@@ -1,6 +1,6 @@
 
 resource "azuread_application" "app" {
-  display_name = format("darts-%s-app", var.env)
+  display_name = "darts-${var.env}-app"
 
   required_resource_access {
     resource_app_id = "00000003-0000-0000-c000-000000000000" # Microsoft Graph
