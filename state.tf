@@ -1,6 +1,6 @@
 terraform {
-  # backend "azurerm" {
-  # }
+  backend "azurerm" {
+  }
 
   required_providers {
     azurerm = {
@@ -19,4 +19,3 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
