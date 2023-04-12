@@ -19,8 +19,15 @@ resource "azurerm_key_vault_secret" "darts_app_secret" {
   value        = azuread_application_password.secret.value
   key_vault_id = module.darts_key_vault.key_vault_id
 }
+
 resource "azurerm_key_vault_secret" "darts_app_id" {
   name         = format("darts-%s-app-id", var.env)
   value        = azuread_application.app.application_id
+  key_vault_id = module.darts_key_vault.key_vault_id
+}
+
+resource "azurerm_key_vault_secret" "darts_tenant_id" {
+  name         = format("darts-%s-tenant-id", var.env)
+  value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = module.darts_key_vault.key_vault_id
 }
