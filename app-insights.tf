@@ -1,5 +1,5 @@
 resource "azurerm_application_insights" "appinsights" {
-  name                = "${var.product}-appinsights${var.env}"
+  name                = "${var.product}-${var.env}"
   location            = azurerm_resource_group.darts_resource_group.location
   resource_group_name = azurerm_resource_group.darts_resource_group.name
   application_type    = "web"
