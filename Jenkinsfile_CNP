@@ -3,6 +3,9 @@
 @Library("Infrastructure") _
 
 def product = "darts"
+def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
+      enableSlackNotifications('#darts-builds')
+      syncBranchesWithMaster(branchesToSync)
 }
