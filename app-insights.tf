@@ -24,3 +24,4 @@ resource "azurerm_key_vault_secret" "azure_appinsights_key" {
   name         = "AppInsightsInstrumentationKey"
   value        = azurerm_application_insights.appinsights.instrumentation_key
   key_vault_id = module.darts_key_vault.key_vault_id
+}
