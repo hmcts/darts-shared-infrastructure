@@ -5,7 +5,7 @@
 def product = "darts"
 def branchesToSync = ['demo']
 
-withPipeline(product) {
+withInfraPipeline(product) {
       enableSlackNotifications('#darts-builds')
       syncBranchesWithMaster(branchesToSync)
 }
