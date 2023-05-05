@@ -16,7 +16,8 @@ resource "azurerm_storage_account" "storage_account" {
   tags = var.common_tags
 }
 
-resource "azurerm_storage_container" "darts" {
+module "darts" {
+  source= "https://github.com/hmcts/cnp-module-storage-account?ref=master"
   name                  = "darts"
   storage_account_name  = azurerm_storage_account.storage_account.name
   container_access_type = "container"
