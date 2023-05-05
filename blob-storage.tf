@@ -3,8 +3,7 @@ locals {
   unstructured            = "${var.product}-unstrcutured-blob-st-${var.env}"
 }
 
-module  "storage_account" {
-  source                   = "git@github.com:hmcts/cnp-module-storage-account.git?ref=master"
+resource "azurerm_storage_account" "storage_account" {
   name                = replace("${var.product}${var.env}", "-", "")
   resource_group_name     = azurerm_resource_group.darts_resource_group.name
 
