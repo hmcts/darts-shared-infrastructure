@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "storage_account" {
 }
 
 module "darts" {
-  source= "https://github.com/hmcts/cnp-module-storage-account?ref=master"
+  source                = "https://github.com/hmcts/cnp-module-storage-account/blob/master/containers.tf"
   name                  = "darts"
   storage_account_name  = azurerm_storage_account.storage_account.name
   container_access_type = "container"
