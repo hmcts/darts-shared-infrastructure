@@ -20,7 +20,7 @@ module "darts" {
   resource_group_name   = azurerm_resource_group.darts_resource_group.name
   account_kind          = "StorageV2"
   env                   = "${var.env}"
-#   storage_container_name = "darts"
+  storage_container_name = "darts"
 #   name                  = "darts"
   storage_account_name  = azurerm_storage_account.storage_account.name
 #   container_access_type = "container"
@@ -30,12 +30,12 @@ module "darts" {
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-#   storage_container_name = module.darts.storage_container_name
+  storage_container_name = module.darts.storage_container_name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-#   storage_container_name = module.darts.storage_container_name
+  storage_container_name = module.darts.storage_container_name
   type                   = "Block"
 }
