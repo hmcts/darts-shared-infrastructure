@@ -19,7 +19,8 @@ module "darts" {
   source                = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   resource_group_name   = azurerm_resource_group.darts_resource_group.name
   account_kind          = "StorageV2"
-  storage_container_name = "darts"
+  env                   = "${var.env}"
+#   storage_container_name = "darts"
 #   name                  = "darts"
   storage_account_name  = azurerm_storage_account.storage_account.name
 #   container_access_type = "container"
