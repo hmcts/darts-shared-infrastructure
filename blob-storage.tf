@@ -6,8 +6,7 @@ locals {
 resource "azurerm_storage_account" "storage_account" {
   name                = replace("${var.product}${var.env}", "-", "")
   resource_group_name     = azurerm_resource_group.darts_resource_group.name
-
-  location                 = var.env
+  location                 = "UK South"
   account_tier             = "Standard"
   account_replication_type = "ZRS"
   account_kind             = "StorageV2"
@@ -18,21 +17,24 @@ resource "azurerm_storage_account" "storage_account" {
 
 module "darts" {
   source                = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  name                  = "darts"
+  resource_group_name   = azurerm_resource_group.darts_resource_group.name
+  account_kind          = "StorageV2"
+  storage_container_name = "darts"
+#   name                  = "darts"
   storage_account_name  = azurerm_storage_account.storage_account.name
-  container_access_type = "container"
+#   container_access_type = "container"
 }
 
 
 resource "azurerm_storage_blob" "outbound" {
   name                   = local.outboud
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = azurerm_storage_container.darts.name
+  storage_container_name = module.darts.storage_container_name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = local.unstructured
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = azurerm_storage_container.darts.name
+  storage_container_name = module.darts.storage_container_name
   type                   = "Block"
 }

@@ -24,3 +24,12 @@ variable "project" {
   description = "Project name"
   default     = "sds"
 }
+
+
+variable "account_kind"{
+  default     = ""
+}
+
+variable "resource_group_name"{
+  default     = ""
+}
