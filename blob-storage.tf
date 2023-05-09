@@ -1,7 +1,7 @@
-locals {
-  outbound                = "${var.product}-outbound-blob-st-${var.env}"
-  unstructured            = "${var.product}-unstrcutured-blob-st-${var.env}"
-}
+# locals {
+#   outbound                = "${var.product}-outbound-blob-st-${var.env}"
+#   unstructured            = "${var.product}-unstrcutured-blob-st-${var.env}"
+# }
 
 resource "azurerm_storage_account" "storage_account" {
   name                = replace("${var.product}${var.env}", "-", "")
@@ -28,14 +28,14 @@ module "darts" {
 
 
 resource "azurerm_storage_blob" "outbound" {
-  name                   = local.outboud
+  name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = module.darts.storage_container_name
+#   storage_container_name = module.darts.storage_container_name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
-  name                   = local.unstructured
+  name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = module.darts.storage_container_name
+#   storage_container_name = module.darts.storage_container_name
   type                   = "Block"
 }
