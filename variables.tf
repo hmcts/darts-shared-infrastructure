@@ -33,3 +33,6 @@ variable "account_kind"{
 variable "resource_group_name"{
   default     = ""
 }
+variable "storage_container_name"{
+  default     = "darts"
+}
