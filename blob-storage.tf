@@ -1,6 +1,6 @@
 resource "azurerm_storage_account" "storage_account" {
-  name                = replace("${var.product}${var.env}", "-", "")
-  resource_group_name     = azurerm_resource_group.darts_resource_group.name
+  storage_account_name     =  replace("${var.product}${var.env}", "-", "")
+  resource_group_name      = azurerm_resource_group.darts_resource_group.name
   location                 = "UK South"
   account_tier             = "Standard"
   account_replication_type = "ZRS"
@@ -15,7 +15,7 @@ module "darts" {
   resource_group_name   = azurerm_resource_group.darts_resource_group.name
   account_kind          = "StorageV2"
   env                   = "${var.env}"
-  storage_account_name  = azurerm_storage_account.storage_account.name
+  storage_account_name  = azurerm_storage_account.storage_account.storage_account_name
 }
 
 
