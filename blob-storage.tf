@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storage_account" {
-  storage_account_name     =  replace("${var.product}${var.env}", "-", "")
+  name                     =  replace("${var.product}${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.darts_resource_group.name
   location                 = "UK South"
   account_tier             = "Standard"
