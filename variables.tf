@@ -24,7 +24,14 @@ variable "project" {
   description = "Project name"
   default     = "sds"
 }
-
+variable "containers" {
+  type = list(object({
+    name        = "darts"
+    access_type = "private"
+  }))
+  description = "List of Storage Containers"
+  default     = []
+}
 
 variable "account_kind"{
   default     = ""
