@@ -33,13 +33,28 @@ variable "containers" {
   default     = []
 }
 
-variable "account_kind"{
-  default     = ""
-}
+
 
 variable "resource_group_name"{
   default     = ""
 }
 variable "storage_container_name"{
   default     = "darts"
+}
+## SA Defaults
+variable "sa_access_tier" {
+  type    = string
+  default = "Cool"
+}
+variable "sa_account_kind" {
+  type    = string
+  default = "StorageV2"
+}
+variable "sa_account_tier" {
+  type    = string
+  default = "Standard"
+}
+variable "sa_account_replication_type" {
+  type    = string
+  default = "RAGRS"
 }
