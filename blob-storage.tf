@@ -9,7 +9,7 @@ locals {
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  name     =  replace("${var.product}${var.env}", "-", "")
+  name                     =  replace("${var.product}${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.darts_resource_group.name
   location                 = "UK South"
   account_tier             = "Standard"
@@ -43,16 +43,15 @@ module "darts" {
   containers = local.containers
 }
 
-
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = locals.containers.name
+  storage_container_name = local.containers.name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = locals.containers.name
+  storage_container_name = local.containers.name
   type                   = "Block"
 }
