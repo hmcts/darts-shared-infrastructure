@@ -1,11 +1,13 @@
 locals {
   
   containers = [{
-    name        = "darts"
+    name        = "darts-outbound"
     access_type = "private"
-    }
-  ]
-
+    },
+    {
+      name        = "darts-unstructured"
+      access_type = "private"
+  }]
 }
 
 resource "azurerm_storage_account" "storage_account" {
@@ -24,7 +26,7 @@ module "darts" {
 
   env = var.env
 
-  storage_account_name = azurerm_storage_account.storage_account_name
+  storage_account_name = azurerm_storage_account.storage_account.name
   common_tags          = var.common_tags
 
   default_action = "Allow"
@@ -46,12 +48,12 @@ module "darts" {
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = local.containers.name
+  storage_container_name = local.containers[0].name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = local.containers.name
+  storage_container_name = local.containers[1].name
   type                   = "Block"
 }
