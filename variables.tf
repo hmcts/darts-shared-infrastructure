@@ -26,8 +26,8 @@ variable "project" {
 }
 variable "containers" {
   type = list(object({
-    name        = "darts"
-    access_type = "private"
+    name        = string
+    access_type = string
   }))
   description = "List of Storage Containers"
   default     = []
