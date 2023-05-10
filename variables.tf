@@ -24,15 +24,37 @@ variable "project" {
   description = "Project name"
   default     = "sds"
 }
-
-
-variable "account_kind"{
-  default     = ""
+variable "containers" {
+  type = list(object({
+    name        = string
+    access_type = string
+  }))
+  description = "List of Storage Containers"
+  default     = []
 }
+
+
 
 variable "resource_group_name"{
   default     = ""
 }
 variable "storage_container_name"{
   default     = "darts"
+}
+## SA Defaults
+variable "sa_access_tier" {
+  type    = string
+  default = "Cool"
+}
+variable "sa_account_kind" {
+  type    = string
+  default = "StorageV2"
+}
+variable "sa_account_tier" {
+  type    = string
+  default = "Standard"
+}
+variable "sa_account_replication_type" {
+  type    = string
+  default = "RAGRS"
 }
