@@ -1,5 +1,5 @@
 locals {
-  
+
   containers = [{
     name        = "darts-outbound"
     access_type = "private"
@@ -9,11 +9,14 @@ locals {
       access_type = "private"
   }]
 }
+data "azurerm_resource_group" "darts_resource_group" {
+    name     = format("%s-%s-rg", var.product, var.env)
+}
 
 resource "azurerm_storage_account" "storage_account" {
   name                     =  replace("${var.product}${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.darts_resource_group.name
-  location                 = "UK South"
+  location                 = azurerm_resource_group.darts_resource_group.location
   account_tier             = "Standard"
   account_replication_type = "ZRS"
   account_kind             = "StorageV2"
