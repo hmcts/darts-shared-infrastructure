@@ -7,8 +7,14 @@ locals {
     {
       name        = "darts-unstructured"
       access_type = "private"
+  },
+    {
+      name        = local.darts_container_name
+      access_type = "container"
   }]
+  darts_container_name = "darts-st-container"
 }
+
 data "azurerm_resource_group" "darts_resource_group" {
     name     = format("%s-%s-rg", var.product, var.env)
 }
@@ -51,12 +57,12 @@ module "darts" {
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = local.containers[0].name
+  storage_container_name = local.darts-container-name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = local.containers[1].name
+  storage_container_name = local.darts-container-name
   type                   = "Block"
 }
