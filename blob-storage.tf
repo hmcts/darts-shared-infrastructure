@@ -18,6 +18,9 @@ locals {
 data "azurerm_resource_group" "darts_resource_group" {
     name     = format("%s-%s-rg", var.product, var.env)
 }
+data "azurerm_resource_group" "darts_resource_group" {
+    name     = format("%s-%s-rg", var.product, var.env)
+}
 
 resource "azurerm_storage_account" "storage_account" {
   name                     =  replace("${var.product}${var.env}", "-", "")
