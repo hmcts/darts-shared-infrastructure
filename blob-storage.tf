@@ -1,17 +1,4 @@
 locals {
-
-  containers = [{
-    name        = "darts-outbound"
-    access_type = "private"
-    },
-    {
-      name        = "darts-unstructured"
-      access_type = "private"
-  },
-    {
-      name        = local.darts_container_name
-      access_type = "container"
-  }]
   darts_container_name = "darts-st-container"
 }
 
