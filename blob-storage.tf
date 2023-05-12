@@ -39,7 +39,7 @@ module "darts" {
 
   enable_data_protection = true
 
-  containers = local.containers
+  containers = local.darts_container_name
 }
 
 resource "azurerm_storage_blob" "outbound" {
