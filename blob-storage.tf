@@ -58,12 +58,12 @@ module "darts" {
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = local.darts-container-name
+  storage_container_name = local.darts_container_name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = local.darts-container-name
+  storage_container_name = local.darts_container_name
   type                   = "Block"
 }
