@@ -15,6 +15,11 @@ locals {
   darts_container_name = "darts-st-container"
 }
 
+data "azurerm_resource_group" "darts_resource_group" {
+    name     = format("%s-%s-rg", var.product, var.env)
+}
+
+
 resource "azurerm_storage_account" "storage_account" {
   name                     =  replace("${var.product}${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.darts_resource_group.name
