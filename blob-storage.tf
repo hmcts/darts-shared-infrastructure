@@ -1,4 +1,17 @@
 locals {
+
+  containers = [{
+    name        = "darts-outbound"
+    access_type = "private"
+    },
+    {
+      name        = "darts-unstructured"
+      access_type = "private"
+  },
+    {
+      name        = local.darts_container_name
+      access_type = "container"
+  }]
   darts_container_name = "darts-st-container"
 }
 
@@ -39,7 +52,7 @@ module "darts" {
 
   enable_data_protection = true
 
-  containers = local.darts_container_name
+  containers = local.containers
 }
 
 resource "azurerm_storage_blob" "outbound" {
