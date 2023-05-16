@@ -1,5 +1,5 @@
 locals {
-  storage_account_name = format("%s-%s-sa", var.product, var.env)
+  storage_account_name = "${var.product}sa${var.env}"
   containers = [{
     name        = "darts-outbound"
     access_type = "private"
