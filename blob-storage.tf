@@ -1,5 +1,5 @@
 locals {
-
+  storage_account_name = "${var.product}sa${var.env}"
   containers = [{
     name        = "darts-outbound"
     access_type = "private"
@@ -20,23 +20,13 @@ data "azurerm_resource_group" "darts_resource_group" {
 }
 
 
-resource "azurerm_storage_account" "storage_account" {
-  name                     =  replace("${var.product}${var.env}", "-", "")
-  resource_group_name      = azurerm_resource_group.darts_resource_group.name
-  location                 = azurerm_resource_group.darts_resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "ZRS"
-  account_kind             = "StorageV2"
 
-  tags = var.common_tags
-}
-
-module "darts" {
+module "sa" {
   source = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
 
   env = var.env
 
-  storage_account_name = azurerm_storage_account.storage_account.name
+  storage_account_name = local.storage_account_name
   common_tags          = var.common_tags
 
   default_action = "Allow"
@@ -57,13 +47,13 @@ module "darts" {
 
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
-  storage_account_name   = azurerm_storage_account.storage_account.name
+  storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
-  storage_account_name   = azurerm_storage_account.storage_account.name
+  storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
 }
