@@ -57,3 +57,9 @@ resource "azurerm_storage_blob" "unstructured" {
   storage_container_name = local.darts_container_name
   type                   = "Block"
 }
+resource "azurerm_storage_blob" "ibound" {
+  name                   = "${var.product}-inbound-blob-st-${var.env}"
+  storage_account_name   = local.storage_account_name
+  storage_container_name = local.darts_container_name
+  type                   = "Block"
+}
