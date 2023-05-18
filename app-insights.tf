@@ -15,7 +15,7 @@ resource "azurerm_application_insights" "appinsights" {
 }
 
 resource "azurerm_key_vault_secret" "app_insights_connection_string" {
-  name         = "AppInsightsConnectionString"
+  name         = "app-insights-connection-string"
   value        = azurerm_application_insights.appinsights.connection_string
   key_vault_id = module.darts_key_vault.key_vault_id
 }
