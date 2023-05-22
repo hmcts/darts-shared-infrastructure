@@ -39,39 +39,13 @@ module "sa" {
   account_replication_type        = var.sa_account_replication_type
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
-  
+  change_feed_enabled = var.enable_change_feed
+
   enable_data_protection = true
 
   containers = local.containers
 
-    dynamic "blob_properties" {
-      for_each = var.enable_data_protection == true ? [1] : []
-      content {
-        versioning_enabled  = true
-        change_feed_enabled = var.enable_change_feed
 
-        container_delete_retention_policy {
-          days = 7
-        }
-        delete_retention_policy {
-          days = 365
-        }
-        restore_policy {
-          days = var.restore_policy_days
-        }
-        dynamic "cors_rule" {
-          for_each = var.cors_rules
-
-          content {
-            allowed_headers    = cors_rule.value["allowed_headers"]
-            allowed_methods    = cors_rule.value["allowed_methods"]
-            allowed_origins    = cors_rule.value["allowed_origins"]
-            exposed_headers    = cors_rule.value["exposed_headers"]
-            max_age_in_seconds = cors_rule.value["max_age_in_seconds"]
-          }
-        }
-      }
-    }
 }
 
 resource "azurerm_storage_blob" "outbound" {
