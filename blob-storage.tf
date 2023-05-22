@@ -39,7 +39,7 @@ module "sa" {
   account_replication_type        = var.sa_account_replication_type
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
-
+  change_feed_enabled = var.enable_change_feed
   enable_data_protection = true
 
   containers = local.containers
@@ -49,17 +49,20 @@ resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
+  change_feed_enabled = var.enable_change_feed
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "unstructured" {
   name                   = "${var.product}-unstrcutured-blob-st-${var.env}"
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
+  change_feed_enabled = var.enable_change_feed
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "inbound" {
   name                   = "${var.product}-inbound-blob-st-${var.env}"
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
+  change_feed_enabled = var.enable_change_feed
   type                   = "Block"
 }
