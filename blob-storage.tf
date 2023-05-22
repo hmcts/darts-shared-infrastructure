@@ -45,33 +45,33 @@ module "sa" {
   containers = local.containers
 
     dynamic "blob_properties" {
-    for_each = var.enable_data_protection == true ? [1] : []
-    content {
-      versioning_enabled  = true
-      change_feed_enabled = var.enable_change_feed
+      for_each = var.enable_data_protection == true ? [1] : []
+      content {
+        versioning_enabled  = true
+        change_feed_enabled = var.enable_change_feed
 
-      container_delete_retention_policy {
-        days = 7
-      }
-      delete_retention_policy {
-        days = 365
-      }
-      restore_policy {
-        days = var.restore_policy_days
-      }
-      dynamic "cors_rule" {
-        for_each = var.cors_rules
+        container_delete_retention_policy {
+          days = 7
+        }
+        delete_retention_policy {
+          days = 365
+        }
+        restore_policy {
+          days = var.restore_policy_days
+        }
+        dynamic "cors_rule" {
+          for_each = var.cors_rules
 
-        content {
-          allowed_headers    = cors_rule.value["allowed_headers"]
-          allowed_methods    = cors_rule.value["allowed_methods"]
-          allowed_origins    = cors_rule.value["allowed_origins"]
-          exposed_headers    = cors_rule.value["exposed_headers"]
-          max_age_in_seconds = cors_rule.value["max_age_in_seconds"]
+          content {
+            allowed_headers    = cors_rule.value["allowed_headers"]
+            allowed_methods    = cors_rule.value["allowed_methods"]
+            allowed_origins    = cors_rule.value["allowed_origins"]
+            exposed_headers    = cors_rule.value["exposed_headers"]
+            max_age_in_seconds = cors_rule.value["max_age_in_seconds"]
+          }
         }
       }
     }
-  }
 }
 
 resource "azurerm_storage_blob" "outbound" {
