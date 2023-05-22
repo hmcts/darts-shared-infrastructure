@@ -15,10 +15,6 @@ variable "location" {
   default     = "UK South"
 }
 
-variable "enable_change_feed" {
-  default = true
-}
-
 variable "product" {
   description = "The name of your application"
   default     = "darts"
