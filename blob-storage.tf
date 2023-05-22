@@ -39,10 +39,13 @@ module "sa" {
   account_replication_type        = var.sa_account_replication_type
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
+  enable_change_feed = true
 
   enable_data_protection = true
 
   containers = local.containers
+
+
 }
 
 resource "azurerm_storage_blob" "outbound" {
