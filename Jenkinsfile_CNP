@@ -4,16 +4,10 @@
 
 def product = "darts"
 def branchesToSync = ['demo']
-def secrets = [
-  'darts-migration-${env}': [
-    secret('ipAddress', 'IP_ADDRESS'),
 
-  ],
-]
 
 
 withInfraPipeline(product) {
       enableSlackNotifications('#darts-builds')
-      loadVaultSecrets(secrets)
       syncBranchesWithMaster(branchesToSync)
 }
