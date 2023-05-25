@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
