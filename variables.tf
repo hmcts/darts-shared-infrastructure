@@ -61,7 +61,7 @@ variable "sa_account_replication_type" {
 
 variable "ipAddress"{
   type  =string
-  default = "00.00.000.0/00"
+  # default = "00.00.000.0/00"
 }
 variable "ipRange"{
   type =list(string)
