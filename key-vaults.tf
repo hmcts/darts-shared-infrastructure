@@ -29,6 +29,6 @@ module "darts_migration_key_vault" {
 
 resource "azurerm_key_vault_secret" "ipAddress" {
   name         = "ipAddress"
-  value        = local.db_name
+  value        = var.ipAddress
   key_vault_id = module.darts_migration_key_vault.id
 }
