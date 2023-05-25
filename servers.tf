@@ -1,6 +1,6 @@
 locals {
   vault_name = "${var.product}-migration-${var.env}"
-  rg_name    = "${var.product}-${var.env}-rg"
+  rg_name    = "${var.product}-migration-${var.env}-rg"
 }
 
 data "azurerm_resource_group" "darts_resource_migration_group" {
