@@ -7,7 +7,7 @@ locals {
     {
       name        = "darts-unstructured"
       access_type = "private"
-  },
+    },
     {
       name        = local.darts_container_name
       access_type = "container"
@@ -16,7 +16,7 @@ locals {
 }
 
 data "azurerm_resource_group" "darts_resource_group" {
-    name     = format("%s-%s-rg", var.product, var.env)
+  name = format("%s-%s-rg", var.product, var.env)
 }
 
 
@@ -39,12 +39,19 @@ module "sa" {
   account_replication_type        = var.sa_account_replication_type
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
-  enable_change_feed = true
+  enable_change_feed              = true
 
   enable_data_protection = true
 
   containers = local.containers
 
+  cors_rules = [{
+    allowed_headers    = ["*"]
+    allowed_methods    = ["GET", "OPTIONS"]
+    allowed_origins    = ["https://hmctsdartsb2csbox.b2clogin.com"]
+    exposed_headers    = ["*"]
+    max_age_in_seconds = 200
+  }]
 
 }
 
