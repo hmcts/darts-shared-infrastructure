@@ -16,7 +16,7 @@ module "darts_key_vault" {
 
 module "darts_migration_key_vault" {
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  name                    = format("%s-migration-%s-rg", var.product, var.env)
+  name                    = format("%s-migration-%s", var.product, var.env)
   product                 = var.product
   env                     = var.env
   object_id               = var.jenkins_AAD_objectId
