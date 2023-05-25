@@ -63,3 +63,7 @@ variable "ipAddress"{
   type  =string
   default = "10.24.239.0/26"
 }
+variable "ipRange"{
+  type =list(string)
+  default = ["10.24.239.0/26"]
+}
