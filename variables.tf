@@ -65,5 +65,5 @@ variable "ipAddress"{
 }
 variable "ipRange"{
   type =list(string)
-  default = ["10.24.239.0/26"]
+  default = ["00.00.000.0/00"]
 }

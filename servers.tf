@@ -1,5 +1,21 @@
+locals {
+  vault_name = "${var.product}-migration-${var.env}"
+  rg_name    = "${var.product}-${var.env}-rg"
+}
+
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
+}
+
+
+data "azurerm_key_vault" "key_vault" {
+  name                = local.vault_name
+  resource_group_name = local.rg_name
+}
+resource "azurerm_key_vault_secret" "ipAddress_Key_Vault" {
+  name         = "ipAddress"
+  value        = var.ipRange
+  key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 resource "azurerm_virtual_network" "migration" {
