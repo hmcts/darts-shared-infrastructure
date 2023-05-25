@@ -61,4 +61,5 @@ variable "sa_account_replication_type" {
 
 variable "ipAddress"{
   type  =string
+  default = "10.24.239.0/26"
 }
