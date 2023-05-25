@@ -1,26 +1,12 @@
-locals {
-  vault_name = "${var.product}-migration-${var.env}"
-  rg_name    = "${var.product}-migration-${var.env}-rg"
-}
 
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 
 
-data "azurerm_key_vault" "key_vault" {
-  name                = local.vault_name
-  resource_group_name = local.rg_name
-}
-resource "azurerm_key_vault_secret" "ipAddress_Key_Vault" {
-  name         = "ipAddress"
-  value        = var.ipAddress
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
-  address_space       = [azurerm_key_vault_secret.ipAddress_Key_Vault.value]
+  address_space       = var.ipRange
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
 }
@@ -29,10 +15,8 @@ resource "azurerm_subnet" "migration" {
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = [azurerm_key_vault_secret.ipAddress_Key_Vault.value]
+  address_prefixes     = var.ipRange
 }
-
-
 
 resource "azurerm_network_interface" "migration" {
   name                = "migration-nic"
@@ -43,7 +27,6 @@ resource "azurerm_network_interface" "migration" {
     name                          = "migration-ipconfig"
     subnet_id                     = azurerm_subnet.migration.id
     private_ip_address_allocation = "Dynamic"
-    # public_ip_address_id          = azurerm_public_ip.migration.id
   }
 }
 
