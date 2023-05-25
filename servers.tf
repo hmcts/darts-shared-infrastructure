@@ -2,7 +2,8 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 data "azurerm_key_vault_secret" "ipAddress" {
-  name = "ipAddress"
+    name = "ipAddress"
+    key_vault_id = module.darts_migration_key_vault.id
 }
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
@@ -47,6 +48,7 @@ resource "azurerm_managed_disk" "migration_data" {
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
   disk_size_gb         = 200
 }
 

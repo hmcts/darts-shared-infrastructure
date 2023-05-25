@@ -58,3 +58,7 @@ variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
 }
+
+variable "ipAddress"{
+  type  =string
+}
