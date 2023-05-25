@@ -14,7 +14,7 @@ data "azurerm_key_vault" "key_vault" {
 }
 resource "azurerm_key_vault_secret" "ipAddress_Key_Vault" {
   name         = "ipAddress"
-  value        = var.ipRange
+  value        = var.ipAddress
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
