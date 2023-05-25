@@ -35,11 +35,11 @@ variable "containers" {
 
 
 
-variable "resource_group_name"{
-  default     = ""
+variable "resource_group_name" {
+  default = ""
 }
-variable "storage_container_name"{
-  default     = "darts"
+variable "storage_container_name" {
+  default = "darts"
 }
 ## SA Defaults
 variable "sa_access_tier" {
