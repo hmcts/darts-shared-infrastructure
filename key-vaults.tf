@@ -27,8 +27,3 @@ module "darts_migration_key_vault" {
   common_tags = var.common_tags
 }
 
-resource "azurerm_key_vault_secret" "ipAddress" {
-  name         = "ipAddress"
-  value        = var.ipAddress
-  key_vault_id = module.darts_migration_key_vault.id
-}

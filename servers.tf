@@ -1,13 +1,10 @@
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
-data "azurerm_key_vault_secret" "ipAddress" {
-    name = "ipAddress"
-    key_vault_id = module.darts_migration_key_vault.id
-}
+
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
-  address_space       = azurerm_key_vault_secret.ipAddress.value
+  address_space       = var.ipAddress
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
 }
@@ -16,7 +13,7 @@ resource "azurerm_subnet" "migration" {
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = azurerm_key_vault_secret.ipAddress.value
+  address_prefixes     = var.ipAddress
 }
 
 
