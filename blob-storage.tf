@@ -81,7 +81,7 @@ resource "azurerm_storage_blob" "b2c_login_html" {
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
-  source                 = "b2c/login.html"
+  source                 = "./b2c/login.html"
 }
 
 resource "azurerm_storage_blob" "b2c_login_css" {
@@ -90,7 +90,7 @@ resource "azurerm_storage_blob" "b2c_login_css" {
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
-  source                 = "b2c/login.css"
+  source                 = "./b2c/login.css"
 }
 
 resource "azurerm_storage_blob" "b2c_copyright_png" {
@@ -99,7 +99,7 @@ resource "azurerm_storage_blob" "b2c_copyright_png" {
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
-  source                 = "b2c/copyright.png"
+  source                 = "./b2c/copyright.png"
 }
 
 resource "azurerm_storage_blob" "b2c_favicon" {
@@ -108,7 +108,7 @@ resource "azurerm_storage_blob" "b2c_favicon" {
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
-  source                 = "b2c/favicon.ico"
+  source                 = "./b2c/favicon.ico"
 }
 
 resource "azurerm_storage_blob" "b2c_logo_gov" {
@@ -117,5 +117,5 @@ resource "azurerm_storage_blob" "b2c_logo_gov" {
   storage_account_name   = local.storage_account_name
   storage_container_name = local.darts_container_name
   type                   = "Block"
-  source                 = "b2c/logo_gov.png"
+  source                 = "./b2c/logo_gov.png"
 }
