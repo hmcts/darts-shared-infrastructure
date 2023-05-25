@@ -20,7 +20,7 @@ resource "azurerm_key_vault_secret" "ipAddress_Key_Vault" {
 
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
-  address_space       = var.ipRange
+  address_space       = [azurerm_key_vault_secret.ipAddress_Key_Vault.value]
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
 }
@@ -29,7 +29,7 @@ resource "azurerm_subnet" "migration" {
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = var.ipRange
+  address_prefixes     = [azurerm_key_vault_secret.ipAddress_Key_Vault.value]
 }
 
 
