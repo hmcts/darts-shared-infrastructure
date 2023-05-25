@@ -22,12 +22,7 @@ resource "azurerm_subnet" "migration" {
   address_prefixes     = azurerm_key_vault_secret.ipAddress.value
 }
 
-resource "azurerm_public_ip" "migration" {
-  name                = "migration-publicip"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  allocation_method   = "Static"
-}
+
 
 resource "azurerm_network_interface" "migration" {
   name                = "migration-nic"
@@ -38,7 +33,7 @@ resource "azurerm_network_interface" "migration" {
     name                          = "migration-ipconfig"
     subnet_id                     = azurerm_subnet.migration.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.migration.id
+    # public_ip_address_id          = azurerm_public_ip.migration.id
   }
 }
 
