@@ -64,4 +64,5 @@ variable "ip_range"{
 }
 variable "builtFrom" {
   type = string
+  default = "https://github.com/hmcts/darts-shared-infrastructure.git"
 }
