@@ -7,11 +7,6 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 
-data "azurerm_key_vault" "key_vault" {
-  name                = local.vault_name
-  resource_group_name = local.rg_name
-}
-
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
   address_space       = var.ip_range
@@ -100,6 +95,6 @@ resource "azurerm_virtual_machine" "migration" {
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
   value        = random_password.password.result
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
