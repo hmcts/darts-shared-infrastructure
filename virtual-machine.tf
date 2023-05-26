@@ -56,12 +56,6 @@ resource "azurerm_managed_disk" "migration_data" {
   disk_size_gb         = 200
 }
 
-resource "random_password" "password" {
-  length           = 16
-  special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
-}
-
 resource "azurerm_virtual_machine" "migration" {
   name                  = "migration-vm"
   location              = azurerm_resource_group.darts_migration_resource_group.location
@@ -104,7 +98,7 @@ resource "azurerm_virtual_machine" "migration" {
   }
 }
 resource "azurerm_key_vault_secret" "os_profile_password" {
-  name         = "os-profil-password"
+  name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }

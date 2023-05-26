@@ -14,7 +14,7 @@ module "darts_key_vault" {
   common_tags = var.common_tags
 }
 
-module "darts__migration_key_vault" {
+module "darts_migration_key_vault" {
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   name                    = format("darts-migration-%s", var.env)
