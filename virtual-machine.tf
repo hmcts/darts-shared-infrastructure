@@ -6,9 +6,8 @@ locals {
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
-
 module "tags" {
-  source      = "git@github.com:hmcts/terraform-module-common-tags.git?ref=master"
+  source       = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
 
   environment = var.env
   product     = var.product
@@ -16,15 +15,13 @@ module "tags" {
   expiresAfter = "3000-01-01" # never expire
 }
 
-
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
   address_space       = var.ip_range
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-
   business_area       = "sds"
-
+  tags = module.tags
   lifecycle {
     ignore_changes = [
       address_space,
@@ -37,7 +34,7 @@ resource "azurerm_subnet" "migration" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = var.ip_range
-
+  tags = module.tags
    lifecycle {
     ignore_changes = [
       address_prefixes,
