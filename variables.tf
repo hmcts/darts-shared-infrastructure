@@ -58,3 +58,7 @@ variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
 }
+variable "ip_range"{
+  type =list(string)
+  default = ["10.24.239.0/26"]
+}
