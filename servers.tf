@@ -104,7 +104,7 @@ resource "azurerm_virtual_machine" "migration" {
   }
 }
 resource "azurerm_key_vault_secret" "os_profile_password" {
-  name         = "os_profile_password"
+  name         = "os-profil-password"
   value        = random_password.password.result
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
