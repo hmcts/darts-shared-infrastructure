@@ -7,7 +7,7 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 module "tags" {
-  source       = "git@github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  source       = "git@github.com:hmcts/terraform-module-common-tags.git?ref=master"
 
   environment = var.env
   product     = var.product
