@@ -1,0 +1,34 @@
+.govuk-input, .verifyInput, .textInput, .verificationControlContent {
+  margin-left: 0px;
+}
+
+.attrEntry label {
+  margin-left: 0px;
+}
+
+.attr ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#cancel, #ReadOnlyEmail_ver_but_resend {
+  background: none;
+  border: none;
+  padding: 10px 0 0 0;
+  text-decoration: underline;
+  box-shadow: none;
+  color: #1d70b8;
+}
+
+#cancel:hover, #ReadOnlyEmail_ver_but_resend:hover {
+  color: #003078;
+  background-color: white;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
+
+#simplemodal-overlay, #simplemodal-container {
+  display: none !important;
+}
+

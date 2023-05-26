@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <title>
-    Sign in with a DARTS Account
+    Login
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b0c0c">
@@ -13,9 +13,7 @@
 <body>
 <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 
-
 <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
-
 
 <header class="govuk-header " role="banner" data-module="govuk-header">
   <div class="govuk-header__container govuk-width-container">
@@ -28,19 +26,13 @@
             GOV.UK
           </span>
         </span>
-
       </a>
     </div>
-
     <div class="govuk-header__content">
-
       <a href="https://darts-portal.staging.platform.hmcts.net/view-option" class="govuk-header__link govuk-header__link--service-name">
         DARTS
       </a>
-
-
     </div>
-
   </div>
 </header>
 
@@ -52,7 +44,7 @@
         beta
       </strong>
       <span class="govuk-phase-banner__text">
-      This is a new service – your <a id="betalink" class="govuk-link" href="https://www.smartsurvey.co.uk/s/FBSPI22/?pageurl=b2c/login">feedback</a> will help us to improve it.
+      This is a new service – your <a id="betalink" class="govuk-link" href="https://www.smartsurvey.co.uk/s/FBSPI22/?pageurl=b2c/admin-mfa">feedback</a> will help us to improve it.
     </span>
     </p>
   </div>
@@ -61,15 +53,14 @@
 
     <ul class="moj-sub-navigation__list">
       <li class="moj-sub-navigation__item">
-        <a class="moj-sub-navigation__link" href="https://darts-portal.staging.platform.hmcts.net/">Home</a>
+        <a class="moj-sub-navigation__link" href="https://darts-portal.staging.platform.hmcts.net/view-option">Home</a>
     </ul>
-
   </nav>
-
 
   <main class="govuk-main-wrapper " id="main-content" role="main">
 
     <link href="https://dartssastg.blob.core.windows.net/darts-st-container/login.css" rel="stylesheet">
+    <link href="https://dartssastg.blob.core.windows.net/darts-st-container/mfa.css" rel="stylesheet">
     <div class="row">
       <div class="col1">
         <div id="api">
@@ -78,13 +69,8 @@
       <div class="col2">
       </div>
     </div>
-
-
-    </div>
-
   </main>
 </div>
-
 
 <footer class="govuk-footer " role="contentinfo">
   <div class="govuk-width-container ">
@@ -167,27 +153,28 @@
 </footer>
 
 <script>
-  function moveForgotPassword() {
-    const forgotPasswordId = 'forgotPassword'
-    const forgotPassword = document.getElementById(forgotPasswordId);
+  function modalTimeoutCallback() {
+    setTimeout(
+      function() {
+        const modalOverlay = document.getElementById('simplemodal-overlay');
+        const modalContainer = document.getElementById('simplemodal-container');
 
-    if (forgotPassword) {
-      const text = forgotPassword.innerHTML;
-      forgotPassword.remove();
-
-      const newForgotPassword = document.createElement('a');
-      newForgotPassword.id = forgotPasswordId;
-      newForgotPassword.innerHTML = text;
-
-      const div = document.createElement('div');
-      div.className = 'forgotPassword-wrapper';
-      div.appendChild(newForgotPassword);
-
-      const passwordInput = document.getElementById('password');
-      passwordInput.parentNode.insertBefore(div, passwordInput.nextSibling);
-    }
+        if (document.contains(modalOverlay) && document.contains(modalContainer)) {
+          modalOverlay.style.setProperty('display', 'block', 'important');
+          modalContainer.style.setProperty('display', 'block', 'important');
+        }
+      }, 5000);
   }
-  moveForgotPassword();
+
+  const timeoutConfig = {
+    attributes: true,
+    attributeFilter: ["id"],
+    attributeOldValue: true
+  };
+
+  const timeoutObserver = new MutationObserver(modalTimeoutCallback);
+  const verifyingModal = document.getElementsByClassName("verifying-modal");
+  timeoutObserver.observe(verifyingModal[0], timeoutConfig);
 </script>
 
 </body>

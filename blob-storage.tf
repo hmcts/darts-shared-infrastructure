@@ -119,3 +119,21 @@ resource "azurerm_storage_blob" "b2c_logo_gov" {
   type                   = "Block"
   source                 = "./b2c/logo_gov.png"
 }
+
+resource "azurerm_storage_blob" "b2c_mfa_html" {
+  name                   = "mfa.html"
+  content_type           = "text/html"
+  storage_account_name   = local.storage_account_name
+  storage_container_name = local.darts_container_name
+  type                   = "Block"
+  source                 = "./b2c/mfa.html"
+}
+
+resource "azurerm_storage_blob" "b2c_mfa_css" {
+  name                   = "mfa.css"
+  content_type           = "text/css"
+  storage_account_name   = local.storage_account_name
+  storage_container_name = local.darts_container_name
+  type                   = "Block"
+  source                 = "./b2c/mfa.css"
+}
