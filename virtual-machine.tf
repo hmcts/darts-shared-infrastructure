@@ -20,7 +20,6 @@ resource "azurerm_virtual_network" "migration" {
   address_space       = var.ip_range
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  business_area       = "sds"
   tags = module.tags
   lifecycle {
     ignore_changes = [
