@@ -33,7 +33,6 @@ resource "azurerm_subnet" "migration" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = var.ip_range
-  tags = module.tags
    lifecycle {
     ignore_changes = [
       address_prefixes,
