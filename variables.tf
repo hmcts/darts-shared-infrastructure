@@ -66,3 +66,6 @@ variable "builtFrom" {
   type = string
   default = "https://github.com/hmcts/darts-shared-infrastructure.git"
 }
+variable "businessArea" {
+  default = "sds"
+}
