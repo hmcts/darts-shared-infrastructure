@@ -9,10 +9,15 @@ locals {
       access_type = "private"
     },
     {
+      name        = "darts-inbound"
+      access_type = "private"
+    },
+    {
       name        = local.darts_container_name
       access_type = "container"
   }]
   darts_container_name = "darts-st-container"
+  darts_inbound_container ="darts-inbound-contaienr"
 }
 
 data "azurerm_resource_group" "darts_resource_group" {
@@ -70,7 +75,7 @@ resource "azurerm_storage_blob" "unstructured" {
 resource "azurerm_storage_blob" "inbound" {
   name                   = "${var.product}-inbound-blob-st-${var.env}"
   storage_account_name   = local.storage_account_name
-  storage_container_name = local.darts_container_name
+  storage_container_name = local.darts_inbound_container
   type                   = "Block"
 }
 

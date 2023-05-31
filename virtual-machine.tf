@@ -12,6 +12,12 @@ resource "azurerm_virtual_network" "migration" {
   address_space       = var.ip_range
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  tags = var.common_tags
+  lifecycle {
+    ignore_changes = [
+      address_space,
+    ]
+  }
 }
 
 resource "azurerm_subnet" "migration" {
@@ -19,6 +25,12 @@ resource "azurerm_subnet" "migration" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = var.ip_range
+   lifecycle {
+    ignore_changes = [
+      address_prefixes,
+      service_endpoints,
+    ]
+  }
 }
 
 resource "azurerm_network_interface" "migration" {

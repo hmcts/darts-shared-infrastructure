@@ -15,10 +15,10 @@ variable "location" {
   default     = "UK South"
 }
 
-variable "product" {
-  description = "The name of your application"
-  default     = "darts"
-}
+variable "product" {}
+
+variable "component" {}
+
 
 variable "project" {
   description = "Project name"
@@ -61,4 +61,14 @@ variable "sa_account_replication_type" {
 variable "ip_range"{
   type =list(string)
   default = ["10.24.239.0/26"]
+}
+variable "builtFrom" {
+  type = string
+  default = "https://github.com/hmcts/darts-shared-infrastructure.git"
+}
+variable "businessArea" {
+  default = "Cross-Cutting"
+}
+variable "application" {
+  default = "core"
 }
