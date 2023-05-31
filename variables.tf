@@ -15,10 +15,10 @@ variable "location" {
   default     = "UK South"
 }
 
-variable "product" {
-  description = "The name of your application"
-  default     = "darts"
-}
+variable "product" {}
+
+variable "component" {}
+
 
 variable "project" {
   description = "Project name"
