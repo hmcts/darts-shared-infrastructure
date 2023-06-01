@@ -26,7 +26,7 @@ resource "azurerm_subnet" "migration" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = var.ip_range
-  tags = var.common_tags
+
    lifecycle {
     ignore_changes = [
       address_prefixes,
@@ -77,7 +77,7 @@ resource "azurerm_virtual_machine" "migration" {
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    sku       = "22.04-LTS"
     version   = "latest"
   }
 
