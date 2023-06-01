@@ -7,6 +7,7 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 
+
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
   address_space       = var.ip_range
@@ -25,6 +26,7 @@ resource "azurerm_subnet" "migration" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = var.ip_range
+
    lifecycle {
     ignore_changes = [
       address_prefixes,
@@ -37,6 +39,7 @@ resource "azurerm_network_interface" "migration" {
   name                = "migration-nic"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  tags = var.common_tags
 
   ip_configuration {
     name                          = "migration-ipconfig"
@@ -61,6 +64,7 @@ resource "azurerm_managed_disk" "migration_data" {
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = 200
+  tags = var.common_tags
 }
 
 resource "azurerm_virtual_machine" "migration" {
@@ -69,11 +73,11 @@ resource "azurerm_virtual_machine" "migration" {
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
   network_interface_ids = [azurerm_network_interface.migration.id]
   vm_size               = "Standard_D8_v3"
-
+  tags = var.common_tags
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    sku       = "22.04-LTS"
     version   = "latest"
   }
 

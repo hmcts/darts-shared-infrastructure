@@ -9,7 +9,7 @@ locals {
       access_type = "private"
     },
     {
-      name        = "darts-inbound"
+      name        = local.darts_inbound_container
       access_type = "private"
     },
     {
@@ -17,7 +17,7 @@ locals {
       access_type = "container"
   }]
   darts_container_name = "darts-st-container"
-  darts_inbound_container ="darts-inbound-contaienr"
+  darts_inbound_container ="darts-inbound-container"
 }
 
 data "azurerm_resource_group" "darts_resource_group" {
