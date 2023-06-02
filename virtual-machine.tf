@@ -111,6 +111,6 @@ resource "azurerm_virtual_machine" "migration" {
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
   value        = random_password.password.result
-  key_vault_id = module.darts_migration_key_vault.key_vault_id
+  key_vault_id = module.darts_key_vault.key_vault_id
 }
 

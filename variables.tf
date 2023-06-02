@@ -72,3 +72,4 @@ variable "businessArea" {
 variable "application" {
   default = "core"
 }
+
