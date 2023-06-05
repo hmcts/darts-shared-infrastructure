@@ -68,13 +68,14 @@ resource "azurerm_managed_disk" "migration_data" {
   tags = var.common_tags
 }
 
-resource "azurerm_virtual_machine" "migration" {
+resource "azurerm_linux_virtual_machine" "migration" {
   name                  = "migration-vm"
   location              = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
   network_interface_ids = [azurerm_network_interface.migration.id]
-  vm_size               = "Standard_D8ds_v5"
+  size                  = "Standard_D8ds_v5"
   tags = var.common_tags
+  
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
