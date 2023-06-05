@@ -54,7 +54,7 @@ resource "azurerm_managed_disk" "migration_os" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 20
+  disk_size_gb         = "20"
   tags = var.common_tags
 }
 
@@ -64,7 +64,7 @@ resource "azurerm_managed_disk" "migration_data" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 200
+  disk_size_gb         = "200"
   tags = var.common_tags
 }
 
