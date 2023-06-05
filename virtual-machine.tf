@@ -55,6 +55,7 @@ resource "azurerm_managed_disk" "migration_os" {
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = 20
+  tags = var.common_tags
 }
 
 resource "azurerm_managed_disk" "migration_data" {
