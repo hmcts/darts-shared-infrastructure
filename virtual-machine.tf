@@ -96,7 +96,7 @@ resource "azurerm_virtual_machine" "migration" {
     create_option     = "Attach"
     caching           = "None"
     managed_disk_type = "Standard_LRS"
-    lun               = 0
+    lun               = "1"
   }
 
   os_profile {
