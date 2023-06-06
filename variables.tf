@@ -72,4 +72,7 @@ variable "businessArea" {
 variable "application" {
   default = "core"
 }
+variable "admin_user"{
+  default = "adminuser"
+}
 

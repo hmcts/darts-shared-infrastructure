@@ -68,50 +68,44 @@ resource "azurerm_managed_disk" "migration_data" {
   tags = var.common_tags
 }
 
-resource "azurerm_virtual_machine" "migration" {
+resource "azurerm_linux_virtual_machine" "migration" {
   name                  = "migration-vm"
   location              = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
   network_interface_ids = [azurerm_network_interface.migration.id]
-  vm_size               = "Standard_D8ds_v5"
-  tags = var.common_tags
-  storage_image_reference {
+  size                  = "Standard_D8ds_v5"
+  tags                  = var.common_tags
+  admin_username        = var.admin_user
+  admin_password        = random_password.password.result
+
+  os_disk {
+    name              = azurerm_managed_disk.migration_os.name
+    caching           = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "22_04-LTS"
+    sku       = "22.04-LTS"
     version   = "latest"
   }
-
-  storage_os_disk {
-    name              = azurerm_managed_disk.migration_os.name
-    managed_disk_id   = azurerm_managed_disk.migration_os.id
-    create_option     = "Attach"
-    caching           = "ReadWrite"
-    managed_disk_type = "Standard_LRS"
+  identity {
+    type = "SystemAssigned"
   }
 
-  storage_data_disk {
-    name              = azurerm_managed_disk.migration_data.name
-    managed_disk_id   = azurerm_managed_disk.migration_data.id
-    create_option     = "Attach"
-    caching           = "None"
-    managed_disk_type = "Standard_LRS"
-    lun               = "1"
-  }
-
-  os_profile {
-    computer_name  = "migration-vm"
-    admin_username = "adminuser"
-    admin_password = random_password.password.result
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
 }
+  
+resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
+  managed_disk_id    = azurerm_managed_disk.migration_data.id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration.id
+  lun                = "10"
+  caching            = "ReadWrite"
+}
+
+
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
-
