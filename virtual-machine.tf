@@ -76,11 +76,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   size                  = "Standard_D8ds_v5"
   tags                  = var.common_tags
   admin_username        = var.admin_user
-
-  admin_ssh_key {
-    username   = var.admin_user
-    public_key = random_password.password.result
-  }
+  admin_password        = random_password.password.result
 
   os_disk {
     name              = azurerm_managed_disk.migration_os.name
@@ -108,17 +104,8 @@ resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
 }
 
 
-resource "azurerm_key_vault_secret" "ssh_public_key" {
-  name         = "ssh_public_key"
-  value        = azurerm_ssh_public_key.ssh_public_key.value
+resource "azurerm_key_vault_secret" "os_profile_password" {
+  name         = "os-profile-password"
+  value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
-}
-
-data "azurerm_ssh_public_key" "example" {
-  name                = "ssh_public_key"
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-}
-
-output "id" {
-  value = data.azurerm_ssh_public_key.example.id
 }
