@@ -84,18 +84,18 @@ resource "azurerm_linux_virtual_machine" "migration" {
 
   os_disk {
     name              = azurerm_managed_disk.migration_os.name
-    managed_disk_id   = azurerm_managed_disk.migration_os.id
-    create_option     = "Attach"
+    # managed_disk_id   = azurerm_managed_disk.migration_os.id
+    # create_option     = "Attach"
     caching           = "ReadWrite"
-    managed_disk_type = "Standard_LRS"
+    storage_account_type = "Standard_LRS"
   }
 
-  os_disk {
+  datadisk {
     name              = azurerm_managed_disk.migration_data.name
-    managed_disk_id   = azurerm_managed_disk.migration_data.id
-    create_option     = "Attach"
+    # managed_disk_id   = azurerm_managed_disk.migration_data.id
+    # create_option     = "Attach"
     caching           = "None"
-    managed_disk_type = "Standard_LRS"
+    storage_account_type = "Standard_LRS"
 
   }
 
