@@ -87,7 +87,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "22.04-LTS"
+    sku       = "22_04-LTS"
     version   = "latest"
   }
   identity {
