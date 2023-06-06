@@ -74,10 +74,13 @@ resource "azurerm_linux_virtual_machine" "migration" {
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
   network_interface_ids = [azurerm_network_interface.migration.id]
   size                  = "Standard_D8ds_v5"
-  tags = var.common_tags
-  admin_username        = "adminuser"
+  tags                  = var.common_tags
+  admin_username        = var.admin_user
 
-
+  admin_ssh_key {
+    username   = var.admin_user
+    public_key = random_password.password.result
+  }
 
   os_disk {
     name              = azurerm_managed_disk.migration_os.name
@@ -96,11 +99,11 @@ resource "azurerm_linux_virtual_machine" "migration" {
 
   }
 
-  os_profile {
-    computer_name  = "migration-vm"
-    admin_username = "adminuser"
-    admin_password = random_password.password.result
-  }
+  # os_profile {
+  #   computer_name  = "migration-vm"
+  #   admin_username = "adminuser"
+  #   admin_password = random_password.password.result
+  # }
 
   source_image_reference {
     publisher = "Canonical"
