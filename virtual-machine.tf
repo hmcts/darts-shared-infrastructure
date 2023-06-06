@@ -77,6 +77,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   tags                  = var.common_tags
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
+  disable_password_authentication = false
 
   os_disk {
     name              = azurerm_managed_disk.migration_os.name
