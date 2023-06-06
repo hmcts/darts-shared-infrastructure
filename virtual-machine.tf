@@ -75,15 +75,11 @@ resource "azurerm_linux_virtual_machine" "migration" {
   network_interface_ids = [azurerm_network_interface.migration.id]
   size                  = "Standard_D8ds_v5"
   tags = var.common_tags
-  
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "22.04-LTS"
-    version   = "latest"
-  }
+  admin_username        = "adminuser"
 
-  storage_os_disk {
+
+
+  os_disk {
     name              = azurerm_managed_disk.migration_os.name
     managed_disk_id   = azurerm_managed_disk.migration_os.id
     create_option     = "Attach"
@@ -91,13 +87,13 @@ resource "azurerm_linux_virtual_machine" "migration" {
     managed_disk_type = "Standard_LRS"
   }
 
-  storage_data_disk {
+  os_disk {
     name              = azurerm_managed_disk.migration_data.name
     managed_disk_id   = azurerm_managed_disk.migration_data.id
     create_option     = "Attach"
     caching           = "None"
     managed_disk_type = "Standard_LRS"
-    lun               = "1"
+
   }
 
   os_profile {
@@ -106,10 +102,21 @@ resource "azurerm_linux_virtual_machine" "migration" {
     admin_password = random_password.password.result
   }
 
-  os_profile_linux_config {
-    disable_password_authentication = false
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "22.04-LTS"
+    version   = "latest"
   }
+  identity {
+    type = "SystemAssigned"
+  }
+
 }
+  
+
+
+
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
   value        = random_password.password.result
