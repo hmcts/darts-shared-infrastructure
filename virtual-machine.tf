@@ -98,7 +98,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
   managed_disk_id    = azurerm_managed_disk.migration_data.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration
+  virtual_machine_id = azurerm_linux_virtual_machine.migration.id
   lun                = "10"
   caching            = "ReadWrite"
 }
