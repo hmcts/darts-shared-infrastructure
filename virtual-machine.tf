@@ -84,26 +84,9 @@ resource "azurerm_linux_virtual_machine" "migration" {
 
   os_disk {
     name              = azurerm_managed_disk.migration_os.name
-    # managed_disk_id   = azurerm_managed_disk.migration_os.id
-    # create_option     = "Attach"
     caching           = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
-  datadisk {
-    name              = azurerm_managed_disk.migration_data.name
-    # managed_disk_id   = azurerm_managed_disk.migration_data.id
-    # create_option     = "Attach"
-    caching           = "None"
-    storage_account_type = "Standard_LRS"
-
-  }
-
-  # os_profile {
-  #   computer_name  = "migration-vm"
-  #   admin_username = "adminuser"
-  #   admin_password = random_password.password.result
-  # }
 
   source_image_reference {
     publisher = "Canonical"
@@ -117,7 +100,12 @@ resource "azurerm_linux_virtual_machine" "migration" {
 
 }
   
-
+resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
+  managed_disk_id    = azurerm_managed_disk.migration_data.id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration
+  lun                = "10"
+  caching            = "ReadWrite"
+}
 
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
