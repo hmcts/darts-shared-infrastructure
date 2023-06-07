@@ -82,7 +82,6 @@ resource "azurerm_linux_virtual_machine" "migration" {
   os_disk {
     caching           = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    create_option = "Attach"
   }
 
   source_image_reference {
@@ -102,7 +101,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
   virtual_machine_id = azurerm_linux_virtual_machine.migration.id
   lun                = "10"
   caching            = "ReadWrite"
-  create_option = "Attach"
 }
 
 
