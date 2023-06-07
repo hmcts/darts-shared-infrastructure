@@ -80,7 +80,6 @@ resource "azurerm_linux_virtual_machine" "migration" {
   disable_password_authentication = false
 
   os_disk {
-    name              = azurerm_managed_disk.migration_os.name
     caching           = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
