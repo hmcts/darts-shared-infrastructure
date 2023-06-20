@@ -51,10 +51,6 @@ resource "azurerm_virtual_network" "peerVN" {
       address_space,
     ]
   }
-
-  route_tables_ids = {
-    subnet1 = azurerm_route_table.peering.id
-  }
 }
 
 resource "azurerm_subnet" "peerSubnet" {
