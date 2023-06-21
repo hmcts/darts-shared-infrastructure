@@ -35,7 +35,7 @@ resource "azurerm_subnet" "migration" {
   }
 }
 
-data "azurerm_resource_group" "darts_resource_peer_group" {
+data "azurerm_resource_group" "darts_peer_resource_group" {
     name     = format("%s-peer-%s-rg", var.product, var.env)
 }
 
