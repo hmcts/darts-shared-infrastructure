@@ -43,8 +43,8 @@ data "azurerm_resource_group" "darts_peer_resource_group" {
 resource "azurerm_virtual_network" "peerVN" {
   name                = "peer-vnet"
   address_space       = var.ip_range
-  location            = azurerm_resource_group.darts_peer_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_peer_resource_group.name
+  location            = data.azurerm_resource_group.darts_peer_resource_group.location
+  resource_group_name = data.azurerm_resource_group.darts_peer_resource_group.name
   tags = var.common_tags
   lifecycle {
     ignore_changes = [
@@ -55,7 +55,7 @@ resource "azurerm_virtual_network" "peerVN" {
 
 resource "azurerm_subnet" "peerSubnet" {
   name                 = "peer-subnet"
-  resource_group_name  = azurerm_resource_group.darts_peer_resource_group.name
+  resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = var.ip_range
 
@@ -71,6 +71,7 @@ resource "azurerm_virtual_network_peering" "migration_to_peering" {
   name                 = "VNet1-to-VNet2"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
+  address_prefixes     = var.ip_range
   remote_virtual_network_id = azurerm_virtual_network.migration.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
@@ -79,7 +80,7 @@ resource "azurerm_virtual_network_peering" "migration_to_peering" {
 
 resource "azurerm_virtual_network_peering" "peering_to_migration" {
   name                 = "VNet2-to-VNet2"
-  resource_group_name  = azurerm_resource_group.darts_peer_resource_group.name
+  resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
   virtual_network_name = azurerm_virtual_network.peerVN.name
   remote_virtual_network_id = azurerm_virtual_network.peerVN.id
   allow_virtual_network_access = true
@@ -91,6 +92,7 @@ resource "azurerm_route_table" "peering" {
   name                = "vnetToPauloAlto"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
+  tags                = var.common_tags
 }
 
 resource "azurerm_route" "route" {
