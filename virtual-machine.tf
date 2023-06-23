@@ -71,7 +71,6 @@ resource "azurerm_virtual_network_peering" "migration_to_peering" {
   name                 = "VNet1-to-VNet2"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = var.ip_range
   remote_virtual_network_id = azurerm_virtual_network.migration.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
