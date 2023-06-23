@@ -62,6 +62,13 @@ variable "ip_range"{
   type =list(string)
   default = ["10.24.239.0/26"]
 }
+variable "paloaltoProd"{
+  default = "10.11.8.36"
+}
+variable "paloaltoNonProd"{
+  default = "10.11.8.36" 
+}
+
 variable "builtFrom" {
   type = string
   default = "https://github.com/hmcts/darts-shared-infrastructure.git"

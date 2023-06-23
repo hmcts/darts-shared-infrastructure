@@ -35,6 +35,74 @@ resource "azurerm_subnet" "migration" {
   }
 }
 
+data "azurerm_resource_group" "darts_peer_resource_group" {
+    name     = format("%s-peer-%s-rg", var.product, var.env)
+}
+
+
+resource "azurerm_virtual_network" "peerVN" {
+  name                = "peer-vnet"
+  address_space       = var.ip_range
+  location            = azurerm_resource_group.darts_peer_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_peer_resource_group.name
+  tags = var.common_tags
+  lifecycle {
+    ignore_changes = [
+      address_space,
+    ]
+  }
+}
+
+resource "azurerm_subnet" "peerSubnet" {
+  name                 = "peer-subnet"
+  resource_group_name  = azurerm_resource_group.darts_peer_resource_group.name
+  virtual_network_name = azurerm_virtual_network.migration.name
+  address_prefixes     = var.ip_range
+
+   lifecycle {
+    ignore_changes = [
+      address_prefixes,
+      service_endpoints,
+    ]
+  }
+}
+
+resource "azurerm_virtual_network_peering" "migration_to_peering" {
+  name                 = "VNet1-to-VNet2"
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  virtual_network_name = azurerm_virtual_network.migration.name
+  remote_virtual_network_id = azurerm_virtual_network.migration.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic = true
+  allow_gateway_transit = false
+}
+
+resource "azurerm_virtual_network_peering" "peering_to_migration" {
+  name                 = "VNet2-to-VNet2"
+  resource_group_name  = azurerm_resource_group.darts_peer_resource_group.name
+  virtual_network_name = azurerm_virtual_network.peerVN.name
+  remote_virtual_network_id = azurerm_virtual_network.peerVN.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic = true
+  allow_gateway_transit = false
+}
+
+resource "azurerm_route_table" "peering" {
+  name                = "vnetToPauloAlto"
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group.location
+}
+
+resource "azurerm_route" "route" {
+  name                = "DefaultRoute"
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  route_table_name    = azurerm_route_table.peering.name
+  address_prefix      = var.env == "prod" ? var.paloaltoProd : var.paloaltoNonProd 
+  next_hop_type       = "VirtualNetworkGateway"
+}
+
+
+
 resource "azurerm_network_interface" "migration" {
   name                = "migration-nic"
   location            = azurerm_resource_group.darts_migration_resource_group.location
