@@ -97,7 +97,7 @@ resource "azurerm_route" "route" {
   name                = "DefaultRoute"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   route_table_name    = azurerm_route_table.peering.name
-  address_prefix      = "10.11.8.36"
+  address_prefix      = var.env == "prod" ? "10.11.8.36" :"10.11.8.36" 
   next_hop_type       = "VirtualNetworkGateway"
 }
 
