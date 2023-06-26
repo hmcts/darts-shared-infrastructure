@@ -26,6 +26,8 @@ locals {
   }
 }
 
+
+
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
@@ -59,7 +61,7 @@ resource "azurerm_subnet" "migration" {
 }
 
 data "azurerm_virtual_network" "hub-south-vnet" {
-  provider            = azurerm.hub
+  provider            = required_providers.azurerm
   name                = local.hub[var.hub].ukSouth.name
   resource_group_name = local.hub[var.hub].ukSouth.name
 }
