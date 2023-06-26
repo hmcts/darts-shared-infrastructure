@@ -26,7 +26,13 @@ locals {
   }
 }
 
-
+provider "azurerm" {
+  alias                      = "hub"
+  skip_provider_registration = "true"
+  version                    = "=3.20.0"
+  features {}
+  subscription_id            = local.hub[var.hub].subscription
+}
 
 data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
@@ -47,6 +53,7 @@ resource "azurerm_virtual_network" "migration" {
 }
 
 resource "azurerm_subnet" "migration" {
+  provider             = azurerm.hub
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
