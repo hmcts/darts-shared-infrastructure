@@ -1,3 +1,1 @@
-variable "hub" {
-    default= "hmcts-hub-prod-int"
-}
+hub= "hmcts-hub-prod-int"
