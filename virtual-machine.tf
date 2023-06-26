@@ -53,7 +53,6 @@ resource "azurerm_virtual_network" "migration" {
 }
 
 resource "azurerm_subnet" "migration" {
-  provider             = azurerm.hub
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
@@ -85,6 +84,7 @@ resource "azurerm_virtual_network_peering" "migration_to_hub" {
 }
 
 resource "azurerm_virtual_network_peering" "hub_to_migration" {
+  provider             = azurerm.hub
   name                 = "hub-to-migration"
   resource_group_name  = local.hub[var.hub].ukSouth.name
   virtual_network_name = local.hub[var.hub].ukSouth.name
