@@ -29,7 +29,7 @@ locals {
 provider "azurerm" {
   alias                      = "hub"
   skip_provider_registration = "true"
-  version                    = "=3.20.0"
+  version                    = "3.54"
   features {}
   subscription_id            = local.hub[var.hub].subscription
 }
