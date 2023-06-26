@@ -86,4 +86,5 @@ variable "application" {
 variable "admin_user"{
   default = "adminuser"
 }
+variable "hub" {}
 
