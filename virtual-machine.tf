@@ -56,9 +56,8 @@ resource "azurerm_virtual_network" "peerVN" {
 
 resource "azurerm_subnet" "peerSubnet" {
   name                 = "peer-subnet"
-
   resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
-  virtual_network_name = azurerm_virtual_network.migration.name
+  virtual_network_name = azurerm_virtual_network.peerVN.name
   address_prefixes     = var.ip_range
 
    lifecycle {
@@ -73,7 +72,7 @@ resource "azurerm_virtual_network_peering" "migration_to_peering" {
   name                 = "VNet1-to-VNet2"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  remote_virtual_network_id = azurerm_virtual_network.migration.id
+  remote_virtual_network_id = azurerm_virtual_network.peerVN.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   allow_gateway_transit = false
@@ -83,7 +82,7 @@ resource "azurerm_virtual_network_peering" "peering_to_migration" {
   name                 = "VNet2-to-VNet2"
   resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
   virtual_network_name = azurerm_virtual_network.peerVN.name
-  remote_virtual_network_id = azurerm_virtual_network.peerVN.id
+  remote_virtual_network_id = azurerm_virtual_network.migration.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   allow_gateway_transit = false

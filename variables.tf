@@ -63,10 +63,10 @@ variable "ip_range"{
   default = ["10.24.239.0/26"]
 }
 variable "paloaltoProd"{
-  default = "10.11.8.36"
+  default = "10.11.8.36/32"
 }
 variable "paloaltoNonProd"{
-  default = "10.11.8.36" 
+  default = "10.11.72.36/32" 
 }
 
 variable "builtFrom" {
