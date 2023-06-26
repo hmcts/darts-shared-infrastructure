@@ -1,1 +1,1 @@
-hub= "hmcts-hub-prod-int"
+hub= "prod"
