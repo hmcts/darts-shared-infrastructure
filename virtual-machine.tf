@@ -60,16 +60,7 @@ resource "azurerm_subnet" "migration" {
   }
 }
 
-provider "azurerm" {
-  alias                      = "hub"
-  skip_provider_registration = "true"
-  features {}
-  subscription_id            = local.hub[var.hub].subscription
-}
-
-
 data "azurerm_virtual_network" "hub-south-vnet" {
-  provider            = azurerm.hub
   name                = local.hub[var.hub].ukSouth.name
   resource_group_name = local.hub[var.hub].ukSouth.name
 }
