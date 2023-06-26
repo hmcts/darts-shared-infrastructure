@@ -57,7 +57,7 @@ resource "azurerm_subnet" "peerSubnet" {
   name                 = "peer-subnet"
 
   resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
-  virtual_network_name = azurerm_virtual_network.migration.name
+  virtual_network_name = azurerm_virtual_network.peerVN.name
   address_prefixes     = var.ip_range_2
 
    lifecycle {
