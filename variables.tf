@@ -86,5 +86,7 @@ variable "application" {
 variable "admin_user"{
   default = "adminuser"
 }
-variable "hub" {}
+variable "hub" {
+  default = "hmcts-hub-nonprodi"
+}
 
