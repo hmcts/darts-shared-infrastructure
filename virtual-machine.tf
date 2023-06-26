@@ -42,8 +42,7 @@ data "azurerm_resource_group" "darts_peer_resource_group" {
 
 resource "azurerm_virtual_network" "peerVN" {
   name                = "peer-vnet"
-  address_space       = var.ip_range
-
+  address_space       = var.ip_range_2
   location            = data.azurerm_resource_group.darts_peer_resource_group.location
   resource_group_name = data.azurerm_resource_group.darts_peer_resource_group.name
   tags = var.common_tags
@@ -58,7 +57,7 @@ resource "azurerm_subnet" "peerSubnet" {
   name                 = "peer-subnet"
   resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
   virtual_network_name = azurerm_virtual_network.peerVN.name
-  address_prefixes     = var.ip_range
+  address_prefixes     = var.ip_range_2
 
    lifecycle {
     ignore_changes = [
