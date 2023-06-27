@@ -13,7 +13,7 @@ module "darts_redis" {
 
 resource "azurerm_key_vault_secret" "redis_connection_string" {
   name         = "redis-connection-string"
-  value        = "redis://ignore:${urlencode(module.darts_redis.access_key)}@${module.darts_redis.host_name}:${module.darts_redis.redis_port}?tls=true"
+  value        = "rediss://:${urlencode(module.darts_redis.access_key)}@${module.darts_redis.host_name}:${module.darts_redis.redis_port}?tls=true"
 
   key_vault_id = module.darts_key_vault.key_vault_id
 }
