@@ -1,6 +1,37 @@
 locals {
   vault_name = "${var.product}-migration-${var.env}"
   rg_name    = "${var.product}-migration-${var.env}-rg"
+  hub = {
+    nonprod = {
+      subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
+      ukSouth = {
+        name = "hmcts-hub-nonprodi"
+        next_hop_ip = "10.11.72.36"
+      }
+    }
+    sbox = {
+      subscription = "ea3a8c1e-af9d-4108-bc86-a7e2d267f49c"
+      ukSouth = {
+        name = "hmcts-hub-sbox-int"
+        next_hop_ip = "10.10.200.36"
+      }
+    }
+    prod = {
+      subscription = "0978315c-75fe-4ada-9d11-1eb5e0e0b214"
+      ukSouth = {
+        name = "hmcts-hub-prod-int"
+        next_hop_ip = "10.11.8.36"
+      }
+    }
+  }
+}
+
+provider "azurerm" {
+  alias                      = "hub"
+  skip_provider_registration = "true"
+  version                    = "3.54"
+  features {}
+  subscription_id            = local.hub[var.hub].subscription
 }
 
 data "azurerm_resource_group" "darts_resource_migration_group" {
@@ -35,52 +66,28 @@ resource "azurerm_subnet" "migration" {
   }
 }
 
-data "azurerm_resource_group" "darts_peer_resource_group" {
-    name     = format("%s-peer-%s-rg", var.product, var.env)
+data "azurerm_virtual_network" "hub-south-vnet" {
+  provider            = azurerm.hub
+  name                = local.hub[var.hub].ukSouth.name
+  resource_group_name = local.hub[var.hub].ukSouth.name
 }
 
 
-resource "azurerm_virtual_network" "peerVN" {
-  name                = "peer-vnet"
-  address_space       = var.ip_range_2
-  location            = data.azurerm_resource_group.darts_peer_resource_group.location
-  resource_group_name = data.azurerm_resource_group.darts_peer_resource_group.name
-  tags = var.common_tags
-  lifecycle {
-    ignore_changes = [
-      address_space,
-    ]
-  }
-}
-
-resource "azurerm_subnet" "peerSubnet" {
-  name                 = "peer-subnet"
-  resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
-  virtual_network_name = azurerm_virtual_network.peerVN.name
-  address_prefixes     = var.ip_range_2
-
-   lifecycle {
-    ignore_changes = [
-      address_prefixes,
-      service_endpoints,
-    ]
-  }
-}
-
-resource "azurerm_virtual_network_peering" "migration_to_peering" {
-  name                 = "VNet1-to-VNet2"
+resource "azurerm_virtual_network_peering" "migration_to_hub" {
+  name                 = "migration-to-hub"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  remote_virtual_network_id = azurerm_virtual_network.peerVN.id
+  remote_virtual_network_id = data.azurerm_virtual_network.hub-south-vnet.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   allow_gateway_transit = false
 }
 
-resource "azurerm_virtual_network_peering" "peering_to_migration" {
-  name                 = "VNet2-to-VNet2"
-  resource_group_name  = data.azurerm_resource_group.darts_peer_resource_group.name
-  virtual_network_name = azurerm_virtual_network.peerVN.name
+resource "azurerm_virtual_network_peering" "hub_to_migration" {
+  provider             = azurerm.hub
+  name                 = "hub-to-migration"
+  resource_group_name  = local.hub[var.hub].ukSouth.name
+  virtual_network_name = local.hub[var.hub].ukSouth.name
   remote_virtual_network_id = azurerm_virtual_network.migration.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true

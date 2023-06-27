@@ -60,7 +60,7 @@ variable "sa_account_replication_type" {
 }
 variable "ip_range"{
   type =list(string)
-  default = ["10.24.239.0/26"]
+  default = ["10.24.239.0/28"]
 }
 variable "ip_range_2"{
   type =list(string)
@@ -86,4 +86,5 @@ variable "application" {
 variable "admin_user"{
   default = "adminuser"
 }
+variable "hub" {}
 
