@@ -56,7 +56,7 @@ resource "azurerm_subnet" "migration" {
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = var.ip_range
+  address_prefixes     = var.env == "prod" ? var.ip_range : var.ip_range_2
 
    lifecycle {
     ignore_changes = [
