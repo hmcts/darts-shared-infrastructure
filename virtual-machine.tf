@@ -41,7 +41,7 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
 
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
-  address_space       = var.ip_range
+  address_space       = var.env == "prod" ? var.ip_range : var.ip_range_2
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags = var.common_tags
