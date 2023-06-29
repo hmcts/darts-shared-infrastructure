@@ -72,7 +72,7 @@ data "azurerm_virtual_network" "hub-south-vnet" {
 }
 
 
-resource "azurerm_virtual_network_peering" "migration_to_hub" {
+resource "azurerm_virtual_network_peering" "darts_migration_to_hub" {
   name                 = "darts-migration-to-hub"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
@@ -82,7 +82,7 @@ resource "azurerm_virtual_network_peering" "migration_to_hub" {
   allow_gateway_transit = false
 }
 
-resource "azurerm_virtual_network_peering" "hub_to_migration" {
+resource "azurerm_virtual_network_peering" "hub_to_darts_migration" {
   provider             = azurerm.hub
   name                 = "hub-to-darts-migration"
   resource_group_name  = local.hub[var.hub].ukSouth.name
