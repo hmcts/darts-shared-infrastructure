@@ -72,6 +72,7 @@ data "azurerm_virtual_network" "hub-south-vnet" {
 }
 
 
+
 resource "azurerm_virtual_network_peering" "darts_migration_to_hub" {
   name                 = "darts-migration-to-hub"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
