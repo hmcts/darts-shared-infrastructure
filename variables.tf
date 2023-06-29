@@ -62,10 +62,7 @@ variable "ip_range"{
   type =list(string)
   default = ["10.24.239.0/28"]
 }
-variable "ip_range_2"{
-  type =list(string)
-  default = ["10.24.239.48/28"]
-}
+
 variable "paloaltoProd"{
   default = "10.11.8.36/32"
 }
@@ -87,4 +84,6 @@ variable "admin_user"{
   default = "adminuser"
 }
 variable "hub" {}
+
+variable "address_space" {}
 
