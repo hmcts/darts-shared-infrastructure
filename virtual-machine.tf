@@ -125,60 +125,60 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
 #   }
 # }
 
-resource "azurerm_managed_disk" "migration_os" {
-  name                 = "migration-osdisk"
-  location             = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
-  storage_account_type = "Standard_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = "20"
-  tags = var.common_tags
-}
+# resource "azurerm_managed_disk" "migration_os" {
+#   name                 = "migration-osdisk"
+#   location             = azurerm_resource_group.darts_migration_resource_group.location
+#   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+#   storage_account_type = "Standard_LRS"
+#   create_option        = "Empty"
+#   disk_size_gb         = "20"
+#   tags = var.common_tags
+# }
 
-resource "azurerm_managed_disk" "migration_data" {
-  name                 = "migration-datadisk"
-  location             = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
-  storage_account_type = "Standard_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = "200"
-  tags = var.common_tags
-}
+# resource "azurerm_managed_disk" "migration_data" {
+#   name                 = "migration-datadisk"
+#   location             = azurerm_resource_group.darts_migration_resource_group.location
+#   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+#   storage_account_type = "Standard_LRS"
+#   create_option        = "Empty"
+#   disk_size_gb         = "200"
+#   tags = var.common_tags
+# }
 
-resource "azurerm_linux_virtual_machine" "migration" {
-  name                  = "migration-vm"
-  location              = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
-  network_interface_ids = [azurerm_network_interface.migration.id]
-  size                  = "Standard_D8ds_v5"
-  tags                  = var.common_tags
-  admin_username        = var.admin_user
-  admin_password        = random_password.password.result
-  disable_password_authentication = false
+# resource "azurerm_linux_virtual_machine" "migration" {
+#   name                  = "migration-vm"
+#   location              = azurerm_resource_group.darts_migration_resource_group.location
+#   resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
+#   network_interface_ids = [azurerm_network_interface.migration.id]
+#   size                  = "Standard_D8ds_v5"
+#   tags                  = var.common_tags
+#   admin_username        = var.admin_user
+#   admin_password        = random_password.password.result
+#   disable_password_authentication = false
 
-  os_disk {
-    caching           = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
+#   os_disk {
+#     caching           = "ReadWrite"
+#     storage_account_type = "Standard_LRS"
+#   }
 
-  source_image_reference {
-    publisher = "canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
-    version   = "latest"
-  }
-  identity {
-    type = "SystemAssigned"
-  }
+#   source_image_reference {
+#     publisher = "canonical"
+#     offer     = "0001-com-ubuntu-server-jammy"
+#     sku       = "22_04-lts-gen2"
+#     version   = "latest"
+#   }
+#   identity {
+#     type = "SystemAssigned"
+#   }
 
-}
+# }
   
-resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
-  managed_disk_id    = azurerm_managed_disk.migration_data.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration.id
-  lun                = "10"
-  caching            = "ReadWrite"
-}
+# resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
+#   managed_disk_id    = azurerm_managed_disk.migration_data.id
+#   virtual_machine_id = azurerm_linux_virtual_machine.migration.id
+#   lun                = "10"
+#   caching            = "ReadWrite"
+# }
 
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
