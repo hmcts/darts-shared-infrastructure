@@ -39,75 +39,75 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
 }
 
 
-resource "azurerm_virtual_network" "migration" {
-  name                = "migration-vnet"
-  address_space       =  [var.address_space]
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  tags = var.common_tags
-  lifecycle {
-    ignore_changes = [
-      address_space,
-    ]
-  }
-}
+# resource "azurerm_virtual_network" "migration" {
+#   name                = "migration-vnet"
+#   address_space       =  [var.address_space]
+#   location            = azurerm_resource_group.darts_migration_resource_group.location
+#   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+#   tags = var.common_tags
+#   lifecycle {
+#     ignore_changes = [
+#       address_space,
+#     ]
+#   }
+# }
 
-resource "azurerm_subnet" "migration" {
-  name                 = "migration-subnet"
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
-  virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = [var.address_space]
+# resource "azurerm_subnet" "migration" {
+#   name                 = "migration-subnet"
+#   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+#   virtual_network_name = azurerm_virtual_network.migration.name
+#   address_prefixes     = [var.address_space]
 
-   lifecycle {
-    ignore_changes = [
-      address_prefixes,
-      service_endpoints,
-    ]
-  }
-}
+#    lifecycle {
+#     ignore_changes = [
+#       address_prefixes,
+#       service_endpoints,
+#     ]
+#   }
+# }
 
-data "azurerm_virtual_network" "hub-south-vnet" {
-  provider            = azurerm.hub
-  name                = local.hub[var.hub].ukSouth.name
-  resource_group_name = local.hub[var.hub].ukSouth.name
-}
+# data "azurerm_virtual_network" "hub-south-vnet" {
+#   provider            = azurerm.hub
+#   name                = local.hub[var.hub].ukSouth.name
+#   resource_group_name = local.hub[var.hub].ukSouth.name
+# }
 
 
-resource "azurerm_virtual_network_peering" "migration_to_hub" {
-  name                 = "migration-to-hub"
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
-  virtual_network_name = azurerm_virtual_network.migration.name
-  remote_virtual_network_id = data.azurerm_virtual_network.hub-south-vnet.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  allow_gateway_transit = false
-}
+# resource "azurerm_virtual_network_peering" "migration_to_hub" {
+#   name                 = "migration-to-hub"
+#   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+#   virtual_network_name = azurerm_virtual_network.migration.name
+#   remote_virtual_network_id = data.azurerm_virtual_network.hub-south-vnet.id
+#   allow_virtual_network_access = true
+#   allow_forwarded_traffic = true
+#   allow_gateway_transit = false
+# }
 
-resource "azurerm_virtual_network_peering" "hub_to_migration" {
-  provider             = azurerm.hub
-  name                 = "hub-to-migration"
-  resource_group_name  = local.hub[var.hub].ukSouth.name
-  virtual_network_name = local.hub[var.hub].ukSouth.name
-  remote_virtual_network_id = azurerm_virtual_network.migration.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  allow_gateway_transit = false
-}
+# resource "azurerm_virtual_network_peering" "hub_to_migration" {
+#   provider             = azurerm.hub
+#   name                 = "hub-to-migration"
+#   resource_group_name  = local.hub[var.hub].ukSouth.name
+#   virtual_network_name = local.hub[var.hub].ukSouth.name
+#   remote_virtual_network_id = azurerm_virtual_network.migration.id
+#   allow_virtual_network_access = true
+#   allow_forwarded_traffic = true
+#   allow_gateway_transit = false
+# }
 
-resource "azurerm_route_table" "peering" {
-  name                = "vnetToPauloAlto"
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  tags                = var.common_tags
-}
+# resource "azurerm_route_table" "peering" {
+#   name                = "vnetToPauloAlto"
+#   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+#   location            = azurerm_resource_group.darts_migration_resource_group.location
+#   tags                = var.common_tags
+# }
 
-resource "azurerm_route" "route" {
-  name                = "DefaultRoute"
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  route_table_name    = azurerm_route_table.peering.name
-  address_prefix      = var.env == "prod" ? var.paloaltoProd : var.paloaltoNonProd 
-  next_hop_type       = "VirtualNetworkGateway"
-}
+# resource "azurerm_route" "route" {
+#   name                = "DefaultRoute"
+#   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+#   route_table_name    = azurerm_route_table.peering.name
+#   address_prefix      = var.env == "prod" ? var.paloaltoProd : var.paloaltoNonProd 
+#   next_hop_type       = "VirtualNetworkGateway"
+# }
 
 
 
