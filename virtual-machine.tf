@@ -38,7 +38,6 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
     name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 
-
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
   address_space       =  [var.address_space]
@@ -172,13 +171,14 @@ resource "azurerm_linux_virtual_machine" "migration" {
   }
 
 }
+
   
-resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
-  managed_disk_id    = azurerm_managed_disk.migration_data.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration.id
-  lun                = "10"
-  caching            = "ReadWrite"
-}
+ resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
+   managed_disk_id    = azurerm_managed_disk.migration_data.id
+   virtual_machine_id = azurerm_linux_virtual_machine.migration.id
+   lun                = "10"
+   caching            = "ReadWrite"
+ }
 
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
