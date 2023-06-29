@@ -73,7 +73,7 @@ data "azurerm_virtual_network" "hub-south-vnet" {
 
 
 resource "azurerm_virtual_network_peering" "migration_to_hub" {
-  name                 = "migration-to-hub"
+  name                 = "darts-migration-to-hub"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   remote_virtual_network_id = data.azurerm_virtual_network.hub-south-vnet.id
@@ -84,7 +84,7 @@ resource "azurerm_virtual_network_peering" "migration_to_hub" {
 
 resource "azurerm_virtual_network_peering" "hub_to_migration" {
   provider             = azurerm.hub
-  name                 = "hub-to-migration"
+  name                 = "hub-to-darts-migration"
   resource_group_name  = local.hub[var.hub].ukSouth.name
   virtual_network_name = local.hub[var.hub].ukSouth.name
   remote_virtual_network_id = azurerm_virtual_network.migration.id
