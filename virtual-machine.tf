@@ -111,6 +111,7 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
 
 
 
+
 resource "azurerm_network_interface" "migration" {
   name                = "migration-nic"
   location            = azurerm_resource_group.darts_migration_resource_group.location
