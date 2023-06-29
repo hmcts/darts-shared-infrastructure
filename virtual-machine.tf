@@ -112,18 +112,18 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
 
 
 
-resource "azurerm_network_interface" "migration" {
-  name                = "migration-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  tags = var.common_tags
+# resource "azurerm_network_interface" "migration" {
+#   name                = "migration-nic"
+#   location            = azurerm_resource_group.darts_migration_resource_group.location
+#   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+#   tags = var.common_tags
 
-  ip_configuration {
-    name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.migration.id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
+#   ip_configuration {
+#     name                          = "migration-ipconfig"
+#     subnet_id                     = azurerm_subnet.migration.id
+#     private_ip_address_allocation = "Dynamic"
+#   }
+# }
 
 resource "azurerm_managed_disk" "migration_os" {
   name                 = "migration-osdisk"
