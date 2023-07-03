@@ -63,12 +63,6 @@ variable "ip_range"{
   default = ["10.24.239.0/28"]
 }
 
-variable "paloaltoProd"{
-  default = "10.11.8.36/32"
-}
-variable "paloaltoNonProd"{
-  default = "10.11.72.36/32" 
-}
 
 variable "builtFrom" {
   type = string
@@ -87,3 +81,4 @@ variable "hub" {}
 
 variable "address_space" {}
 
+variable "paloAddress" {}

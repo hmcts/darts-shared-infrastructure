@@ -104,11 +104,15 @@ resource "azurerm_route" "route" {
   name                = "DefaultRoute"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   route_table_name    = azurerm_route_table.peering.name
-  address_prefix      = var.env == "prod" ? var.paloaltoProd : var.paloaltoNonProd 
-  next_hop_type       = "VirtualNetworkGateway"
+  address_prefix      = "0.0.0.0/0"
+  next_hop_type       = "VirtualAppliance"
+  next_hop_in_ip_address = "10.11.72.36"
 }
 
-
+resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
+  subnet_id      = azurerm_subnet.migration.id
+  route_table_id = azurerm_route_table.peering.id
+}
 
 
 resource "azurerm_network_interface" "migration" {
