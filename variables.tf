@@ -80,5 +80,3 @@ variable "admin_user"{
 variable "hub" {}
 
 variable "address_space" {}
-
-variable "paloAddress" {}
