@@ -107,7 +107,7 @@ resource "azurerm_route" "route" {
   address_prefix      = "0.0.0.0/0"
   next_hop_type       = "VirtualAppliance"
   next_hop_in_ip_address =  local.hub[var.hub].ukSouth.next_hop_ip
-
+}
 
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   subnet_id      = azurerm_subnet.migration.id
