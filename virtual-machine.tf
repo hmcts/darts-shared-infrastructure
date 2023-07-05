@@ -184,15 +184,16 @@ resource "azurerm_linux_virtual_machine" "migration" {
    caching            = "ReadWrite"
  }
 
-resource "azurerm_virtual_machine_extension" "bastion_aad" {
+resource "azurerm_virtual_machine_extension" "migration_aad" {
   name                       = "AADSSHLoginForLinux"
-  virtual_machine_id         = azurerm_linux_virtual_machine.migration-vm.id
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
   tags                       = var.common_tags
 }
+
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
   value        = random_password.password.result
