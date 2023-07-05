@@ -81,12 +81,12 @@ variable "hub" {}
 
 variable "address_space" {}
 
-variable "aad_role_def_id_admin" {
-  description = "The role definition ID for Virtual Machine Administrator Login"
-  type        = string
+variable "virtual_machine_admins" {
+  description = "List of pricipal IDs for the virtual machine administrators."
+  type = list(string)
 }
 
-variable "aad_role_def_id_user" {
-  description = "The role definition ID for Virtual Machine User Login"
-  type        = string
+variable "virtual_machine_users" {
+  description = "List of pricipal IDs for the virtual machine users."
+  type = list(string)
 }
