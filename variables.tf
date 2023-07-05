@@ -80,3 +80,13 @@ variable "admin_user"{
 variable "hub" {}
 
 variable "address_space" {}
+
+variable "aad_role_def_id_admin" {
+  description = "The role definition ID for Virtual Machine Administrator Login"
+  type        = string
+}
+
+variable "aad_role_def_id_user" {
+  description = "The role definition ID for Virtual Machine User Login"
+  type        = string
+}
