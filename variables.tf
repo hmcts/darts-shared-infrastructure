@@ -80,3 +80,13 @@ variable "admin_user"{
 variable "hub" {}
 
 variable "address_space" {}
+
+variable "virtual_machine_admins" {
+  description = "List of pricipal IDs for the virtual machine administrators."
+  type = list(string)
+}
+
+variable "virtual_machine_users" {
+  description = "List of pricipal IDs for the virtual machine users."
+  type = list(string)
+}
