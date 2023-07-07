@@ -165,9 +165,9 @@ resource "azurerm_linux_virtual_machine" "migration" {
   }
 
   source_image_reference {
-    publisher = "canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
+    publisher = "RedHat"
+    offer     = "RHEL"
+    sku       = "88-gen2"
     version   = "latest"
   }
   identity {
