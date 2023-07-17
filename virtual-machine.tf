@@ -199,3 +199,46 @@ resource "azurerm_key_vault_secret" "os_profile_password" {
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
+
+resource "azurerm_network_interface" "assessment" {
+  name                = "assessment-nic"
+  location            = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  tags = var.common_tags
+
+  ip_configuration {
+    name                          = "assessment-ipconfig"
+    subnet_id                     = azurerm_subnet.migration.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+
+resource "azurerm_windows_virtual_machine" "assessment_windows" {
+
+  name                = "assessment-windows"
+  location              = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
+  size                  = "Standard_D8ds_v5"
+  tags                  = var.common_tags
+  admin_username        = var.admin_user
+  admin_password        = random_password.password.result
+  provision_vm_agent = true
+
+  network_interface_ids = [
+    azurerm_network_interface.assessment.id,
+  ]
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+    name                 = "Windows-Assesment-OsDisk"
+  }
+
+  source_image_reference {
+    publisher = "microsoftwindowsdesktop"
+    offer     = "windows-11"
+    sku       = "win11-21h2-pro"
+    version   = "latest"
+  }
+
+}
