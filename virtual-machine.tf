@@ -158,7 +158,6 @@ resource "azurerm_linux_virtual_machine" "migration" {
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
   disable_password_authentication = false
-  computer_name         = "winAssessment" 
 
   os_disk {
     caching           = "ReadWrite"
@@ -225,7 +224,7 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
   provision_vm_agent = true
-
+  computer_name         = "winAssessment" 
   network_interface_ids = [
     azurerm_network_interface.assessment.id,
   ]
