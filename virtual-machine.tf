@@ -224,7 +224,7 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
   provision_vm_agent = true
-
+  computer_name         = "winAssessment" 
   network_interface_ids = [
     azurerm_network_interface.assessment.id,
   ]
