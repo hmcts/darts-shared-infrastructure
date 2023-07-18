@@ -119,7 +119,7 @@ resource "azurerm_subnet" "firewall_subnet" {
   name                 = "firewall-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = [var.address_space_2]
+  address_prefixes     = [var.firewall_address_space]
 
    lifecycle {
     ignore_changes = [
@@ -129,15 +129,29 @@ resource "azurerm_subnet" "firewall_subnet" {
   }
 }
 
+
+resource "azurerm_public_ip" "firewall_public_ip" {
+  name                = "hub-${var.environment_tag}-firewall-pip"
+  location            = var.location
+  resource_group_name =  azurerm_resource_group.soc.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+
+  tags = {
+    environment = var.environment_tag
+  }
+}
+
+
 resource "azurerm_firewall" "migration_firewall" {
-  name                = "migration-firewall"
+  name                = "darts-migration-firewall-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags = var.common_tags
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.firewall_subnet.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_id = azurerm_public_ip.firewall_public_ip.id
   }
 
 

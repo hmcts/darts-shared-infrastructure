@@ -81,7 +81,7 @@ variable "hub" {}
 
 variable "address_space" {}
 
-variable "address_space_2" {}
+variable "firewall_address_space" {}
 
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
