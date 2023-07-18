@@ -133,16 +133,14 @@ resource "azurerm_firewall" "migration_firewall" {
   name                = "migration-firewall"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-
+  tags = var.common_tags
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.firewall_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
 
-  tags = {
-    environment = var.environment_tag
-  }
+
 }
 
 resource "azurerm_network_interface" "migration" {
