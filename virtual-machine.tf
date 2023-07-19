@@ -137,6 +137,7 @@ resource "azurerm_public_ip" "firewall_public_ip" {
   allocation_method   = "Static"
   sku                 = "Standard"
   tags = var.common_tags
+
 }
 
 
@@ -145,10 +146,12 @@ resource "azurerm_firewall" "migration_firewall" {
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags = var.common_tags
+  sku_name            = "AZFW_VNet"
+  sku_tier            = "Premium"
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.firewall_subnet.id
-    private_ip_address_id = azurerm_public_ip.firewall_public_ip.id
+    public_ip_address_id = azurerm_public_ip.firewall_public_ip.id
   }
 
 
