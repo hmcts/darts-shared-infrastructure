@@ -132,14 +132,11 @@ resource "azurerm_subnet" "firewall_subnet" {
 
 resource "azurerm_public_ip" "firewall_public_ip" {
   name                = "hub-${var.environment_tag}-firewall-pip"
-  location            = var.location
-  resource_group_name =  azurerm_resource_group.soc.name
+  location            = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name =  azurerm_resource_group.darts_migration_resource_group.name
   allocation_method   = "Static"
   sku                 = "Standard"
-
-  tags = {
-    environment = var.environment_tag
-  }
+  tags = var.common_tags
 }
 
 
