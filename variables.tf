@@ -58,14 +58,14 @@ variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
 }
-variable "ip_range"{
-  type =list(string)
+variable "ip_range" {
+  type    = list(string)
   default = ["10.24.239.0/28"]
 }
 
 
 variable "builtFrom" {
-  type = string
+  type    = string
   default = "https://github.com/hmcts/darts-shared-infrastructure.git"
 }
 variable "businessArea" {
@@ -74,7 +74,7 @@ variable "businessArea" {
 variable "application" {
   default = "core"
 }
-variable "admin_user"{
+variable "admin_user" {
   default = "adminuser"
 }
 variable "hub" {}
@@ -85,10 +85,75 @@ variable "firewall_address_space" {}
 
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
-  type = list(string)
+  type        = list(string)
 }
 
 variable "virtual_machine_users" {
   description = "List of pricipal IDs for the virtual machine users."
-  type = list(string)
+  type        = list(string)
+}
+
+variable "firewall_policy_priority" {
+  description = "The priority of the firewall policy."
+  type        = number
+  default     = 100
+}
+
+variable "firewall_application_rules" {
+  type = map(object({
+    action   = string
+    priority = number
+    rules = optional(map(object({
+      description = optional(string)
+      protocols = list(object({
+        port = number
+        type = string
+      }))
+      source_addresses      = optional(list(string), [])
+      destination_addresses = optional(list(string), [])
+      source_ip_groups      = optional(list(string), [])
+      destination_fqdns     = optional(list(string), [])
+    })), {})
+  }))
+  description = "Map of firewall application rule collections to create with any number of related rules."
+  default     = {}
+}
+
+variable "firewall_network_rules" {
+  type = map(object({
+    name     = string
+    action   = string
+    priority = number
+    rules = optional(map(object({
+      protocols             = list(string)
+      source_addresses      = optional(list(string), [])
+      source_ip_groups      = optional(list(string), [])
+      destination_addresses = optional(list(string), [])
+      destination_ip_groups = optional(list(string), [])
+      destination_fqdns     = optional(list(string), [])
+      destination_ports     = list(string)
+    })), {})
+  }))
+  description = "Map of firewall network rule collections to create with any number of related rules."
+  default     = {}
+}
+
+variable "firewall_nat_rules" {
+  type = map(object({
+    name     = string
+    action   = string
+    priority = number
+    rules = optional(map(object({
+      protocols           = list(string)
+      source_addresses    = optional(list(string), [])
+      source_ip_groups    = optional(list(string), [])
+      destination_address = optional(string)
+      destination_ports   = optional(list(string), [])
+      translated_address  = optional(string)
+      translated_fqdn     = optional(string)
+      translated_port     = number
+    })), {})
+  }))
+  description = "Map of firewall NAT rule collections to create with any number of related rules."
+  default     = {}
 }

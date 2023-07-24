@@ -1,30 +1,6 @@
-locals {
-  storage_account_name = "${var.product}sa${var.env}"
-  containers = [{
-    name        = "darts-outbound"
-    access_type = "private"
-    },
-    {
-      name        = "darts-unstructured"
-      access_type = "private"
-    },
-    {
-      name        = local.darts_inbound_container
-      access_type = "private"
-    },
-    {
-      name        = local.darts_container_name
-      access_type = "container"
-  }]
-  darts_container_name = "darts-st-container"
-  darts_inbound_container ="darts-inbound-container"
-}
-
 data "azurerm_resource_group" "darts_resource_group" {
   name = format("%s-%s-rg", var.product, var.env)
 }
-
-
 
 module "sa" {
   source = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
