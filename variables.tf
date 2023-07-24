@@ -121,7 +121,6 @@ variable "firewall_application_rules" {
 
 variable "firewall_network_rules" {
   type = map(object({
-    name     = string
     action   = string
     priority = number
     rules = optional(map(object({
@@ -140,7 +139,6 @@ variable "firewall_network_rules" {
 
 variable "firewall_nat_rules" {
   type = map(object({
-    name     = string
     action   = string
     priority = number
     rules = optional(map(object({
