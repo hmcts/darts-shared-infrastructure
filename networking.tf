@@ -49,7 +49,7 @@ resource "azurerm_virtual_network_peering" "hub_to_darts_migration" {
 }
 
 resource "azurerm_route_table" "route_table" {
-  name                = "darts-migration-rg-${var.env}"
+  name                = "darts-migration-rt-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
   tags                = var.common_tags
