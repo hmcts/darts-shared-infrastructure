@@ -147,7 +147,7 @@ resource "azurerm_firewall" "migration_firewall" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags = var.common_tags
   sku_name            = "AZFW_VNet"
-  sku_tier            = "Premium"
+  sku_tier            = "Standard"
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.firewall_subnet.id
