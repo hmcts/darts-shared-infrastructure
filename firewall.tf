@@ -33,7 +33,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules
   name               = "darts-migration-fwpolicyrules-${var.env}"
   firewall_policy_id = azurerm_firewall_policy.migration_policy.id
   priority           = var.firewall_policy_priority
-  tags               = var.common_tags
 
   dynamic "application_rule_collection" {
     for_each = var.firewall_application_rules
