@@ -40,7 +40,7 @@ data "azurerm_resource_group" "darts_resource_migration_group" {
 
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
-  address_space       =  [var.address_space, var.var.firewall_address_space]
+  address_space       =  [var.address_space, var.firewall_address_space]
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags = var.common_tags
