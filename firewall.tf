@@ -1,3 +1,12 @@
+resource "azurerm_public_ip" "firewall_public_ip" {
+  name                = "firewall-pip-${var.env}"
+  location            = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  tags                = var.common_tags
+}
+
 resource "azurerm_firewall" "migration_firewall" {
   name                = "darts-migration-firewall-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -7,8 +16,9 @@ resource "azurerm_firewall" "migration_firewall" {
   sku_tier            = "Standard"
 
   ip_configuration {
-    name      = "configuration"
-    subnet_id = azurerm_subnet.firewall_subnet.id
+    name                 = "configuration"
+    subnet_id            = azurerm_subnet.firewall_subnet.id
+    public_ip_address_id = azurerm_public_ip.firewall_public_ip.id
   }
 }
 
