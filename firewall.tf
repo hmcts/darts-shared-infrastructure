@@ -26,12 +26,14 @@ resource "azurerm_firewall_policy" "migration_policy" {
   name                = "darts-migration-policy-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
+  tags                = var.common_tags
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules" {
   name               = "darts-migration-fwpolicyrules-${var.env}"
   firewall_policy_id = azurerm_firewall_policy.migration_policy.id
   priority           = var.firewall_policy_priority
+  tags               = var.common_tags
 
   dynamic "application_rule_collection" {
     for_each = var.firewall_application_rules
