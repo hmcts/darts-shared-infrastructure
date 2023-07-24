@@ -81,6 +81,8 @@ variable "hub" {}
 
 variable "address_space" {}
 
+variable "firewall_address_space" {}
+
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
   type = list(string)
