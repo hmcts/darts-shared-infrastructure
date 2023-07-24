@@ -111,7 +111,7 @@ resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
 
 
 resource "azurerm_subnet" "firewall_subnet" {
-  name                 = "firewall-subnet"
+  name                 = "AzureFirewallSubnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = [var.firewall_address_space]
