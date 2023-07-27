@@ -155,3 +155,9 @@ variable "firewall_nat_rules" {
   description = "Map of firewall NAT rule collections to create with any number of related rules."
   default     = {}
 }
+
+variable "az_firewall_route_ranges" {
+  type        = list(string)
+  description = "List of IP ranges to route through the firewall."
+  default     = ["10.100.209.177/32", "10.100.209.178/32", "10.23.253.177/32", "10.23.253.178/32"]
+}
