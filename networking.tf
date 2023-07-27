@@ -65,7 +65,7 @@ resource "azurerm_route" "route" {
 }
 
 resource "azurerm_route" "azure_firewall_routes" {
-  for_each = { for key, value in var.az_firewall_route_ranges : key => value }
+  for_each = toset(var.az_firewall_route_ranges)
 
   name                   = "azure_firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
   resource_group_name    = azurerm_resource_group.darts_migration_resource_group.name
