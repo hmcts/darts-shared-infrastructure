@@ -40,7 +40,7 @@ resource "azurerm_firewall_policy" "migration_policy" {
   tags                = var.common_tags
 
   dynamic "insights" {
-    count = var.firewall_log_analytics_enabled ? 1 : 0
+    for_each = var.firewall_log_analytics_enabled ? [0] : []
     content {
       enabled                            = true
       default_log_analytics_workspace_id = azurerm_log_analytics_workspace.firewall_log_analytics[0].id
