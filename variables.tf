@@ -161,3 +161,9 @@ variable "az_firewall_route_ranges" {
   description = "List of IP ranges to route through the firewall."
   default     = ["10.100.209.177/32", "10.100.209.178/32", "10.23.253.177/32", "10.23.253.178/32"]
 }
+
+variable "firewall_log_analytics_enabled" {
+  type        = bool
+  description = "Enable firewall logging to log analytics."
+  default     = false
+}
