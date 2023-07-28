@@ -46,7 +46,7 @@ resource "azurerm_firewall_policy" "migration_policy" {
       default_log_analytics_workspace_id = azurerm_log_analytics_workspace.firewall_log_analytics[0].id
       log_analytics_workspace {
         id                = azurerm_log_analytics_workspace.firewall_log_analytics[0].id
-        firewall_location = azurerm_firewall.migration_firewall.location
+        firewall_location = azurerm_resource_group.darts_migration_resource_group.location
       }
     }
   }
