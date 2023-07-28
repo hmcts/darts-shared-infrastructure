@@ -13,7 +13,7 @@ resource "azurerm_log_analytics_workspace" "firewall_log_analytics" {
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   sku                 = "PerGB2018"
-  retention_in_days   = 7
+  retention_in_days   = 30
   daily_quota_gb      = 5
   tags                = var.common_tags
 }
