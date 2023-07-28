@@ -14,6 +14,7 @@ resource "azurerm_firewall" "migration_firewall" {
   tags                = var.common_tags
   sku_name            = "AZFW_VNet"
   sku_tier            = "Standard"
+  firewall_policy_id  = azurerm_firewall_policy.migration_policy.id
 
   ip_configuration {
     name                 = "configuration"
