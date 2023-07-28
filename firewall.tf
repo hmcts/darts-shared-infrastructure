@@ -7,6 +7,16 @@ resource "azurerm_public_ip" "firewall_public_ip" {
   tags                = var.common_tags
 }
 
+resource "azurerm_log_analytics_workspace" "firewall_log_analytics" {
+  count               = var.firewall_log_analytics_enabled ? 1 : 0
+  name                = "darts-migration-log-analytics-${var.env}"
+  location            = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  sku                 = "Free"
+  retention_in_days   = 7
+  daily_quota_gb      = 0.5
+}
+
 resource "azurerm_firewall" "migration_firewall" {
   name                = "darts-migration-firewall-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -28,6 +38,18 @@ resource "azurerm_firewall_policy" "migration_policy" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
   tags                = var.common_tags
+
+  dynamic "insights" {
+    count = var.firewall_log_analytics_enabled ? 1 : 0
+    content {
+      enabled                            = true
+      default_log_analytics_workspace_id = azurerm_log_analytics_workspace.firewall_log_analytics[0].id
+      log_analytics_workspace {
+        id                = azurerm_log_analytics_workspace.firewall_log_analytics[0].id
+        firewall_location = azurerm_firewall.migration_firewall.location
+      }
+    }
+  }
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules" {
