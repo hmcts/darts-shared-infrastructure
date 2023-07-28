@@ -12,9 +12,9 @@ resource "azurerm_log_analytics_workspace" "firewall_log_analytics" {
   name                = "darts-migration-log-analytics-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  sku                 = "Free"
+  sku                 = "PerGB2018"
   retention_in_days   = 7
-  daily_quota_gb      = 0.5
+  daily_quota_gb      = 5
   tags                = var.common_tags
 }
 
