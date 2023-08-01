@@ -64,6 +64,17 @@ resource "azurerm_route" "route" {
   next_hop_in_ip_address = local.hub[var.hub].ukSouth.next_hop_ip
 }
 
+resource "azurerm_route" "azure_firewall_routes" {
+  for_each = toset(var.az_firewall_route_ranges)
+
+  name                   = "azure_firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
+  resource_group_name    = azurerm_resource_group.darts_migration_resource_group.name
+  route_table_name       = azurerm_route_table.route_table.name
+  address_prefix         = each.value
+  next_hop_type          = "VirtualAppliance"
+  next_hop_in_ip_address = azurerm_firewall.migration_firewall.ip_configuration[0].private_ip_address
+}
+
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   subnet_id      = azurerm_subnet.migration.id
   route_table_id = azurerm_route_table.route_table.id

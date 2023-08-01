@@ -5,7 +5,7 @@ virtual_machine_users  = []
 firewall_address_space = "10.24.239.128/26"
 
 firewall_network_rules = {
-  darts-migration-stg = {
+  darts-migration-prod = {
     action   = "Allow"
     priority = 100
     rules = {
@@ -36,3 +36,5 @@ firewall_network_rules = {
     }
   }
 }
+
+firewall_log_analytics_enabled = true
