@@ -3,7 +3,7 @@ data "azurerm_resource_group" "darts_migration_resource_group" {
 }
 
 
-module "sa" {
+module "sa-migration" {
   source = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
 
   env = var.env
