@@ -24,7 +24,7 @@ resource "azurerm_firewall" "migration_firewall" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags                = var.common_tags
   sku_name            = "AZFW_VNet"
-  sku_tier            = "Standard"
+  sku_tier            = "Premium"
   firewall_policy_id  = azurerm_firewall_policy.migration_policy.id
 
   ip_configuration {
