@@ -122,9 +122,9 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
 }
 
 resource "azurerm_windows_virtual_machine" "migration_windows" {
-  count = var.vm_instance_count
+
   for_each = toset(var.windows_machines)
-  name                = "mogration-win-${count.index + 1}"
+  name                = var.windows_machines
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   size                = "Standard_D8ds_v5"
@@ -132,14 +132,14 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   admin_username      = var.admin_user
   admin_password      = random_password.password.result
   provision_vm_agent  = true
-  computer_name       = "winMigration-${count.index + 1}"
+  computer_name       = var.windows_machines
   network_interface_ids = [
     azurerm_network_interface.assessment.id,
   ]
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "Windows-Migration-OsDisk-${count.index + 1}"
+    name                 = "${var.windows_machines}-OsDisk"
   }
 
   source_image_reference {
