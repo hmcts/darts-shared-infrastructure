@@ -124,7 +124,7 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
 resource "azurerm_windows_virtual_machine" "migration_windows" {
 
   for_each = toset(var.windows_machines)
-  name                = each.value.windows_machines.default
+  name                = each.value
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   size                = "Standard_D8ds_v5"
