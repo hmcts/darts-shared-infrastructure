@@ -63,6 +63,15 @@ variable "ip_range" {
   default = ["10.24.239.0/28"]
 }
 
+variable "vm_instance_count" {
+  type    = number
+  default = 1
+}
+
+variable "windows_machines"{
+  type = list(int)
+  default = [1, 2, 3, 4, 5]
+}
 
 variable "builtFrom" {
   type    = string
