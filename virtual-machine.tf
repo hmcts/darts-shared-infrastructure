@@ -139,7 +139,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "${each.value.windows_machines.default}-OsDisk"
+    name                 = "${each.value}-OsDisk"
   }
 
   source_image_reference {
