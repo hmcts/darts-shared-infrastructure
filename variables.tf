@@ -63,12 +63,6 @@ variable "ip_range" {
   default = ["10.24.239.0/28"]
 }
 
-# variable "vm_instance_count" {
-#   type    = number
-#   default = 1
-
-# }
-
 variable "windows_machines"{
   type = list(string)
   default = ["win-migration-1", "win-migration-2", "win-migration-3", "win-migration-4", "win-migration-5"]
