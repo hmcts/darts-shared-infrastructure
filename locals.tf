@@ -1,5 +1,5 @@
 locals {
-  vault_name = "${var.product}-migration-${var.env}"
+  vault_name = "${var.product}-${var.env}"
   rg_name    = "${var.product}-migration-${var.env}-rg"
   hub = {
     nonprod = {
