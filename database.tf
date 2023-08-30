@@ -9,12 +9,7 @@ provider "azurerm" {
   subscription_id            = var.aks_subscription_id
 }
 
-locals {
-  vault_name = "${var.product}-${var.env}"
-  rg_name    = "${var.product}-${var.env}-rg"
-  db_name    = "darts"
-  db_port    = 5432
-}
+
 
 data "azurerm_resource_group" "rg" {
   name = local.rg_name
@@ -33,31 +28,31 @@ data "azurerm_key_vault" "key_vault" {
 
 
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {
-  name         = "api-POSTGRES-USER"
+  name         = "POSTGRES-USER"
   value        = module.postgresql_flexible.username
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES-PASS" {
-  name         = "api-POSTGRES-PASS"
+  name         = "POSTGRES-PASS"
   value        = module.postgresql_flexible.password
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
-  name         = "api-POSTGRES-HOST"
+  name         = "POSTGRES-HOST"
   value        = module.postgresql_flexible.fqdn
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
-  name         = "api-POSTGRES-PORT"
+  name         = "POSTGRES-PORT"
   value        = local.db_port
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
-  name         = "api-POSTGRES-DATABASE"
+  name         = "POSTGRES-DATABASE"
   value        = local.db_name
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
