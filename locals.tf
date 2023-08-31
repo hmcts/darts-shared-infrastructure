@@ -1,6 +1,7 @@
 locals {
-  vault_name = "${var.product}-migration-${var.env}"
-  rg_name    = "${var.product}-migration-${var.env}-rg"
+  vault_name = "${var.product}-${var.env}"
+  migration_vault_name = "${var.product}-migration-${var.env}"
+  rg_name    = azurerm_resource_group.darts_migration_resource_group.name
   hub = {
     nonprod = {
       subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
@@ -42,5 +43,7 @@ locals {
       access_type = "container"
   }]
   darts_container_name    = "darts-st-container"
-  darts_inbound_container = "darts-inbound-container"
+  darts_inbound_container = "darts-inbound-container"  
+  db_name    = "darts-migration"
+  db_port    = 5432
 }
