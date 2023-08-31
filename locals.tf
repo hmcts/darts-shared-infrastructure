@@ -1,6 +1,6 @@
 locals {
   vault_name = "${var.product}-${var.env}"
-  rg_name    = "${var.product}-migration-${var.env}-rg"
+  rg_name    = azurerm_resource_group.darts_migration_resource_group.name
   hub = {
     nonprod = {
       subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
