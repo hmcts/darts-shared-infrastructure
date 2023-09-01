@@ -128,7 +128,7 @@ resource "azurerm_storage_blob" "b2c_mfa_css" {
 
 resource "azurerm_role_assignment" "storage_contributors" {
   for_each             = toset(var.storage_account_contributor_ids)
-  scope                = module.sa.storaageaccount_id
+  scope                = module.sa.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
 }
