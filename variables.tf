@@ -167,3 +167,9 @@ variable "firewall_log_analytics_enabled" {
   description = "Enable firewall logging to log analytics."
   default     = false
 }
+
+variable "storage_account_contributor_ids" {
+  type        = list(string)
+  description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
+  default     = []
+}
