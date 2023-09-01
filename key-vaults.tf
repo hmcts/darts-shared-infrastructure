@@ -27,4 +27,3 @@ module "darts_migration_key_vault" {
 
   common_tags = var.common_tags
 }
-
