@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 module "darts_key_vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=fix%2Fremove-diagnostic-retention"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   name                    = format("darts-%s", var.env)
   product                 = var.product
@@ -15,7 +15,7 @@ module "darts_key_vault" {
 }
 
 module "darts_migration_key_vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=fix%2Fremove-diagnostic-retention"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   depends_on = [module.darts_key_vault]
 
