@@ -159,7 +159,7 @@ variable "firewall_nat_rules" {
 variable "az_firewall_route_ranges" {
   type        = list(string)
   description = "List of IP ranges to route through the firewall."
-  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32"]
+  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
 }
 
 variable "firewall_log_analytics_enabled" {
