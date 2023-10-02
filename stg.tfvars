@@ -20,7 +20,7 @@ firewall_network_rules = {
         protocols             = ["TCP"]
         source_addresses      = ["10.24.239.64/28"]
         destination_addresses = ["10.23.253.177/32", "10.23.253.178/32"]
-        destination_ports     = ["1521"]
+        destination_ports     = ["22", "1521"]
       }
       "DARTS Centerra Outbound" = {
         protocols             = ["TCP", "UDP"]
