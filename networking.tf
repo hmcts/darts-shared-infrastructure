@@ -20,6 +20,13 @@ resource "azurerm_subnet" "firewall_subnet" {
   address_prefixes     = [var.firewall_address_space]
 }
 
+resource "azurerm_subnet" "legacy" {
+  name                 = "legacy-subnet"
+  resource_group_name  = azurerm_resource_group.darts_resource_group.name
+  virtual_network_name = azurerm_virtual_network.legacy.name
+  address_prefixes     = [var.address_legacy_space]
+}
+
 data "azurerm_virtual_network" "hub-south-vnet" {
   provider            = azurerm.hub
   name                = local.hub[var.hub].ukSouth.name

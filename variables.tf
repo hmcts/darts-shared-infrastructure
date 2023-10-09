@@ -81,6 +81,8 @@ variable "hub" {}
 
 variable "address_space" {}
 
+variable "address_legacy_space" {}
+
 variable "firewall_address_space" {}
 
 variable "virtual_machine_admins" {
