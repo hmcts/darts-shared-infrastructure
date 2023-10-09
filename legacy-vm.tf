@@ -1,4 +1,4 @@
-resource "azurerm_network_interface" "migration" {
+resource "azurerm_network_interface" "legacy" {
   name                = "legacy-nic"
   location            = azurerm_resource_group.darts_resource_group.location
   resource_group_name = azurerm_resource_group.darts_resource_group.name
