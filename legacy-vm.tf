@@ -58,7 +58,7 @@ resource "azurerm_linux_virtual_machine" "legacy" {
   }
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
+resource "azurerm_virtual_machine_data_disk_attachment" "legacydatadisk" {
   managed_disk_id    = azurerm_managed_disk.legacy_data.id
   virtual_machine_id = azurerm_linux_virtual_machine.legacy.id
   lun                = "10"
@@ -75,20 +75,20 @@ resource "azurerm_virtual_machine_extension" "legacy_aad" {
   tags                       = var.common_tags
 }
 
-resource "azurerm_key_vault_secret" "os_profile_password" {
-  name         = "os-profile-password"
+resource "azurerm_key_vault_secret" "os_legacy_password" {
+  name         = "os-legacy-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
 
-resource "azurerm_network_interface" "assessment" {
+resource "azurerm_network_interface" "legacy" {
   name                = "legacy-nic"
   location            = azurerm_resource_group.darts_resource_group.location
   resource_group_name = azurerm_resource_group.darts_resource_group.name
   tags                = var.common_tags
 
   ip_configuration {
-    name                          = "assessment-ipconfig"
+    name                          = "legacy-ipconfig"
     subnet_id                     = azurerm_subnet.migration.id
     private_ip_address_allocation = "Dynamic"
   }
