@@ -39,3 +39,6 @@ firewall_network_rules = {
 }
 
 firewall_log_analytics_enabled = true
+sku_name                       = "Premium"
+family                         = "P"
+capacity                       = "1"
