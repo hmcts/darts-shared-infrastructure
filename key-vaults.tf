@@ -37,6 +37,6 @@ resource "random_string" "session-secret" {
 
 resource "azurerm_key_vault_secret" "darts-portal-session-secret" {
   name         = "darts-portal-session-secret"
-  value        = random_string.session-secret
+  value        = random_string.session-secret.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
