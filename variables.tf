@@ -159,11 +159,31 @@ variable "firewall_nat_rules" {
 variable "az_firewall_route_ranges" {
   type        = list(string)
   description = "List of IP ranges to route through the firewall."
-  default     = ["10.100.209.177/32", "10.100.209.178/32", "10.23.253.177/32", "10.23.253.178/32"]
+  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
 }
 
 variable "firewall_log_analytics_enabled" {
   type        = bool
   description = "Enable firewall logging to log analytics."
   default     = false
+}
+
+variable "storage_account_contributor_ids" {
+  type        = list(string)
+  description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
+  default     = []
+}
+variable "family" {
+  default     = "C"
+  description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
+}
+
+variable "sku_name" {
+  default     = "Basic"
+  description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
+}
+
+variable "capacity" {
+  default     = "1"
+  description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
 }

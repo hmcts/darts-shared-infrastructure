@@ -9,6 +9,10 @@ module "darts_redis" {
 
   private_endpoint_enabled      = true
   public_network_access_enabled = false
+  sku_name                      = var.sku_name
+  family                        = var.family
+  capacity                      = var.capacity
+
 }
 
 resource "azurerm_key_vault_secret" "redis_connection_string" {
