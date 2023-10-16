@@ -12,26 +12,26 @@ firewall_network_rules = {
     rules = {
       "App Outbound" = {
         protocols             = ["TCP"]
-        source_addresses      = ["10.100.209.177", "10.100.209.178", "10.23.253.177", "10.23.253.178"]
+        source_addresses      = ["10.23.253.177/32", "10.23.253.178/32"]
         destination_addresses = ["10.24.239.0/28"]
         destination_ports     = ["22", "1521"]
       }
       "App Inbound" = {
         protocols             = ["TCP"]
         source_addresses      = ["10.24.239.0/28"]
-        destination_addresses = ["10.100.209.177", "10.100.209.178", "10.23.253.177", "10.23.253.178"]
-        destination_ports     = ["1521"]
+        destination_addresses = ["10.23.253.177/32", "10.23.253.178/32"]
+        destination_ports     = ["22", "1521"]
       }
       "DARTS Centerra Outbound" = {
         protocols             = ["TCP", "UDP"]
-        source_addresses      = ["10.100.209.177", "10.100.209.178", "10.23.253.177", "10.23.253.178"]
+        source_addresses      = ["10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
         destination_addresses = ["10.24.239.0/28"]
         destination_ports     = ["3218", "3682"]
       }
       "DARTS Centerra Inbound" = {
         protocols             = ["TCP", "UDP"]
         source_addresses      = ["10.24.239.0/28"]
-        destination_addresses = ["10.100.209.177", "10.100.209.178", "10.23.253.177", "10.23.253.178"]
+        destination_addresses = ["10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
         destination_ports     = ["3218", "3682"]
       }
     }
@@ -57,3 +57,8 @@ migration_vms = {
     ip_address = "10.24.239.10"
   }
 }
+
+sku_name                       = "Premium"
+family                         = "P"
+capacity                       = "1"
+
