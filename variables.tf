@@ -63,8 +63,8 @@ variable "ip_range" {
   default = ["10.24.239.0/28"]
 }
 
-variable "windows_machines"{
-  type = list(string)
+variable "windows_machines" {
+  type    = list(string)
   default = ["win-migration-1", "win-migration-2", "win-migration-3", "win-migration-4", "win-migration-5"]
 }
 
@@ -176,4 +176,12 @@ variable "storage_account_contributor_ids" {
   type        = list(string)
   description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
   default     = []
+}
+
+variable "migration_vms" {
+  type = map(object({
+    ip_address = string
+  }))
+  description = "Map of objects describing the migration virtual machines to create."
+  default     = {}
 }

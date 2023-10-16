@@ -39,3 +39,5 @@ firewall_network_rules = {
 }
 
 firewall_log_analytics_enabled = true
+
+migration_vms = {}

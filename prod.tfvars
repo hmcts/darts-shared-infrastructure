@@ -39,3 +39,21 @@ firewall_network_rules = {
 }
 
 firewall_log_analytics_enabled = true
+
+migration_vms = {
+  dartsmigvm1 = {
+    ip_address = "10.24.239.6"
+  }
+  dartsmigvm2 = {
+    ip_address = "10.24.239.7"
+  }
+  dartsmigvm3 = {
+    ip_address = "10.24.239.8"
+  }
+  dartsmigvm4 = {
+    ip_address = "10.24.239.9"
+  }
+  dartsmigvm5 = {
+    ip_address = "10.24.239.10"
+  }
+}
