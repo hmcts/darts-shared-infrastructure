@@ -41,19 +41,19 @@ firewall_network_rules = {
 firewall_log_analytics_enabled = true
 
 migration_vms = {
-  dartsmigvm1 = {
+  migration-vm1 = {
     ip_address = "10.24.239.6"
   }
-  dartsmigvm2 = {
+  migration-vm2 = {
     ip_address = "10.24.239.7"
   }
-  dartsmigvm3 = {
+  migration-vm3 = {
     ip_address = "10.24.239.8"
   }
-  dartsmigvm4 = {
+  migration-vm4 = {
     ip_address = "10.24.239.9"
   }
-  dartsmigvm5 = {
+  migration-vm5 = {
     ip_address = "10.24.239.10"
   }
 }
