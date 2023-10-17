@@ -41,19 +41,20 @@ firewall_network_rules = {
 firewall_log_analytics_enabled = true
 
 migration_vms = {
-  migration-vm1 = {
+
+  prddartsmig01 = {
     ip_address = "10.24.239.6"
   }
-  migration-vm2 = {
+  prddartsmig02 = {
     ip_address = "10.24.239.7"
   }
-  migration-vm3 = {
+  prddartsmig03 = {
     ip_address = "10.24.239.8"
   }
-  migration-vm4 = {
+  prddartsmig04 = {
     ip_address = "10.24.239.9"
   }
-  migration-vm5 = {
+  prddartsmig05 = {
     ip_address = "10.24.239.10"
   }
 }
