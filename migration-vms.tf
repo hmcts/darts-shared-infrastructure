@@ -43,11 +43,11 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   }
 
   source_image_reference {
-    publisher = "microsoftwindowsdesktop"
-    offer     = "windows-11"
-    sku       = "win11-21h2-pro"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-datacenter-azure-edition"
     version   = "latest"
-  }
+  } 
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk" {
