@@ -63,8 +63,8 @@ variable "ip_range" {
   default = ["10.24.239.0/28"]
 }
 
-variable "windows_machines"{
-  type = list(string)
+variable "windows_machines" {
+  type    = list(string)
   default = ["win-migration-1", "win-migration-2", "win-migration-3", "win-migration-4", "win-migration-5"]
 }
 
@@ -163,7 +163,7 @@ variable "firewall_nat_rules" {
 variable "az_firewall_route_ranges" {
   type        = list(string)
   description = "List of IP ranges to route through the firewall."
-  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32"]
+  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
 }
 
 variable "firewall_log_analytics_enabled" {
@@ -176,4 +176,28 @@ variable "storage_account_contributor_ids" {
   type        = list(string)
   description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
   default     = []
+}
+
+
+variable "migration_vms" {
+  type = map(object({
+    ip_address = string
+  }))
+  description = "Map of objects describing the migration virtual machines to create."
+  default     = {}
+}
+
+variable "family" {
+  default     = "C"
+  description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
+}
+
+variable "sku_name" {
+  default     = "Basic"
+  description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
+}
+
+variable "capacity" {
+  default     = "1"
+  description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
 }
