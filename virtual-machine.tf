@@ -120,30 +120,3 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
     version   = "latest"
   }
 }
-
-resource "azurerm_windows_virtual_machine" "assessment_windows" {
-  name                = "assessment-windows"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
-  size                = "Standard_D8ds_v5"
-  tags                = var.common_tags
-  admin_username      = var.admin_user
-  admin_password      = random_password.password.result
-  provision_vm_agent  = true
-  computer_name       = "winAssessment"
-  network_interface_ids = [
-    azurerm_network_interface.assessment.id,
-  ]
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-    name                 = "Windows-Assesment-OsDisk"
-  }
-
-  source_image_reference {
-    publisher = "microsoftwindowsdesktop"
-    offer     = "windows-11"
-    sku       = "win11-21h2-pro"
-    version   = "latest"
-  }
-}
