@@ -63,6 +63,10 @@ variable "ip_range" {
   default = ["10.24.239.0/28"]
 }
 
+variable "windows_machines" {
+  type    = list(string)
+  default = ["win-migration-1", "win-migration-2", "win-migration-3", "win-migration-4", "win-migration-5"]
+}
 
 variable "builtFrom" {
   type    = string
@@ -173,6 +177,16 @@ variable "storage_account_contributor_ids" {
   description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
   default     = []
 }
+
+
+variable "migration_vms" {
+  type = map(object({
+    ip_address = string
+  }))
+  description = "Map of objects describing the migration virtual machines to create."
+  default     = {}
+}
+
 variable "family" {
   default     = "C"
   description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."

@@ -39,6 +39,9 @@ firewall_network_rules = {
 }
 
 firewall_log_analytics_enabled = true
+
+migration_vms = {}
+
 sku_name                       = "Premium"
 family                         = "P"
 capacity                       = "1"
