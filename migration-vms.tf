@@ -58,7 +58,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk"
   caching            = "ReadWrite"
 }
 
-resource "azurerm_linux_virtual_machine" "migration" {
+resource "azurerm_linux_virtual_machine" "migration-linux" {
   name                            = "migration-vm"
   location                        = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
