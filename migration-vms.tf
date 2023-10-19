@@ -20,7 +20,7 @@ resource "azurerm_managed_disk" "migration_vms_data" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
-  disk_size_gb         = "200"
+  disk_size_gb         = "255"
   tags                 = var.common_tags
 }
 
@@ -29,7 +29,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   name                  = each.key
   location              = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group.name
-  size                  = "Standard_D8ds_v5"
+  size                  = "Standard_D16ds_v5"
   tags                  = var.common_tags
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
@@ -45,7 +45,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2022-datacenter-azure-edition"
+    sku       = "2022-Datacenter"
     version   = "latest"
   } 
 }
