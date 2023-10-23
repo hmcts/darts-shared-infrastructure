@@ -57,3 +57,44 @@ resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk"
   lun                = "10"
   caching            = "ReadWrite"
 }
+
+resource "azurerm_linux_virtual_machine" "migration-linux" {
+  name                            = "${var.env}dartsmigdb01"
+  location                        = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
+  network_interface_ids           = [azurerm_network_interface.migration.id]
+  size                            = "Standard_E32d_v5"
+  tags                            = var.common_tags
+  admin_username                  = var.admin_user
+  admin_password                  = random_password.password.result
+  disable_password_authentication = false
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+  source_image_reference {
+    publisher = "Cannonical"
+    offer     = "UbuntuServer"
+    sku       = "22.04.03-LTS"
+    version   = "latest"
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+}
+resource "azurerm_managed_disk" "migration_disk" {
+  name                 = "${var.env}darts_disk"
+  location             = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  storage_account_type = "Premium_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = "200"
+  tags                 = var.common_tags
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
+  managed_disk_id    = azurerm_managed_disk.migration_disk.id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux.id
+  lun                = "10"
+  caching            = "ReadWrite"
+}
