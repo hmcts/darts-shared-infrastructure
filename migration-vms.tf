@@ -83,7 +83,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
   }
 }
 resource "azurerm_managed_disk" "migration_disk" {
-  name                 = var.env+"dartsmigdb01_DataDisk_01"
+  name                 = var.env+"_darts_disk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Premium_LRS"
