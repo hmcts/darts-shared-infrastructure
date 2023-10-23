@@ -18,7 +18,7 @@ resource "azurerm_managed_disk" "migration_vms_data" {
   name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
-  storage_account_type = "Standard_LRS"
+  storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = "255"
   tags                 = var.common_tags
