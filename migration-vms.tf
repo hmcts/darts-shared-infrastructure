@@ -92,7 +92,7 @@ resource "azurerm_managed_disk" "migration_disk" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
+resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
   managed_disk_id    = azurerm_managed_disk.migration_disk.id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux.id
   lun                = "10"
