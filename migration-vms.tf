@@ -113,7 +113,7 @@ resource "azurerm_managed_disk" "migration_disk" {
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
   for_each           = var.migration_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration-linux[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
