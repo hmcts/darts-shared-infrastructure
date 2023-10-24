@@ -68,6 +68,7 @@ resource "azurerm_network_interface" "migration-linux-nic" {
   ip_configuration {
     name                          = "migration-ipconfig"
     subnet_id                     = azurerm_subnet.migration.id
+    private_ip_address_allocation = "Static"
     private_ip_address            = each.value.ip_address
   }
 }
