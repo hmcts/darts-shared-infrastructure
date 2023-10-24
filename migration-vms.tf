@@ -58,12 +58,28 @@ resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk"
   caching            = "ReadWrite"
 }
 
+resource "azurerm_network_interface" "migration-linux-nic" {
+  for_each            = var.migration_linux_vms
+  name                = "${each.key}-nic"
+  location            = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  tags                = var.common_tags
+
+  ip_configuration {
+    name                          = "migration-ipconfig"
+    subnet_id                     = azurerm_subnet.migration.id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.ip_address
+  }
+}
+
 resource "azurerm_linux_virtual_machine" "migration-linux" {
-  name                            = "${var.env}dartsmigdb01"
+  for_each                        = var.migration_linux_vms
+  name                            = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
-  network_interface_ids           = [azurerm_network_interface.migration.id]
-  size                            = var.env == "prd" ? "Standard_E32d_v5" : "Standard_D8ds_v5"
+  network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
+  size                            =  "Standard_E32d_v5" 
   tags                            = var.common_tags
   admin_username                  = var.admin_user
   admin_password                  = random_password.password.result
@@ -82,8 +98,10 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
     type = "SystemAssigned"
   }
 }
+
 resource "azurerm_managed_disk" "migration_disk" {
-  name                 = "${var.env}darts_disk"
+  for_each             = var.migration_vms
+  name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Premium_LRS"
@@ -93,8 +111,9 @@ resource "azurerm_managed_disk" "migration_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
-  managed_disk_id    = azurerm_managed_disk.migration_disk.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux.id
+  for_each           = var.migration_vms
+  managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }

@@ -183,10 +183,17 @@ variable "migration_vms" {
   type = map(object({
     ip_address = string
   }))
-  description = "Map of objects describing the migration virtual machines to create."
+  description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}
 }
 
+variable "migration_linux_vms" {
+  type = map(object({
+    ip_address = string
+  }))
+  description = "Map of objects describing the migration linux virtual machines to create."
+  default     = {}
+}
 variable "family" {
   default     = "C"
   description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."

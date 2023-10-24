@@ -59,6 +59,13 @@ migration_vms = {
   }
 }
 
+migration_linux_ms ={
+  prddartsmigdb01 = {
+    ip_address = "10.24.239.11"
+  }
+}
+
+
 sku_name                       = "Premium"
 family                         = "P"
 capacity                       = "1"
