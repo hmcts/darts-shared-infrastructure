@@ -73,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
     storage_account_type = "Premium_LRS"
   }
   source_image_reference {
-    publisher = "Cannonical"
+    publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "22.04.03-LTS"
     version   = "latest"
