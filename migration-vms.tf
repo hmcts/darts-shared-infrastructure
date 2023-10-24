@@ -100,7 +100,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
 }
 
 resource "azurerm_managed_disk" "migration_disk" {
-  for_each             = var.migration_vms
+  for_each             = var.migration_linux_vms
   name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
@@ -111,7 +111,7 @@ resource "azurerm_managed_disk" "migration_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
-  for_each           = var.migration_vms
+  for_each           = var.migration_linux_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
   lun                = "10"
