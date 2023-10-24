@@ -78,7 +78,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
   name                            = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
-  network_interface_ids           = [azurerm_network_interface.migration-linux-nic.id]
+  network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
   size                            =  "Standard_E32d_v5" 
   tags                            = var.common_tags
   admin_username                  = var.admin_user
