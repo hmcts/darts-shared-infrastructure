@@ -98,8 +98,10 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
     type = "SystemAssigned"
   }
 }
+
 resource "azurerm_managed_disk" "migration_disk" {
-  name                 = "${var.env}darts_disk"
+  for_each             = var.migration_vms
+  name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   storage_account_type = "Premium_LRS"
@@ -109,8 +111,9 @@ resource "azurerm_managed_disk" "migration_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
-  managed_disk_id    = azurerm_managed_disk.migration_disk.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux.id
+  for_each           = var.migration_vms
+  managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
