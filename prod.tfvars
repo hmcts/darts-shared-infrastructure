@@ -39,6 +39,34 @@ firewall_network_rules = {
 }
 
 firewall_log_analytics_enabled = true
+
+migration_vms = {
+
+  prddartsmig01 = {
+    ip_address = "10.24.239.6"
+  }
+  prddartsmig02 = {
+    ip_address = "10.24.239.7"
+  }
+  prddartsmig03 = {
+    ip_address = "10.24.239.8"
+  }
+  prddartsmig04 = {
+    ip_address = "10.24.239.9"
+  }
+  prddartsmig05 = {
+    ip_address = "10.24.239.10"
+  }
+}
+
+migration_linux_vms ={
+  prddartsmigdb01 = {
+    ip_address = "10.24.239.11"
+  }
+}
+
+
 sku_name                       = "Premium"
 family                         = "P"
 capacity                       = "1"
+
