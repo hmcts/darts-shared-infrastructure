@@ -23,6 +23,16 @@ variable "admin-users" {
     error_message = "One of is_group, is_user or is_service_principal must be set to true for each user, group or service principal. The valid values for role_type are admin and user."
   }
 }
+data "azuread_group" "ldap_groups" {
+  for_each         = { for key, value in var.admin-users : key => value if value.is_group == true }
+  display_name     = each.key
+  security_enabled = each.value.group_security_enabled
+}
+data "azuread_service_principal" "ldap_sps" {
+  for_each     = { for key, value in var.admin-users : key => value if value.is_service_principal == true }
+  display_name = each.key
+}
+
 
 resource "azurerm_role_assignment" "vm-admin2" {
 for_each             = { for value in local.flattened_admin_users : "${value.user_key}-${value.vm_key}" => value }
@@ -30,6 +40,7 @@ for_each             = { for value in local.flattened_admin_users : "${value.use
   role_definition_name = each.value.user.role_type == "admin" ? "Virtual Machine Administrator Login" : "Virtual Machine User Login"
   principal_id         = each.value.user.is_user == true ? data.azuread_user.admin-users[each.value.user_key].id : each.value.user.is_group == true ? data.azuread_group.ldap_groups[each.value.user_key].id : data.azuread_service_principal.ldap_sps[each.value.user_key].id
 }
+
 
 resource "azurerm_role_assignment" "vm-user" {
   count                = length(var.virtual_machine_users)
