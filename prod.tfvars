@@ -65,8 +65,14 @@ migration_linux_vms ={
   }
 }
 
+admin_users = {
+  "DTS Darts Admin (env:production) " = {
+    is_group               = true
+    group_security_enabled = true
+    role_type              = "admin"
+  }
 
+}
 sku_name                       = "Premium"
 family                         = "P"
 capacity                       = "1"
-

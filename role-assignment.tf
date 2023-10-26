@@ -4,6 +4,11 @@ resource "azurerm_role_assignment" "vm-admin" {
   role_definition_name = "Virtual Machine Administrator Login"
   principal_id         = var.virtual_machine_admins[count.index]
 }
+resource "azurerm_role_assignment" "vm-admin2" {
+  scope                = azurerm_linux_virtual_machine.migration.id
+  role_definition_name = "Virtual Machine Administrator Login"
+  principal_id         = var.admin_users
+}
 
 resource "azurerm_role_assignment" "vm-user" {
   count                = length(var.virtual_machine_users)
