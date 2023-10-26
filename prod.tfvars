@@ -65,7 +65,7 @@ migration_linux_vms ={
   }
 }
 
-admin_users = {
+admin-users = {
   "DTS Darts Admin (env:production) " = {
     is_group               = true
     group_security_enabled = true
