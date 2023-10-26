@@ -91,10 +91,7 @@ variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
   type        = list(string)
 }
-variable "admin-users" {
-  description = "principle id for each of the users given the admin group in azure ad"
-  type        = string
-}
+
 
 variable "virtual_machine_users" {
   description = "List of pricipal IDs for the virtual machine users."
