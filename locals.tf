@@ -46,8 +46,7 @@ locals {
   darts_container_name    = "darts-st-container"
   darts_inbound_container = "darts-inbound-container"
   darts_migration_container = "darts-migration-container"
-}
   db_name                 = "darts-migration"
   db_port                 = 5432
-
+}
 
