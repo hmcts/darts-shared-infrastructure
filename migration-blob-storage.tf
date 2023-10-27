@@ -12,6 +12,7 @@ module "sa-migration" {
   account_replication_type = var.sa_account_replication_type
   containers               = local.containers
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
+  common_tags               = var.common_tags
 }
 
 resource "azurerm_storage_blob" "migration-st" {
