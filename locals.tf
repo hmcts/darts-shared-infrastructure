@@ -43,6 +43,10 @@ locals {
       name        = local.darts_container_name
       access_type = "container"
   }]
+  containers-mig =[{
+    name      = "darts-migration"
+    access_type = "private"
+  }]
   darts_container_name    = "darts-st-container"
   darts_inbound_container = "darts-inbound-container"
   darts_migration_container = "darts-migration-container"
