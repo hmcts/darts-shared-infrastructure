@@ -10,7 +10,7 @@ module "sa-migration" {
   location                 = var.location
   account_kind             = var.sa_account_kind
   account_replication_type = var.sa_account_replication_type
-  containers               = local.containers
+  containers               = local.containers2
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
   common_tags               = var.common_tags
 }
