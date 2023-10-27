@@ -14,3 +14,10 @@ module "sa-migration" {
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
   common_tags               = var.common_tags
 }
+
+resource "azurerm_storage_blob" "migration-st" {
+  name                   = "${var.product}-migration-blob-st-${var.env}"
+  storage_account_name   = local.migration_storage_account_name
+  storage_container_name = local.darts_migration_container
+  type                   = "Block"
+}
