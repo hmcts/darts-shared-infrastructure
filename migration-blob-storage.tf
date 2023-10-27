@@ -2,8 +2,6 @@ data "azurerm_resource_group" "darts_migration_resource_group" {
   name     = format("%s-migration-%s-rg", var.product, var.env)
 }
 
-
-
 module "sa-migration" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
@@ -12,7 +10,7 @@ module "sa-migration" {
   location                 = var.location
   account_kind             = var.account_kind
   account_replication_type = var.account_replication_type
-  containers = local.containers
+  containers               = local.containers
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
 }
 

@@ -49,5 +49,5 @@ locals {
 }
   db_name                 = "darts-migration"
   db_port                 = 5432
-}
+
 
