@@ -33,16 +33,6 @@ variable "containers" {
   default     = []
 }
 
-variable "containers-mig" {
-  type = list(object({
-    name        = string
-    access_type = string
-  }))
-  description = "List of Storage Containers"
-  default     = []
-}
-
-
 variable "resource_group_name" {
   default = ""
 }
