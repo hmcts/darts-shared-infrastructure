@@ -7,9 +7,10 @@ data "azurerm_resource_group" "rg" {
 }
 
 data "azurerm_subnet" "postgres" {
-  name                 = "iaas"
-  resource_group_name  = "ss-${var.env}-network-rg"
-  virtual_network_name = "ss-${var.env}-vnet"
+  provider             = azurerm.postgres_network
+  name                 = "postgresql"
+  resource_group_name  = local.rg_name
+  virtual_network_name = azurerm_virtual_network.migration.name
 }
 
 data "azurerm_key_vault" "key_vault" {
@@ -69,5 +70,5 @@ module "postgresql_flexible" {
     }
   ]
 
-  pgsql_version = "14"
+  pgsql_version = "15"
 }
