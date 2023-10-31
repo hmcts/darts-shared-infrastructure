@@ -17,13 +17,26 @@ module "darts_key_vault" {
 module "darts_migration_key_vault" {
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
-  name                    = format("darts-migration-%s", var.env)
-  product                 = var.product
-  env                     = var.env
-  object_id               = var.jenkins_AAD_objectId
-  resource_group_name     = azurerm_resource_group.darts_migration_resource_group.name
-  product_group_name      = "DTS Darts Modernisation"
-  create_managed_identity = true
+  depends_on = [module.darts_key_vault]
+
+  name                        = format("darts-migration-%s", var.env)
+  product                     = var.product
+  env                         = var.env
+  object_id                   = var.jenkins_AAD_objectId
+  resource_group_name         = azurerm_resource_group.darts_migration_resource_group.name
+  product_group_name          = "DTS Darts Modernisation"
+  create_managed_identity     = false
+  managed_identity_object_ids = module.darts_key_vault.managed_identity_objectid
 
   common_tags = var.common_tags
+}
+
+resource "random_string" "session-secret" {
+  length           = 16
+}
+
+resource "azurerm_key_vault_secret" "darts-portal-session-secret" {
+  name         = "darts-portal-session-secret"
+  value        = random_string.session-secret.result
+  key_vault_id = module.darts_key_vault.key_vault_id
 }
