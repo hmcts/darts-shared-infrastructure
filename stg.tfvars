@@ -39,7 +39,7 @@ firewall_network_rules = {
 }
 
 firewall_nat_rules = {
-  darts-migration-stg = {
+  darts-migration-dnat-stg = {
     priority = 100
     action   = "Dnat"
     rules = {
