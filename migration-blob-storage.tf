@@ -9,7 +9,7 @@ module "sa-migration" {
   resource_group_name      = azurerm_resource_group.darts_migration_resource_group.name
   location                 = var.location
   account_kind             = var.sa_account_kind 
-  account_tier             = var.sa_mig_account_kind
+  account_tier             = var.sa_mig_account_tier
   account_replication_type = var.sa_account_replication_type
   containers               = local.containers-mig
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
