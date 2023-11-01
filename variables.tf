@@ -56,6 +56,10 @@ variable "sa_mig_account_tier" {
   type    = string
   default = "Premium"
 }
+variable "sa_mig_account_kind" {
+  type    = string
+  default = "BlockBlobStorage"
+}
 
 variable "sa_account_replication_type" {
   type    = string
