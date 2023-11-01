@@ -10,7 +10,7 @@ module "sa-migration" {
   location                   = var.location
   account_kind               = var.sa_mig_account_kind
   account_tier               = var.sa_mig_account_tier
-  account_replication_type   = var.sa_account_replication_type
+  account_replication_type   = var.sa_mig_account_replication_type
   containers                 = local.containers-mig
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
   enable_nfs                 = true
@@ -23,4 +23,6 @@ resource "azurerm_storage_blob" "migration-st" {
   storage_account_name   = module.sa-migration.storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
+
+  depends_on = [module.sa-migration]
 }

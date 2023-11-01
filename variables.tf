@@ -65,6 +65,10 @@ variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
 }
+variable "sa_mig_account_replication_type" {
+  type    = string
+  default = "ZRS"
+}
 variable "ip_range" {
   type    = list(string)
   default = ["10.24.239.0/28"]
