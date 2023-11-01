@@ -13,7 +13,7 @@ module "sa-migration" {
   account_replication_type = var.sa_account_replication_type
   containers               = local.containers-mig
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
-  nfsv3_enabled             = var.nfsv3_enabled
+  enable_nfs               = true
   common_tags               = var.common_tags
 }
 
