@@ -54,7 +54,7 @@ variable "sa_account_tier" {
 }
 variable "sa_mig_account_tier" {
   type    = string
-  default = "premium"
+  default = "Premium"
 }
 
 variable "sa_account_replication_type" {
