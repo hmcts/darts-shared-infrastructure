@@ -60,7 +60,7 @@ variable "sa_mig_account_tier" {
 variable "nfsv3_enabled" {
   description = "Is NFSv3 protocol enabled for this storage account?"
   type        = bool
-  default     = false
+  default     = true
 }
 variable "sa_account_replication_type" {
   type    = string
