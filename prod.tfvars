@@ -43,56 +43,112 @@ firewall_nat_rules = {
     priority = 100
     action   = "Dnat"
     rules = {
-      "CN0052-Node1-A-DNAT" = {
+      "CN0052-Node1-A-DNAT-3218" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.63.111.175"]
         destination_ports  = ["3218"]
         translated_address = "10.23.253.241"
         translated_port    = "3218"
       }
-      "CN0052-Node1-B-DNAT" = {
+      "CN0052-Node1-A-DNAT-3682" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.63.111.175"]
+        destination_ports  = ["3682"]
+        translated_address = "10.23.253.241"
+        translated_port    = "3682"
+      }
+      "CN0052-Node1-B-DNAT-3218" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.63.111.187"]
+        destination_ports  = ["3218"]
+        translated_address = "10.23.253.241"
+        translated_port    = "3218"
+      }
+      "CN0052-Node1-B-DNAT-3682" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.63.111.187"]
         destination_ports  = ["3682"]
         translated_address = "10.23.253.241"
         translated_port    = "3682"
       }
-      "CN0052-Node2-A-DNAT" = {
+      "CN0052-Node2-A-DNAT-3218" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.63.111.176"]
         destination_ports  = ["3218"]
         translated_address = "10.23.253.242"
         translated_port    = "3218"
       }
-      "CN0052-Node2-B-DNAT" = {
+      "CN0052-Node2-A-DNAT-3682" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.63.111.176"]
+        destination_ports  = ["3682"]
+        translated_address = "10.23.253.242"
+        translated_port    = "3682"
+      }
+      "CN0052-Node2-B-DNAT-3218" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.63.111.188"]
+        destination_ports  = ["3218"]
+        translated_address = "10.23.253.242"
+        translated_port    = "3218"
+      }
+      "CN0052-Node2-B-DNAT-3682" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.63.111.188"]
         destination_ports  = ["3682"]
         translated_address = "10.23.253.242"
         translated_port    = "3682"
       }
-      "CN0052-Node3-A-DNAT" = {
+      "CN0052-Node3-A-DNAT-3218" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.65.64.155"]
+        destination_ports  = ["3218"]
+        translated_address = "10.23.253.243"
+        translated_port    = "3218"
+      }
+      "CN0052-Node3-A-DNAT-3682" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.65.64.155"]
         destination_ports  = ["3682"]
         translated_address = "10.23.253.243"
+        translated_port    = "3682"
+      }
+      "CN0052-Node3-B-DNAT-3218" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.65.64.180"]
+        destination_ports  = ["3218"]
+        translated_address = "10.23.253.243"
         translated_port    = "3218"
       }
-      "CN0052-Node3-B-DNAT" = {
+      "CN0052-Node3-B-DNAT-3682" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.65.64.180"]
         destination_ports  = ["3682"]
         translated_address = "10.23.253.243"
         translated_port    = "3682"
       }
-      "CN0052-Node4-A-DNAT" = {
+      "CN0052-Node4-A-DNAT-3218" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.65.64.156"]
+        destination_ports  = ["3218"]
+        translated_address = "10.23.253.244"
+        translated_port    = "3218"
+      }
+      "CN0052-Node4-A-DNAT-3682" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.65.64.156"]
         destination_ports  = ["3682"]
         translated_address = "10.23.253.244"
+        translated_port    = "3682"
+      }
+      "CN0052-Node4-B-DNAT-3218" = {
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["10.65.64.181"]
+        destination_ports  = ["3218"]
+        translated_address = "10.23.253.244"
         translated_port    = "3218"
       }
-      "CN0052-Node4-B-DNAT" = {
+      "CN0052-Node4-B-DNAT-3682" = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["10.65.64.181"]
         destination_ports  = ["3682"]
