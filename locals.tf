@@ -25,7 +25,7 @@ locals {
       }
     }
   }
-  storage_account_name = "${var.product}sa${var.env}"
+  storage_account_name = "sa${var.env}${var.product}mig01"
   migration_storage_account_name = "${var.product}mig${var.env}"
   containers = [{
     name        = "darts-outbound"
