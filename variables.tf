@@ -52,6 +52,16 @@ variable "sa_account_tier" {
   type    = string
   default = "Standard"
 }
+variable "sa_mig_account_tier" {
+  type    = string
+  default = "premium"
+}
+
+variable "nfsv3_enabled" {
+  description = "Is NFSv3 protocol enabled for this storage account?"
+  type        = bool
+  default     = false
+}
 variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
@@ -84,6 +94,8 @@ variable "hub" {}
 variable "address_space" {}
 
 variable "firewall_address_space" {}
+
+variable aks_subscription_id {}
 
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
