@@ -43,6 +43,7 @@ resource "azurerm_firewall_policy" "migration_policy" {
   dynamic "insights" {
     for_each = var.firewall_log_analytics_enabled ? [0] : []
     content {
+      retention_in_days                  = 30
       enabled                            = true
       default_log_analytics_workspace_id = azurerm_log_analytics_workspace.firewall_log_analytics[0].id
       log_analytics_workspace {
