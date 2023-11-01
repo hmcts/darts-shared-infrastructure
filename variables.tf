@@ -144,14 +144,13 @@ variable "firewall_nat_rules" {
     action   = string
     priority = number
     rules = optional(map(object({
-      protocols           = list(string)
-      source_addresses    = optional(list(string), [])
-      source_ip_groups    = optional(list(string), [])
-      destination_address = optional(string)
-      destination_ports   = optional(list(string), [])
-      translated_address  = optional(string)
-      translated_fqdn     = optional(string)
-      translated_port     = number
+      protocols          = list(string)
+      source_addresses   = optional(list(string), [])
+      source_ip_groups   = optional(list(string), [])
+      destination_ports  = optional(list(string), [])
+      translated_address = optional(string)
+      translated_fqdn    = optional(string)
+      translated_port    = number
     })), {})
   }))
   description = "Map of firewall NAT rule collections to create with any number of related rules."
@@ -161,7 +160,22 @@ variable "firewall_nat_rules" {
 variable "az_firewall_route_ranges" {
   type        = list(string)
   description = "List of IP ranges to route through the firewall."
-  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
+  default = [
+    "10.23.253.177/32",
+    "10.23.253.178/32",
+    "10.23.253.241/32",
+    "10.23.253.242/32",
+    "10.23.253.243/32",
+    "10.23.253.244/32",
+    "10.63.111.175/32",
+    "10.63.111.187/32",
+    "10.63.111.176/32",
+    "10.63.111.188/32",
+    "10.65.64.155/32",
+    "10.65.64.180/32",
+    "10.65.64.156/32",
+    "10.65.64.181/32"
+  ]
 }
 
 variable "firewall_log_analytics_enabled" {

@@ -120,7 +120,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules
           protocols           = rule.value.protocols
           source_addresses    = rule.value.source_addresses
           source_ip_groups    = rule.value.source_ip_groups
-          destination_address = rule.value.destination_address
+          destination_address = azurerm_firewall.migration_firewall.ip_configuration[0].private_ip_address
           destination_ports   = rule.value.destination_ports
           translated_address  = rule.value.translated_address
           translated_fqdn     = rule.value.translated_fqdn
