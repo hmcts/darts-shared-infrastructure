@@ -260,5 +260,11 @@ resource "azurerm_linux_virtual_machine" "palo" {
     version   = "latest"
   }
 
+  plan {
+    name      = "bundle2"
+    publisher = "paloaltonetworks"
+    product   = "vmseries-flex"
+  }
+
   tags = var.common_tags
 }
