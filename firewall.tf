@@ -142,7 +142,7 @@ resource "azurerm_public_ip" "palo" {
   tags                = var.common_tags
 }
 
-resource "azurerm_subnet" "palo_subnet" {
+resource "azurerm_subnet" "palo" {
   for_each             = var.palo_networks
   name                 = "darts-migration-palo-${each.key}-${var.env}"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
@@ -150,7 +150,7 @@ resource "azurerm_subnet" "palo_subnet" {
   address_prefixes     = [each.value.address_space]
 }
 
-resource "azurerm_network_security_group" "palo_nsg" {
+resource "azurerm_network_security_group" "palo" {
   for_each            = var.palo_networks
   name                = "darts-migration-palo-${each.key}-nsg-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -160,7 +160,7 @@ resource "azurerm_network_security_group" "palo_nsg" {
 
 resource "azurerm_network_security_rule" "deny_inbound" {
   for_each                    = { for key, value in var.palo_networks : key => value if value.nsg_deny_inbound }
-  network_security_group_name = azurerm_network_security_group.palo_nsg[each.key].name
+  network_security_group_name = azurerm_network_security_group.palo[each.key].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group.name
   name                        = "DenyAllInbound"
   direction                   = "Inbound"
@@ -176,7 +176,7 @@ resource "azurerm_network_security_rule" "deny_inbound" {
 
 resource "azurerm_network_security_rule" "this" {
   for_each                                   = { for rule in local.flattened_nsg_rules : "${rule.network_key}-${rule.rule_key}" => rule }
-  network_security_group_name                = azurerm_network_security_group.palo_nsg[each.value.network_key].name
+  network_security_group_name                = azurerm_network_security_group.palo[each.value.network_key].name
   resource_group_name                        = azurerm_resource_group.darts_migration_resource_group.name
   name                                       = each.value.rule.name_override == null ? each.key : each.value.rule.name_override
   priority                                   = each.value.rule.priority
@@ -196,10 +196,10 @@ resource "azurerm_network_security_rule" "this" {
   description                                = each.value.rule.description
 }
 
-resource "azurerm_subnet_network_security_group_association" "name" {
+resource "azurerm_subnet_network_security_group_association" "palo" {
   for_each                  = var.palo_networks
-  subnet_id                 = azurerm_subnet.palo_subnet[each.key].id
-  network_security_group_id = azurerm_network_security_group.palo_nsg[each.key].id
+  subnet_id                 = azurerm_subnet.palo[each.key].id
+  network_security_group_id = azurerm_network_security_group.palo[each.key].id
 }
 
 resource "azurerm_network_interface" "palo" {
@@ -210,7 +210,7 @@ resource "azurerm_network_interface" "palo" {
 
   ip_configuration {
     name                          = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
-    subnet_id                     = azurerm_subnet.palo_subnet[each.key].id
+    subnet_id                     = azurerm_subnet.palo[each.key].id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = each.value.public_ip_required ? azurerm_public_ip.palo[each.key].id : null
   }
