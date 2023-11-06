@@ -240,9 +240,7 @@ resource "azurerm_linux_virtual_machine" "palo" {
   location            = azurerm_resource_group.darts_migration_resource_group.location
   size                = "Standard_D4ds_v5"
 
-  network_interface_ids = [
-    azurerm_network_interface.palo.*.id
-  ]
+  network_interface_ids = [for key, network in var.palo_networks : azurerm_network_interface.palo[key].id]
 
   admin_username = "dartsadmin"
   admin_password = random_password.palo_password.result
