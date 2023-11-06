@@ -32,7 +32,7 @@ module "darts_migration_key_vault" {
 }
 
 resource "random_string" "session-secret" {
-  length           = 16
+  length = 16
 }
 
 resource "azurerm_key_vault_secret" "darts-portal-session-secret" {

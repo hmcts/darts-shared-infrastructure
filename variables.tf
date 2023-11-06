@@ -98,7 +98,7 @@ variable "address_space" {}
 
 variable "firewall_address_space" {}
 
-variable aks_subscription_id {}
+variable "aks_subscription_id" {}
 
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
@@ -234,4 +234,31 @@ variable "sku_name" {
 variable "capacity" {
   default     = "1"
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
+}
+
+variable "palo_networks" {
+  type = map(object({
+    address_space      = string
+    public_ip_required = optional(bool, false)
+    nsg_rules = optional(map(object({
+      name_override                              = optional(string)
+      priority                                   = number
+      direction                                  = string
+      access                                     = string
+      protocol                                   = string
+      source_port_range                          = optional(string)
+      source_port_ranges                         = optional(list(string))
+      destination_port_range                     = optional(string)
+      destination_port_ranges                    = optional(list(string))
+      source_address_prefix                      = optional(string)
+      source_address_prefixes                    = optional(list(string))
+      source_application_security_group_ids      = optional(list(string))
+      destination_address_prefix                 = optional(string)
+      destination_address_prefixes               = optional(list(string))
+      destination_application_security_group_ids = optional(list(string))
+      description                                = optional(string)
+    })), {})
+    nsg_deny_inbound = optional(bool, false)
+  }))
+  description = "Describes the networks and associated resources to support the Palo Alto Firewall."
 }
