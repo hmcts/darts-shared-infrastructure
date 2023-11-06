@@ -132,7 +132,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules
   }
 }
 
-resource "azurerm_public_ip" "palo_pip" {
+resource "azurerm_public_ip" "palo" {
   for_each            = { for key, value in var.palo_networks : key => value if value.public_ip_required }
   name                = "darts-palo-pip-${each.key}-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -212,7 +212,7 @@ resource "azurerm_network_interface" "palo" {
     name                          = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
     subnet_id                     = azurerm_subnet.palo_subnet[each.key].id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = each.value.public_ip_required ? azurerm_public_ip.palo_pip[each.key].id : null
+    public_ip_address_id          = each.value.public_ip_required ? azurerm_public_ip.palo[each.key].id : null
   }
 
   tags = var.common_tags
