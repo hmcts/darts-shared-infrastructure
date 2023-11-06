@@ -210,7 +210,7 @@ resource "azurerm_network_interface" "palo" {
 
   ip_configuration {
     name                          = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
-    subnet_id                     = azurerm_subnet.palo_subnet_mgmt.id
+    subnet_id                     = azurerm_subnet.palo_subnet[each.key].id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = each.value.public_ip_required ? azurerm_public_ip.palo_pip[each.key].id : null
   }
