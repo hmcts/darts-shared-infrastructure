@@ -167,16 +167,5 @@ sku_name = "Premium"
 family   = "P"
 capacity = "1"
 
-palo_networks = {
-  mgmt = {
-    address_space      = "10.24.239.112/28"
-    public_ip_required = true
-    nsg_deny_inbound   = true
-  }
-  trust = {
-    address_space = "10.24.239.80/28"
-  }
-  untrust = {
-    address_space = "10.24.239.96/28"
-  }
-}
+palo_networks = {}
+az_firewall_route_ranges = []
