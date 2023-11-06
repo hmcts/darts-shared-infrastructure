@@ -53,24 +53,10 @@ resource "azurerm_linux_virtual_machine" "migration" {
     sku       = "88-gen2"
     version   = "latest"
   }
-  
   identity {
     type = "SystemAssigned"
   }
-
-        custom_data = <<EOF
-    #!/bin/bash
-    echo 'n
-    p
-    1
-
-
-    w' | fdisk /dev/sdc
-    mkfs.ext4 /dev/sdc1
-    echo '/dev/sdc1 /mnt/data ext4 defaults 0 0' >> /etc/fstab
-    mount -a
-    EOF
-
+    custom_data = filebase64("FormatDisk.sh") # Update with the correct file path
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
@@ -89,6 +75,7 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   auto_upgrade_minor_version = true
   tags                       = var.common_tags
 }
+
 
 
 
