@@ -232,13 +232,15 @@ resource "azurerm_key_vault_secret" "palo_password" {
   name         = "darts-migration-palo-vm01-${var.env}"
   value        = random_password.palo_password.result
   key_vault_id = module.darts_migration_key_vault.key_vault_id
+
+  depends_on = [module.darts_migration_key_vault]
 }
 
 resource "azurerm_linux_virtual_machine" "palo" {
   name                = "darts-migration-palo-vm01-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
-  size                = "Standard_D4ds_v5"
+  size                = "Standard_D8ds_v5"
 
   network_interface_ids = [for key, network in var.palo_networks : azurerm_network_interface.palo[key].id]
 
