@@ -53,9 +53,24 @@ resource "azurerm_linux_virtual_machine" "migration" {
     sku       = "88-gen2"
     version   = "latest"
   }
+  
   identity {
     type = "SystemAssigned"
   }
+
+        custom_data = <<EOF
+    #!/bin/bash
+    echo 'n
+    p
+    1
+
+
+    w' | fdisk /dev/sdc
+    mkfs.ext4 /dev/sdc1
+    echo '/dev/sdc1 /mnt/data ext4 defaults 0 0' >> /etc/fstab
+    mount -a
+    EOF
+
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
@@ -75,24 +90,7 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   tags                       = var.common_tags
 }
 
-data "template_file" "tf" {
-    template = "${file("FormatDisk.ps1")}"
-} 
 
-resource "azurerm_virtual_machine_extension" "disk_init" {
-  name                       = "vm-disk-init-ext"
-  virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
-  publisher            = "Microsoft.Compute"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "1.10"
-
-  settings = <<SETTINGS
-    {
-          "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.tf.rendered)}')) | Out-File -filepath FormatDisk.ps1\" && powershell -ExecutionPolicy Unrestricted -File FormatDisk.ps1"
-    }
-SETTINGS
-  tags                       = var.common_tags
-}
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
