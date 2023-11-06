@@ -242,8 +242,9 @@ resource "azurerm_linux_virtual_machine" "palo" {
 
   network_interface_ids = [for key, network in var.palo_networks : azurerm_network_interface.palo[key].id]
 
-  admin_username = "dartsadmin"
-  admin_password = random_password.palo_password.result
+  admin_username                  = "dartsadmin"
+  admin_password                  = random_password.palo_password.result
+  disable_password_authentication = false
 
   os_disk {
     caching              = "ReadWrite"
