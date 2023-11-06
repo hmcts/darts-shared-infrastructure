@@ -56,7 +56,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   identity {
     type = "SystemAssigned"
   }
-    custom_data = filebase64("FormatDisk.sh") # Update with the correct file path
+    custom_data = filebase64("FormatDisk.sh")
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
