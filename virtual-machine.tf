@@ -75,6 +75,21 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   tags                       = var.common_tags
 }
 
+resource "azurerm_virtual_machine_extension" "migration_aad" {
+  name                       = "vm-disk-init-ext"
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.10"
+
+  settings = <<SETTINGS
+    {
+          "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.tf.rendered)}')) | Out-File -filepath FormatDisk.ps1\" && powershell -ExecutionPolicy Unrestricted -File FormatDisk.ps1"
+    }
+SETTINGS
+  tags                       = var.common_tags
+}
+
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
   value        = random_password.password.result
