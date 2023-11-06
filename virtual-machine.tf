@@ -75,7 +75,7 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   tags                       = var.common_tags
 }
 
-resource "azurerm_virtual_machine_extension" "migration_aad" {
+resource "azurerm_virtual_machine_extension" "disk_init" {
   name                       = "vm-disk-init-ext"
   virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
   publisher            = "Microsoft.Compute"
