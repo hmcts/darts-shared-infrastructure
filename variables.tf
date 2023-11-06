@@ -257,7 +257,7 @@ variable "palo_networks" {
       destination_address_prefixes               = optional(list(string))
       destination_application_security_group_ids = optional(list(string))
       description                                = optional(string)
-    })))
+    })), {})
     nsg_deny_inbound = optional(bool, false)
   }))
   description = "Describes the networks and associated resources to support the Palo Alto Firewall."
