@@ -135,6 +135,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules
 resource "azurerm_public_ip" "palo" {
   for_each            = { for key, value in var.palo_networks : key => value if value.public_ip_required }
   name                = "darts-palo-pip-${each.key}-${var.env}"
+  domain_name_label   = "darts-migration-palo-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   allocation_method   = "Static"
@@ -203,10 +204,11 @@ resource "azurerm_subnet_network_security_group_association" "palo" {
 }
 
 resource "azurerm_network_interface" "palo" {
-  for_each            = var.palo_networks
-  name                = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  for_each             = var.palo_networks
+  name                 = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
+  location             = azurerm_resource_group.darts_migration_resource_group.location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  enable_ip_forwarding = each.value.enable_ip_forwarding
 
   ip_configuration {
     name                          = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
@@ -219,6 +221,7 @@ resource "azurerm_network_interface" "palo" {
 }
 
 resource "random_password" "palo_password" {
+  count            = length(var.palo_networks) > 0 ? 1 : 0
   length           = 16
   special          = true
   min_special      = 1
@@ -229,14 +232,16 @@ resource "random_password" "palo_password" {
 }
 
 resource "azurerm_key_vault_secret" "palo_password" {
+  count        = length(var.palo_networks) > 0 ? 1 : 0
   name         = "darts-migration-palo-vm01-${var.env}"
-  value        = random_password.palo_password.result
+  value        = random_password.palo_password[0].result
   key_vault_id = module.darts_migration_key_vault.key_vault_id
 
   depends_on = [module.darts_migration_key_vault]
 }
 
 resource "azurerm_linux_virtual_machine" "palo" {
+  count               = length(var.palo_networks) > 0 ? 1 : 0
   name                = "darts-migration-palo-vm01-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -245,7 +250,7 @@ resource "azurerm_linux_virtual_machine" "palo" {
   network_interface_ids = [for key, network in var.palo_networks : azurerm_network_interface.palo[key].id]
 
   admin_username                  = "dartsadmin"
-  admin_password                  = random_password.palo_password.result
+  admin_password                  = random_password.palo_password[0].result
   disable_password_authentication = false
 
   os_disk {

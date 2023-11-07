@@ -71,7 +71,7 @@ resource "azurerm_route" "azure_firewall_routes" {
   route_table_name       = azurerm_route_table.route_table.name
   address_prefix         = each.value
   next_hop_type          = "VirtualAppliance"
-  next_hop_in_ip_address = azurerm_firewall.migration_firewall.ip_configuration[0].private_ip_address
+  next_hop_in_ip_address = azurerm_network_interface.palo["trust"].private_ip_address
 }
 
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {

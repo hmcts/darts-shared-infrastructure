@@ -198,9 +198,11 @@ palo_networks = {
     nsg_deny_inbound   = true
   }
   trust = {
-    address_space = "10.24.239.16/28"
+    address_space        = "10.24.239.16/28"
+    enable_ip_forwarding = true
   }
   untrust = {
-    address_space = "10.24.239.32/28"
+    address_space        = "10.24.239.32/28"
+    enable_ip_forwarding = true
   }
 }
