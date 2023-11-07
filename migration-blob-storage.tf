@@ -15,6 +15,7 @@ module "sa-migration" {
   private_endpoint_subnet_id = resource.azurerm_subnet.migration.id
   enable_nfs                 = true
   enable_hns                 = true
+  enable_data_protection     = true
   common_tags                = var.common_tags
 }
 
