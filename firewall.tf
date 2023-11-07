@@ -135,6 +135,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "migration_policy_rules
 resource "azurerm_public_ip" "palo" {
   for_each            = { for key, value in var.palo_networks : key => value if value.public_ip_required }
   name                = "darts-palo-pip-${each.key}-${var.env}"
+  domain_name_label   = "darts-migration-palo-${var.env}"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   allocation_method   = "Static"
