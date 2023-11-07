@@ -238,8 +238,9 @@ variable "capacity" {
 
 variable "palo_networks" {
   type = map(object({
-    address_space      = string
-    public_ip_required = optional(bool, false)
+    address_space        = string
+    enable_ip_forwarding = optional(bool, false)
+    public_ip_required   = optional(bool, false)
     nsg_rules = optional(map(object({
       name_override                              = optional(string)
       priority                                   = number
