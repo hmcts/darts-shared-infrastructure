@@ -167,5 +167,5 @@ sku_name = "Premium"
 family   = "P"
 capacity = "1"
 
-palo_networks = {}
-az_firewall_route_ranges = []
+palo_networks         = {}
+firewall_route_ranges = []
