@@ -96,8 +96,6 @@ variable "hub" {}
 
 variable "address_space" {}
 
-variable "firewall_address_space" {}
-
 variable "aks_subscription_id" {}
 
 variable "virtual_machine_admins" {
@@ -110,69 +108,7 @@ variable "virtual_machine_users" {
   type        = list(string)
 }
 
-variable "firewall_policy_priority" {
-  description = "The priority of the firewall policy."
-  type        = number
-  default     = 100
-}
-
-variable "firewall_application_rules" {
-  type = map(object({
-    action   = string
-    priority = number
-    rules = optional(map(object({
-      description = optional(string)
-      protocols = list(object({
-        port = number
-        type = string
-      }))
-      source_addresses      = optional(list(string), [])
-      destination_addresses = optional(list(string), [])
-      source_ip_groups      = optional(list(string), [])
-      destination_fqdns     = optional(list(string), [])
-    })), {})
-  }))
-  description = "Map of firewall application rule collections to create with any number of related rules."
-  default     = {}
-}
-
-variable "firewall_network_rules" {
-  type = map(object({
-    action   = string
-    priority = number
-    rules = optional(map(object({
-      protocols             = list(string)
-      source_addresses      = optional(list(string), [])
-      source_ip_groups      = optional(list(string), [])
-      destination_addresses = optional(list(string), [])
-      destination_ip_groups = optional(list(string), [])
-      destination_fqdns     = optional(list(string), [])
-      destination_ports     = list(string)
-    })), {})
-  }))
-  description = "Map of firewall network rule collections to create with any number of related rules."
-  default     = {}
-}
-
-variable "firewall_nat_rules" {
-  type = map(object({
-    action   = string
-    priority = number
-    rules = optional(map(object({
-      protocols          = list(string)
-      source_addresses   = optional(list(string), [])
-      source_ip_groups   = optional(list(string), [])
-      destination_ports  = optional(list(string), [])
-      translated_address = optional(string)
-      translated_fqdn    = optional(string)
-      translated_port    = number
-    })), {})
-  }))
-  description = "Map of firewall NAT rule collections to create with any number of related rules."
-  default     = {}
-}
-
-variable "az_firewall_route_ranges" {
+variable "firewall_route_ranges" {
   type        = list(string)
   description = "List of IP ranges to route through the firewall."
   default = [

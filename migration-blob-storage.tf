@@ -16,6 +16,7 @@ module "sa-migration" {
   enable_nfs                 = true
   enable_hns                 = true
   enable_data_protection     = true
+  enable_versioning          = false
   common_tags                = var.common_tags
 }
 
