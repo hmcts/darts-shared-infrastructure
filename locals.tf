@@ -64,10 +64,5 @@ locals {
       }
     ]
   ])
-
-  admin_group_map = {
-    "stg"  = "DTS Darts Admin (env:staging)"
-    "prod" = "DTS Darts Admin (env:production)"
-  }
 }
 
