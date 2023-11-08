@@ -9,7 +9,7 @@ module "darts_key_vault" {
   object_id               = var.jenkins_AAD_objectId
   resource_group_name     = azurerm_resource_group.darts_resource_group.name
   product_group_name      = "DTS Darts Modernisation"
-  developer_group         = local.admin_group_map[var.env]
+  developers_group        = local.admin_group_map[var.env]
   create_managed_identity = true
 
   common_tags = var.common_tags
@@ -26,7 +26,7 @@ module "darts_migration_key_vault" {
   object_id                   = var.jenkins_AAD_objectId
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group.name
   product_group_name          = "DTS Darts Modernisation"
-  developer_group             = local.admin_group_map[var.env]
+  developers_group            = local.admin_group_map[var.env]
   create_managed_identity     = false
   managed_identity_object_ids = module.darts_key_vault.managed_identity_objectid
 
