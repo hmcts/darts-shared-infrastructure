@@ -1,6 +1,6 @@
 resource "azurerm_virtual_network" "migration" {
   name                = "migration-vnet"
-  address_space       = concat([var.address_space, var.firewall_address_space], local.palo_address_space)
+  address_space       = concat([var.address_space], local.palo_address_space)
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   tags                = var.common_tags
@@ -11,13 +11,6 @@ resource "azurerm_subnet" "migration" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = [var.address_space]
-}
-
-resource "azurerm_subnet" "firewall_subnet" {
-  name                 = "AzureFirewallSubnet"
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
-  virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = [var.firewall_address_space]
 }
 
 data "azurerm_virtual_network" "hub-south-vnet" {
@@ -63,10 +56,10 @@ resource "azurerm_route" "route" {
   next_hop_in_ip_address = local.hub[var.hub].ukSouth.next_hop_ip
 }
 
-resource "azurerm_route" "azure_firewall_routes" {
-  for_each = toset(var.az_firewall_route_ranges)
+resource "azurerm_route" "firewall_routes" {
+  for_each = toset(var.firewall_route_ranges)
 
-  name                   = "azure_firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
+  name                   = "firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
   resource_group_name    = azurerm_resource_group.darts_migration_resource_group.name
   route_table_name       = azurerm_route_table.route_table.name
   address_prefix         = each.value
