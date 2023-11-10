@@ -25,8 +25,9 @@ locals {
       }
     }
   }
-  storage_account_name = "${var.product}sa${var.env}"
-  migration_storage_account_name = "${var.product}mig${var.env}"
+  storage_account_name           = "${var.product}sa${var.env}"
+  migration_storage_account_name = "sa${var.env}${var.product}mig01"
+
   containers = [{
     name        = "darts-outbound"
     access_type = "private"
@@ -43,14 +44,30 @@ locals {
       name        = local.darts_container_name
       access_type = "container"
   }]
-  containers-mig =[{
-    name      = "darts-migration"
+  containers-mig = [{
+    name        = "darts-migration"
     access_type = "private"
   }]
-  darts_container_name    = "darts-st-container"
-  darts_inbound_container = "darts-inbound-container"
+  darts_container_name      = "darts-st-container"
+  darts_inbound_container   = "darts-inbound-container"
   darts_migration_container = "darts-migration"
-  db_name                 = "darts-migration"
-  db_port                 = 5432
+  db_name                   = "darts-migration"
+  db_port                   = 5432
+
+  palo_address_space = [for network in var.palo_networks : network.address_space]
+  flattened_nsg_rules = flatten([
+    for network_key, network in var.palo_networks : [
+      for rule_key, rule in network.nsg_rules : {
+        network_key = network_key
+        rule_key    = rule_key
+        rule        = rule
+      }
+    ]
+  ])
+
+  admin_group_map = {
+    "stg"  = "DTS Darts Admin (env:staging)"
+    "prod" = "DTS Darts Admin (env:production)"
+  }
 }
 

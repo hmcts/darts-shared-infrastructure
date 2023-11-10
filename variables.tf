@@ -52,9 +52,22 @@ variable "sa_account_tier" {
   type    = string
   default = "Standard"
 }
+variable "sa_mig_account_tier" {
+  type    = string
+  default = "Premium"
+}
+variable "sa_mig_account_kind" {
+  type    = string
+  default = "BlockBlobStorage"
+}
+
 variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
+}
+variable "sa_mig_account_replication_type" {
+  type    = string
+  default = "ZRS"
 }
 variable "ip_range" {
   type    = list(string)
@@ -83,7 +96,7 @@ variable "hub" {}
 
 variable "address_space" {}
 
-variable "firewall_address_space" {}
+variable "aks_subscription_id" {}
 
 variable aks_subscription_id {}
 
@@ -97,73 +110,26 @@ variable "virtual_machine_users" {
   type        = list(string)
 }
 
-variable "firewall_policy_priority" {
-  description = "The priority of the firewall policy."
-  type        = number
-  default     = 100
-}
-
-variable "firewall_application_rules" {
-  type = map(object({
-    action   = string
-    priority = number
-    rules = optional(map(object({
-      description = optional(string)
-      protocols = list(object({
-        port = number
-        type = string
-      }))
-      source_addresses      = optional(list(string), [])
-      destination_addresses = optional(list(string), [])
-      source_ip_groups      = optional(list(string), [])
-      destination_fqdns     = optional(list(string), [])
-    })), {})
-  }))
-  description = "Map of firewall application rule collections to create with any number of related rules."
-  default     = {}
-}
-
-variable "firewall_network_rules" {
-  type = map(object({
-    action   = string
-    priority = number
-    rules = optional(map(object({
-      protocols             = list(string)
-      source_addresses      = optional(list(string), [])
-      source_ip_groups      = optional(list(string), [])
-      destination_addresses = optional(list(string), [])
-      destination_ip_groups = optional(list(string), [])
-      destination_fqdns     = optional(list(string), [])
-      destination_ports     = list(string)
-    })), {})
-  }))
-  description = "Map of firewall network rule collections to create with any number of related rules."
-  default     = {}
-}
-
-variable "firewall_nat_rules" {
-  type = map(object({
-    action   = string
-    priority = number
-    rules = optional(map(object({
-      protocols           = list(string)
-      source_addresses    = optional(list(string), [])
-      source_ip_groups    = optional(list(string), [])
-      destination_address = optional(string)
-      destination_ports   = optional(list(string), [])
-      translated_address  = optional(string)
-      translated_fqdn     = optional(string)
-      translated_port     = number
-    })), {})
-  }))
-  description = "Map of firewall NAT rule collections to create with any number of related rules."
-  default     = {}
-}
-
-variable "az_firewall_route_ranges" {
+variable "firewall_route_ranges" {
   type        = list(string)
   description = "List of IP ranges to route through the firewall."
-  default     = ["10.23.253.177/32", "10.23.253.178/32", "10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
+  default = [
+    "10.23.253.177/32",
+    "10.23.253.178/32",
+    "10.23.253.241/32",
+    "10.23.253.242/32",
+    "10.23.253.243/32",
+    "10.23.253.244/32",
+    "10.63.111.175/32",
+    "10.63.111.187/32",
+    "10.63.111.176/32",
+    "10.63.111.188/32",
+    "10.65.64.155/32",
+    "10.65.64.180/32",
+    "10.65.64.156/32",
+    "10.65.64.181/32",
+    "10.100.197.200/32"
+  ]
 }
 
 variable "firewall_log_analytics_enabled" {
@@ -207,4 +173,32 @@ variable "sku_name" {
 variable "capacity" {
   default     = "1"
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
+}
+
+variable "palo_networks" {
+  type = map(object({
+    address_space        = string
+    enable_ip_forwarding = optional(bool, false)
+    public_ip_required   = optional(bool, false)
+    nsg_rules = optional(map(object({
+      name_override                              = optional(string)
+      priority                                   = number
+      direction                                  = string
+      access                                     = string
+      protocol                                   = string
+      source_port_range                          = optional(string)
+      source_port_ranges                         = optional(list(string))
+      destination_port_range                     = optional(string)
+      destination_port_ranges                    = optional(list(string))
+      source_address_prefix                      = optional(string)
+      source_address_prefixes                    = optional(list(string))
+      source_application_security_group_ids      = optional(list(string))
+      destination_address_prefix                 = optional(string)
+      destination_address_prefixes               = optional(list(string))
+      destination_application_security_group_ids = optional(list(string))
+      description                                = optional(string)
+    })), {})
+    nsg_deny_inbound = optional(bool, false)
+  }))
+  description = "Describes the networks and associated resources to support the Palo Alto Firewall."
 }

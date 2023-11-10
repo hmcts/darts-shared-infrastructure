@@ -5,41 +5,6 @@ virtual_machine_users           = []
 firewall_address_space          = "10.24.239.128/26"
 storage_account_contributor_ids = []
 
-firewall_network_rules = {
-  darts-migration-prod = {
-    action   = "Allow"
-    priority = 100
-    rules = {
-      "App Outbound" = {
-        protocols             = ["TCP"]
-        source_addresses      = ["10.23.253.177/32", "10.23.253.178/32"]
-        destination_addresses = ["10.24.239.0/28"]
-        destination_ports     = ["22", "1521"]
-      }
-      "App Inbound" = {
-        protocols             = ["TCP"]
-        source_addresses      = ["10.24.239.0/28"]
-        destination_addresses = ["10.23.253.177/32", "10.23.253.178/32"]
-        destination_ports     = ["22", "1521"]
-      }
-      "DARTS Centerra Outbound" = {
-        protocols             = ["TCP", "UDP"]
-        source_addresses      = ["10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
-        destination_addresses = ["10.24.239.0/28"]
-        destination_ports     = ["3218", "3682"]
-      }
-      "DARTS Centerra Inbound" = {
-        protocols             = ["TCP", "UDP"]
-        source_addresses      = ["10.24.239.0/28"]
-        destination_addresses = ["10.23.253.241/32", "10.23.253.242/32", "10.23.253.243/32", "10.23.253.244/32"]
-        destination_ports     = ["3218", "3682"]
-      }
-    }
-  }
-}
-
-firewall_log_analytics_enabled = true
-
 migration_vms = {
 
   prddartsmig01 = {
@@ -59,14 +24,29 @@ migration_vms = {
   }
 }
 
-migration_linux_vms ={
+migration_linux_vms = {
   prddartsmigdb01 = {
     ip_address = "10.24.239.11"
   }
 }
 
 
-sku_name                       = "Premium"
-family                         = "P"
-capacity                       = "1"
+sku_name = "Premium"
+family   = "P"
+capacity = "1"
 
+palo_networks = {
+  mgmt = {
+    address_space      = "10.24.239.48/28"
+    public_ip_required = true
+    nsg_deny_inbound   = true
+  }
+  trust = {
+    address_space        = "10.24.239.16/28"
+    enable_ip_forwarding = true
+  }
+  untrust = {
+    address_space        = "10.24.239.32/28"
+    enable_ip_forwarding = true
+  }
+}
