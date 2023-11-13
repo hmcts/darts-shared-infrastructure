@@ -7,7 +7,7 @@ resource "azurerm_subnet" "postgres" {
   name                 = "postgres-sn"
   resource_group_name  = local.rg_name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = var.address_space
+  address_prefixes     = [each.value.address_space]
   service_endpoints    = ["Microsoft.Storage"]
   delegation {
     name = "fs"
@@ -19,12 +19,6 @@ resource "azurerm_subnet" "postgres" {
     }
   }
 }
-# data "azurerm_subnet" "postgres" {
-#   provider             = azurerm.postgres_network
-#   name                 = "postgresql"
-#   resource_group_name  = local.rg_name
-#   virtual_network_name = azurerm_virtual_network.migration.name
-# }
 
 data "azurerm_key_vault" "key_vault" {
   name                = local.migration_vault_name
