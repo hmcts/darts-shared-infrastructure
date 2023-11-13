@@ -1,13 +1,30 @@
+
 data "azurerm_resource_group" "rg" {
   name = local.rg_name
 }
 
-data "azurerm_subnet" "postgres" {
-  provider             = azurerm.postgres_network
-  name                 = "postgresql"
+resource "azurerm_subnet" "postgres" {
+  name                 = "postgres-sn"
   resource_group_name  = local.rg_name
   virtual_network_name = azurerm_virtual_network.migration.name
+  address_prefixes     = var.address_space
+  service_endpoints    = ["Microsoft.Storage"]
+  delegation {
+    name = "fs"
+    service_delegation {
+      name = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }
+  }
 }
+# data "azurerm_subnet" "postgres" {
+#   provider             = azurerm.postgres_network
+#   name                 = "postgresql"
+#   resource_group_name  = local.rg_name
+#   virtual_network_name = azurerm_virtual_network.migration.name
+# }
 
 data "azurerm_key_vault" "key_vault" {
   name                = local.migration_vault_name
@@ -57,7 +74,7 @@ module "postgresql_flexible" {
   component           = var.component
   business_area       = "sds"
   location            = var.location
-  subnet_id           = data.azurerm_subnet.postgres.id
+
   common_tags          = var.common_tags
   admin_user_object_id = var.jenkins_AAD_objectId
   pgsql_databases = [
