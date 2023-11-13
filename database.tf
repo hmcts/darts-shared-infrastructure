@@ -1,7 +1,3 @@
-
-
-
-
 data "azurerm_resource_group" "rg" {
   name = local.rg_name
 }
@@ -61,7 +57,7 @@ module "postgresql_flexible" {
   component           = var.component
   business_area       = "sds"
   location            = var.location
-
+  subnet_id           = data.azurerm_subnet.postgres.id
   common_tags          = var.common_tags
   admin_user_object_id = var.jenkins_AAD_objectId
   pgsql_databases = [
