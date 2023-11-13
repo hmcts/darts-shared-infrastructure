@@ -98,8 +98,6 @@ variable "address_space" {}
 
 variable "aks_subscription_id" {}
 
-variable aks_subscription_id {}
-
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
   type        = list(string)
