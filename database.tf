@@ -69,7 +69,7 @@ module "postgresql_flexible" {
   business_area       = "sds"
   location            = var.location
   pgsql_storage_mb    = 4194304
-  pgsql_sku           = "GP_Standard_D8ds_v5"
+  pgsql_sku           = "GP_Standard_D8ds_v4"
   
 
   common_tags          = var.common_tags
