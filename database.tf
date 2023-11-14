@@ -20,10 +20,6 @@ resource "azurerm_subnet" "postgres" {
   }
 }
 
-data "azurerm_key_vault" "key_vault" {
-  name                = local.migration_vault_name
-  resource_group_name = local.rg_name
-}
 
 
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {
