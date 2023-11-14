@@ -51,7 +51,7 @@ locals {
   darts_container_name      = "darts-st-container"
   darts_inbound_container   = "darts-inbound-container"
   darts_migration_container = "darts-migration"
-  db_name                   = "darts-migration"
+  db_name                   = "psql-${var.env}-dartsmig-01"
   db_port                   = 5432
 
   palo_address_space = [for network in var.palo_networks : network.address_space]
