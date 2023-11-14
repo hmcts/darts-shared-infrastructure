@@ -25,7 +25,7 @@ resource "azurerm_subnet" "postgres" {
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible.username
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES-PASS" {
