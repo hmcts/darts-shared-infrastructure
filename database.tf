@@ -49,7 +49,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
   name         = "POSTGRES-DATABASE"
   value        = local.db_name
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
 module "postgresql_flexible" {
