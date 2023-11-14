@@ -66,10 +66,10 @@ module "postgresql_flexible" {
   location            = var.location
   pgsql_storage_mb    = 4194304
   pgsql_sku           = "GP_Standard_D8ds_v4"
-  
 
-  common_tags                        = var.common_tags
-  admin_user_object_id           = var.jenkins_AAD_objectId
+
+  common_tags               = var.common_tags
+  admin_user_object_id      = var.jenkins_AAD_objectId
   pgsql_delegated_subnet_id = azurerm_subnet.postgres.id
   pgsql_databases = [
     {
