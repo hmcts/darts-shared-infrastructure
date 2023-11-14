@@ -37,7 +37,7 @@ resource "azurerm_key_vault_secret" "POSTGRES-PASS" {
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
   name         = "POSTGRES-HOST"
   value        = module.postgresql_flexible.fqdn
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
