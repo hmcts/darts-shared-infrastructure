@@ -43,7 +43,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
   name         = "POSTGRES-PORT"
   value        = local.db_port
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
