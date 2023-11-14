@@ -54,7 +54,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
 
 module "postgresql_flexible" {
   providers = {
-    azurerm.postgres_network = azurerm.postgres_network
+    azurerm.postgres_network = azurerm
   }
 
   source              = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
