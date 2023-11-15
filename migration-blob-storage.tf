@@ -17,7 +17,7 @@ module "sa-migration" {
   enable_hns                 = true
   enable_data_protection     = true
   enable_versioning          = false
-  defender_enabled           = var.defender_enabled
+  defender_enabled           = var.defender_enable
   defender_malware_scanning_enabled = var.defender_scan
   common_tags                = var.common_tags
 }
