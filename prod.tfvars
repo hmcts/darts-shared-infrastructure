@@ -4,6 +4,8 @@ virtual_machine_admins          = ["675f1c23-3e46-4cf8-867b-747eb60fe89d", "d8b3
 virtual_machine_users           = []
 firewall_address_space          = "10.24.239.128/26"
 storage_account_contributor_ids = []
+defender_enable                 = true
+defender_scan                   = true
 
 migration_vms = {
 
