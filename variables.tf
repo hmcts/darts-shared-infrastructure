@@ -141,7 +141,16 @@ variable "storage_account_contributor_ids" {
   description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
   default     = []
 }
-
+variable "defender_enable"{
+  type        = bool
+  description = "boolean to enable microsoft defender"
+  default = false
+}
+variable "defender_scan"{
+  type        = bool
+  description = "boolean to enable microsoft defender scanning on incoming objects"
+  default = false
+}
 
 variable "migration_vms" {
   type = map(object({
