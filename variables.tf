@@ -126,6 +126,7 @@ variable "firewall_route_ranges" {
     "10.65.64.180/32",
     "10.65.64.156/32",
     "10.65.64.181/32",
+    "10.100.197.200/32",
     "10.100.197.200/32"
   ]
 }
@@ -141,15 +142,15 @@ variable "storage_account_contributor_ids" {
   description = "List of pricipal IDs to create a role assignemnt to grant the storage account contributor role."
   default     = []
 }
-variable "defender_enable"{
+variable "defender_enable" {
   type        = bool
   description = "boolean to enable microsoft defender"
-  default = false
+  default     = false
 }
-variable "defender_scan"{
+variable "defender_scan" {
   type        = bool
   description = "boolean to enable microsoft defender scanning on incoming objects"
-  default = false
+  default     = false
 }
 
 variable "migration_vms" {
