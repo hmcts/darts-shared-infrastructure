@@ -39,16 +39,12 @@ capacity = "1"
 
 palo_networks = {
   mgmt = {
-    address_space      = "10.24.239.48/28"
+    address_space      = "10.24.239.32/28"
     public_ip_required = true
     nsg_deny_inbound   = true
   }
   trust = {
     address_space        = "10.24.239.16/28"
-    enable_ip_forwarding = true
-  }
-  untrust = {
-    address_space        = "10.24.239.32/28"
     enable_ip_forwarding = true
   }
 }
