@@ -1,8 +1,3 @@
-
-data "azurerm_resource_group" "rg" {
-  name = local.rg_name
-}
-
 resource "azurerm_subnet" "postgres" {
   name                 = "postgres-sn"
   resource_group_name  = local.rg_name
@@ -19,8 +14,6 @@ resource "azurerm_subnet" "postgres" {
     }
   }
 }
-
-
 
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {
   name         = "POSTGRES-USER"
@@ -52,6 +45,8 @@ resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
   key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
+data "azurerm_subscription" "this" {}
+
 module "postgresql_flexible" {
   providers = {
     azurerm.postgres_network = azurerm
@@ -69,7 +64,7 @@ module "postgresql_flexible" {
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
-  pgsql_delegated_subnet_id = resource.azurerm_subnet.postgres.id
+  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${local.rg_name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration.name}/subnets/${azurerm_subnet.postgres.name}"
   pgsql_databases = [
     {
       name : local.db_name
