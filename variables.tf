@@ -95,6 +95,9 @@ variable "admin_user" {
 variable "hub" {}
 
 variable "address_space" {}
+variable "postgres_subnet_address_space" {
+  type = string
+}
 
 variable "aks_subscription_id" {}
 
@@ -129,12 +132,6 @@ variable "firewall_route_ranges" {
     "10.100.197.200/32",
     "10.100.197.200/32"
   ]
-}
-
-variable "firewall_log_analytics_enabled" {
-  type        = bool
-  description = "Enable firewall logging to log analytics."
-  default     = false
 }
 
 variable "storage_account_contributor_ids" {

@@ -2,7 +2,7 @@ resource "azurerm_subnet" "postgres" {
   name                 = "postgres-sn"
   resource_group_name  = local.rg_name
   virtual_network_name = azurerm_virtual_network.migration.name
-  address_prefixes     = [var.address_space]
+  address_prefixes     = [var.postgres_subnet_address_space]
   service_endpoints    = ["Microsoft.Storage"]
   delegation {
     name = "fs"
@@ -15,13 +15,13 @@ resource "azurerm_subnet" "postgres" {
   }
 }
 
-resource "azurerm_key_vault_secret" "POSTGRES-USER" {
+resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible.username
   key_vault_id = module.darts_migration_key_vault.key_vault_id
 }
 
-resource "azurerm_key_vault_secret" "POSTGRES-PASS" {
+resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   name         = "POSTGRES-PASS"
   value        = module.postgresql_flexible.password
   key_vault_id = module.darts_migration_key_vault.key_vault_id
