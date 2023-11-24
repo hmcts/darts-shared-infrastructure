@@ -8,7 +8,6 @@ defender_enable                 = true
 defender_scan                   = true
 
 migration_vms = {
-
   prddartsmig01 = {
     ip_address = "10.24.239.6"
   }
@@ -31,7 +30,6 @@ migration_linux_vms = {
     ip_address = "10.24.239.11"
   }
 }
-
 
 sku_name = "Premium"
 family   = "P"
