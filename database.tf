@@ -19,30 +19,35 @@ resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible.username
   key_vault_id = module.darts_migration_key_vault.key_vault_id
+  depends_on   = [module.darts_migration_key_vault]
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   name         = "POSTGRES-PASS"
   value        = module.postgresql_flexible.password
   key_vault_id = module.darts_migration_key_vault.key_vault_id
+  depends_on   = [module.darts_migration_key_vault]
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
   name         = "POSTGRES-HOST"
   value        = module.postgresql_flexible.fqdn
   key_vault_id = module.darts_migration_key_vault.key_vault_id
+  depends_on   = [module.darts_migration_key_vault]
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
   name         = "POSTGRES-PORT"
   value        = local.db_port
   key_vault_id = module.darts_migration_key_vault.key_vault_id
+  depends_on   = [module.darts_migration_key_vault]
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
   name         = "POSTGRES-DATABASE"
   value        = local.db_name
   key_vault_id = module.darts_migration_key_vault.key_vault_id
+  depends_on   = [module.darts_migration_key_vault]
 }
 
 data "azurerm_subscription" "this" {}
