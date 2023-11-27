@@ -62,6 +62,7 @@ module "postgresql_flexible" {
   product             = var.product
   resource_group_name = local.rg_name
   component           = var.component
+  name                = "darts-migration"
   business_area       = "sds"
   location            = var.location
   pgsql_storage_mb    = 4194304
