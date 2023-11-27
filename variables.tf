@@ -17,7 +17,9 @@ variable "location" {
 
 variable "product" {}
 
-variable "component" {}
+variable "component" {
+  default = ""
+}
 
 
 variable "project" {
