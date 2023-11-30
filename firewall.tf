@@ -132,7 +132,7 @@ resource "azurerm_linux_virtual_machine" "palo" {
   }
 
   plan {
-    name      = "bundle2"
+    name      = "byol"
     publisher = "paloaltonetworks"
     product   = "vmseries-flex"
   }
