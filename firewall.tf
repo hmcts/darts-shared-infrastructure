@@ -127,7 +127,7 @@ resource "azurerm_linux_virtual_machine" "palo" {
   source_image_reference {
     publisher = "paloaltonetworks"
     offer     = "vmseries-flex"
-    sku       = "bundle2"
+    sku       = "byol"
     version   = "latest"
   }
 
