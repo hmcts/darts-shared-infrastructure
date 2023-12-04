@@ -20101,8 +20101,6 @@
                 </dhcp-client>
               </layer3>
             </entry>
-            <deleted name="ethernet1/2" admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:22"/>
-            <deleted name="ethernet1/2" admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:22"/>
           </ethernet>
         </interface>
         <profiles>
@@ -20304,8 +20302,6 @@
               </ip>
             </routing-table>
           </entry>
-          <deleted name="untrust" admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:41"/>
-          <deleted name="untrust" admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:41"/>
         </virtual-router>
       </network>
       <deviceconfig>
@@ -20376,8 +20372,6 @@
                 </layer3>
               </network>
             </entry>
-            <deleted name="Untrusted" admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:35"/>
-            <deleted name="Untrusted" admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:35"/>
           </zone>
           <service>
             <entry name="service-darts-centerra-tcp">
@@ -20443,7 +20437,7 @@
           <rulebase>
             <nat>
               <rules>
-                <entry name="DARTS-Azure-VM0-To-Centera-Node1-A" uuid="15ab89b9-a054-4b0a-92fe-2c51a1ae3dc6">
+                <entry name="DARTS-Azure-VM0-To-Centera-Node1-A" uuid="759d487d-4849-4379-867c-f87d2ced4841">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -20469,7 +20463,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM0-To-Centera-Node1-B" uuid="25d6ae01-c787-4f92-9c35-239bfa8a2b75">
+                <entry name="DARTS-Azure-VM0-To-Centera-Node1-B" uuid="19fdb660-fc3a-47c4-bdbc-e5a904eb685a">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20495,7 +20489,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM0-To-Centera-Node2-A" uuid="672e7cd9-c90d-4a92-8ebd-02c9f22ce6a7">
+                <entry name="DARTS-Azure-VM0-To-Centera-Node2-A" uuid="c7cd7e3b-c6b4-48c0-a1f4-4841fe9ff7b2">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20521,7 +20515,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM0-To-Centera-Node2-B" uuid="7ad0ce1e-0ec4-45a7-8ea5-d646ca6adf68">
+                <entry name="DARTS-Azure-VM0-To-Centera-Node2-B" uuid="fd3f02a5-67aa-47e3-be09-03b064b53312">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20547,7 +20541,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM1-To-Centera-Node1-A" uuid="5e771198-dda1-4b2a-a583-c5b32dee36cf">
+                <entry name="DARTS-Azure-VM1-To-Centera-Node1-A" uuid="4bcb5f72-bdbf-4c19-a322-eb7db2ecc407">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -20573,7 +20567,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM1-To-Centera-Node1-B" uuid="421659e9-2274-4977-a026-159ccabbaec9">
+                <entry name="DARTS-Azure-VM1-To-Centera-Node1-B" uuid="aefdacd2-db65-494f-9f15-6e81b9a7ee8f">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20599,7 +20593,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM1-To-Centera-Node2-A" uuid="b05e2c26-8769-44e2-b63a-79ef08d4c613">
+                <entry name="DARTS-Azure-VM1-To-Centera-Node2-A" uuid="7c3324b7-8031-4b5d-a0a4-62ee1956b321">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20625,7 +20619,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM1-To-Centera-Node2-B" uuid="d7648746-6715-4d67-a341-b06c397e6a56">
+                <entry name="DARTS-Azure-VM1-To-Centera-Node2-B" uuid="21f9991f-69e9-42e6-8973-73ac27dffc52">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20651,7 +20645,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM2-To-Centera-Node1-A" uuid="5fc69d21-f5d3-4d99-85f1-73491de20559">
+                <entry name="DARTS-Azure-VM2-To-Centera-Node1-A" uuid="947648c4-d8d3-40fc-881b-66c33fc93afa">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -20677,7 +20671,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM2-To-Centera-Node1-B" uuid="92792486-9a3b-4def-b7f7-0ebb8c5a3286">
+                <entry name="DARTS-Azure-VM2-To-Centera-Node1-B" uuid="b2223061-ccfc-4482-ac0d-debc8932ff44">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20703,7 +20697,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM2-To-Centera-Node2-A" uuid="a51b3591-9b92-41bd-b1e4-f2980a275c58">
+                <entry name="DARTS-Azure-VM2-To-Centera-Node2-A" uuid="1d9b6bd5-8721-4152-91e4-7b742d9864eb">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20729,7 +20723,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM2-To-Centera-Node2-B" uuid="82235a23-3808-4a37-a0c7-cd5a78aa3e57">
+                <entry name="DARTS-Azure-VM2-To-Centera-Node2-B" uuid="290b8f7d-0d97-4533-9fda-c378c50d8b1c">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20755,7 +20749,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM3-To-Centera-Node1-A" uuid="de7446e1-d75e-4f7b-ba9e-347e63dfdb5a">
+                <entry name="DARTS-Azure-VM3-To-Centera-Node1-A" uuid="ad76e9c0-45b5-41e2-ae6a-589fdc3992cf">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -20781,7 +20775,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM3-To-Centera-Node1-B" uuid="10038cf7-9f95-46c2-8d19-6556d86a869d">
+                <entry name="DARTS-Azure-VM3-To-Centera-Node1-B" uuid="ec5a6f2f-c601-4a79-b222-3490ddbd649b">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20807,7 +20801,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM3-To-Centera-Node2-A" uuid="a52553a4-1ad9-4fee-8cc7-e2299ac52413">
+                <entry name="DARTS-Azure-VM3-To-Centera-Node2-A" uuid="23b9b9b8-0964-4869-8621-db5fb680f4d9">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20833,7 +20827,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM3-To-Centera-Node2-B" uuid="ed7eca7e-830f-4b13-b874-d90066234de0">
+                <entry name="DARTS-Azure-VM3-To-Centera-Node2-B" uuid="863d354c-a133-42f3-a00f-1dd7d1eef64c">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20859,7 +20853,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM4-To-Centera-Node1-A" uuid="40638cd0-771a-41bb-856c-36f86931cdeb">
+                <entry name="DARTS-Azure-VM4-To-Centera-Node1-A" uuid="732f9563-dcc4-4fd1-bca3-9ba548a5213d">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -20885,7 +20879,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM4-To-Centera-Node1-B" uuid="21d746ec-12ee-4de4-baac-ea0039236421">
+                <entry name="DARTS-Azure-VM4-To-Centera-Node1-B" uuid="f10e2b6d-6fa7-49c8-bdcf-170b8eab310a">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20911,7 +20905,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM4-To-Centera-Node2-A" uuid="54bef290-b5a2-473f-a815-dc3664902f76">
+                <entry name="DARTS-Azure-VM4-To-Centera-Node2-A" uuid="9e4fa62f-b0d0-40a7-9046-d41dc6efde76">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20937,7 +20931,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM4-To-Centera-Node2-B" uuid="79635ccf-365a-4351-b8b0-7ed3bff9b336">
+                <entry name="DARTS-Azure-VM4-To-Centera-Node2-B" uuid="7b16e76e-ca85-4baa-9bb9-777660b47e44">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -20963,7 +20957,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM5-To-Centera-Node1-A" uuid="e51d80b5-27c1-4822-a9fd-637f0fa63576">
+                <entry name="DARTS-Azure-VM5-To-Centera-Node1-A" uuid="0e241961-9ee3-4534-b1d5-f8f765a221d2">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -20989,7 +20983,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM5-To-Centera-Node1-B" uuid="6ccb4c1c-6565-4bf0-a67f-5db0f0d41426">
+                <entry name="DARTS-Azure-VM5-To-Centera-Node1-B" uuid="bf40ac25-4baa-4f88-903c-df2e63d57987">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -21015,7 +21009,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM5-To-Centera-Node2-A" uuid="411aa4ad-8f82-46e8-8685-145e4214558a">
+                <entry name="DARTS-Azure-VM5-To-Centera-Node2-A" uuid="bc3b89e6-0128-4031-aafb-0c28967e66b6">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -21041,7 +21035,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM5-To-Centera-Node2-B" uuid="7ab75a8b-8b76-4e69-8c8e-23dbe0ac9ff6">
+                <entry name="DARTS-Azure-VM5-To-Centera-Node2-B" uuid="ba964cfc-1851-4cf8-800e-8a3dcaa8356e">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -21067,7 +21061,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM6-To-Centera-Node1-A" uuid="284800dd-9270-4761-914d-c20de3e4680e">
+                <entry name="DARTS-Azure-VM6-To-Centera-Node1-A" uuid="8d11d44c-e8b9-45a5-a131-2b62001270e1">
                   <destination-translation>
                     <translated-port>3218</translated-port>
                     <translated-address>SW-DCA-CN0052-Node1</translated-address>
@@ -21093,7 +21087,7 @@
                     </dynamic-ip-and-port>
                   </source-translation>
                 </entry>
-                <entry name="DARTS-Azure-VM6-To-Centera-Node1-B" uuid="55a4e677-e2f6-4474-8489-7288cda3d4b6">
+                <entry name="DARTS-Azure-VM6-To-Centera-Node1-B" uuid="fd2fde14-a7d3-4bde-bbc4-f919c0d6d244">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -21119,7 +21113,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM6-To-Centera-Node2-A" uuid="97eb8cfb-1245-4d35-a3d3-bdaee7aa8c4f">
+                <entry name="DARTS-Azure-VM6-To-Centera-Node2-A" uuid="19deb35a-3d65-4a28-8c53-691e83d4859c">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -21145,7 +21139,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="DARTS-Azure-VM6-To-Centera-Node2-B" uuid="c5f9c11c-d033-41bb-9ff0-e9b18c06a6d1">
+                <entry name="DARTS-Azure-VM6-To-Centera-Node2-B" uuid="37e6ae4f-c42d-4c54-ad67-3839b5750cb0">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <translated-address>
@@ -21171,7 +21165,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="CN0052-Node3-A-DNAT" uuid="92ed4693-f910-4cd2-9e57-5f0dad45a228">
+                <entry name="CN0052-Node3-A-DNAT" uuid="5ded086f-2c48-4d5d-a7c4-134fd4ac997f">
                   <destination-translation>
                     <translated-port>3682</translated-port>
                     <translated-address>SW-DCA-CN0052-Node3</translated-address>
@@ -21190,7 +21184,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="CN0052-Node3-B-DNAT" uuid="fee6549c-c8a7-49ea-8465-be91ec91fa9d">
+                <entry name="CN0052-Node3-B-DNAT" uuid="8dd66947-4995-49fe-ad7c-ebb8d794ba94">
                   <destination-translation>
                     <translated-port>3682</translated-port>
                     <translated-address>SW-DCA-CN0052-Node3</translated-address>
@@ -21209,7 +21203,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="CN0052-Node4-A-DNAT" uuid="9c07c2a0-9cb3-404b-9765-ff2bbc1642e9">
+                <entry name="CN0052-Node4-A-DNAT" uuid="017f8d72-1a61-4828-8e8a-102737559ac6">
                   <destination-translation>
                     <translated-port>3682</translated-port>
                     <translated-address>SW-DCA-CN0052-Node4</translated-address>
@@ -21228,7 +21222,7 @@
                   </destination>
                   <service>centerra</service>
                 </entry>
-                <entry name="CN0052-Node4-B-DNAT" uuid="22d7e278-89c5-43e5-9ea3-4c25fe96b73c">
+                <entry name="CN0052-Node4-B-DNAT" uuid="41ba969e-4979-4051-93e8-c4a19dcb9f11">
                   <destination-translation>
                     <translated-port>3682</translated-port>
                     <translated-address>SW-DCA-CN0052-Node4</translated-address>
@@ -21251,7 +21245,7 @@
             </nat>
             <security>
               <rules>
-                <entry name="DARTS-DETS-AZURE-MIGRATION-TO-DC-SDANPL" uuid="ef73922e-ed12-4997-8d8e-013fbe84aad1">
+                <entry name="DARTS-DETS-AZURE-MIGRATION-TO-DC-SDANPL" uuid="4b94abdc-fe2d-41ed-90b8-df1c9459d587">
                   <profile-setting>
                     <profiles>
                       <file-blocking>
@@ -21304,7 +21298,7 @@
                   </destination-hip>
                   <action>allow</action>
                 </entry>
-                <entry name="DARTS-DETS-DC-SDANPL-TO-AZURE-MIGRATION" uuid="7bd3e583-1954-41ff-ba61-6382246cc15b">
+                <entry name="DARTS-DETS-DC-SDANPL-TO-AZURE-MIGRATION" uuid="0a5d2673-74d9-4576-944a-d1961f4f295b">
                   <profile-setting>
                     <profiles>
                       <file-blocking>
@@ -21357,7 +21351,7 @@
                   </destination-hip>
                   <action>allow</action>
                 </entry>
-                <entry name="DARTS-DETS-DC-CN0052-TO-AZURE" uuid="35e06791-0769-4dfa-8487-9e31a484f79e">
+                <entry name="DARTS-DETS-DC-CN0052-TO-AZURE" uuid="0c298777-3ae0-45e6-bfc0-08dda9d80d7c">
                   <profile-setting>
                     <profiles>
                       <file-blocking>
@@ -21410,7 +21404,7 @@
                   </destination-hip>
                   <action>allow</action>
                 </entry>
-                <entry name="DARTS-DETS-AZURE-TO-DC-CN0052" uuid="63985ba6-374b-443f-b510-e9c3f35c5dd1">
+                <entry name="DARTS-DETS-AZURE-TO-DC-CN0052" uuid="df2872e0-9c77-4326-8ffb-295fb6131775">
                   <profile-setting>
                     <profiles>
                       <file-blocking>
@@ -21463,7 +21457,7 @@
                   </destination-hip>
                   <action>allow</action>
                 </entry>
-                <entry name="DARTS-DETS-AZURE-TO-10-100-197-200" uuid="39307129-3b5b-4e07-83e7-a625d012843e">
+                <entry name="DARTS-DETS-AZURE-TO-10-100-197-200" uuid="948aedab-a972-48e5-b97a-bfbb6728293a">
                   <profile-setting>
                     <profiles>
                       <file-blocking>
@@ -21515,7 +21509,7 @@
                   </destination-hip>
                   <action>allow</action>
                 </entry>
-                <entry name="DARTS-DETS-AZURE-TO-Documentum-API-VIP" uuid="d2e38bcd-6aed-48c9-b7c8-645c5e2f1a94">
+                <entry name="DARTS-DETS-AZURE-TO-Documentum-API-VIP" uuid="4e7f75eb-930d-48aa-95e3-6a638a86ff98">
                   <profile-setting>
                     <profiles>
                       <file-blocking>
@@ -21567,7 +21561,7 @@
                   </destination-hip>
                   <action>allow</action>
                 </entry>
-                <entry name="DenyAll" uuid="88cc494a-0d15-48f3-9db2-b2a37326cca9">
+                <entry name="DenyAll" uuid="9c0d2626-2a38-4606-a1c1-bbae4cf465a3">
                   <to>
                     <member>any</member>
                   </to>
@@ -21723,8 +21717,6 @@
             <network>
               <interface>
                 <member>ethernet1/1</member>
-                <deleted admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:22"/>
-                <deleted admin="dartsadmin" dirtyId="2" time="2023/11/27 11:15:22"/>
               </interface>
             </network>
           </import>
