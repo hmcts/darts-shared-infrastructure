@@ -66,6 +66,9 @@ locals {
   ])
 
   admin_group_map = {
+    "demo"  = "DTS Darts Admin (env:demo)"
+    "ithc"  = "DTS Darts Admin (env:ithc)"
+    "test"  = "DTS Darts Admin (env:test)"
     "stg"  = "DTS Darts Admin (env:staging)"
     "prod" = "DTS Darts Admin (env:production)"
   }
