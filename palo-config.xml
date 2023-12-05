@@ -11,7 +11,7 @@
         </permissions>
       </entry>
       <entry name="dartsadmin">
-        <phash>$5$buvqqmik$ShCxiwsAk7drPEgY8BBQfQlSfzjIQux3ELfrBK8ZPj0</phash>
+        <phash>$5$buvqqmik$ShCxiwsAk7drPEgY8BBQfQlSfzjIQux3ELfrBK8ZPj0</phash> <!-- replace this with your password hash or reset the password from the cli/gui -->
         <permissions>
           <role-based>
             <superuser>yes</superuser>
