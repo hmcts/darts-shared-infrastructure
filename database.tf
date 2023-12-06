@@ -17,6 +17,7 @@ resource "azurerm_subnet" "postgres" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible.username
   key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
@@ -24,6 +25,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_USER" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name         = "POSTGRES-PASS"
   value        = module.postgresql_flexible.password
   key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
@@ -31,6 +33,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name         = "POSTGRES-HOST"
   value        = module.postgresql_flexible.fqdn
   key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
@@ -38,6 +41,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name         = "POSTGRES-PORT"
   value        = local.db_port
   key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
@@ -45,6 +49,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name         = "POSTGRES-DATABASE"
   value        = local.db_name
   key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
@@ -72,7 +77,7 @@ module "postgresql_flexible" {
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
-  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[each.key].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration.name}/subnets/${azurerm_subnet.postgres.name}"
+  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[each.key].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration[each.key].name}/subnets/${azurerm_subnet.postgres.name}"
   pgsql_databases = [
     {
       name : local.db_name
