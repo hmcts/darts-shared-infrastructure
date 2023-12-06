@@ -100,7 +100,7 @@ resource "random_password" "palo_password" {
 
 resource "azurerm_key_vault_secret" "palo_password" {
   for_each = contains(["stg", "prod"], var.env) ? var.palo_networks : {}
-  count        = length(var.palo_networks) > 0 ? 1 : 0
+  # count        = length(var.palo_networks) > 0 ? 1 : 0
   name         = "darts-migration-palo-vm01-${var.env}"
   value        = random_password.palo_password[0].result
   key_vault_id = module.darts_migration_key_vault.key_vault_id
@@ -110,7 +110,7 @@ resource "azurerm_key_vault_secret" "palo_password" {
 
 resource "azurerm_linux_virtual_machine" "palo" {
   for_each = contains(["stg", "prod"], var.env) ? var.palo_networks : {}
-  count               = length(var.palo_networks) > 0 ? 1 : 0
+  # count               = length(var.palo_networks) > 0 ? 1 : 0
   name                = "darts-migration-palo-vm01-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
