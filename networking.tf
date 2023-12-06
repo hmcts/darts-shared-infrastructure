@@ -63,7 +63,7 @@ resource "azurerm_route" "route" {
 }
 
 resource "azurerm_route" "firewall_routes" {
-  for_each = contains(["stg", "prod"], var.env) ? toset(var.firewall_route_ranges) : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.firewall_route_ranges : {}
   name                   = "firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
   resource_group_name    = azurerm_resource_group.darts_migration_resource_group[each.key].name
   route_table_name       = azurerm_route_table.route_table[each.key].name
