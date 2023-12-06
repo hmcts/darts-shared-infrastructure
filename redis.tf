@@ -1,4 +1,5 @@
 module "darts_redis" {
+  for_each = var.env == "prod" || "stg" ? 1 : {}
   source        = "git@github.com:hmcts/cnp-module-redis?ref=master"
   product       = var.product
   location      = var.location
@@ -16,6 +17,7 @@ module "darts_redis" {
 }
 
 resource "azurerm_key_vault_secret" "redis_connection_string" {
+  for_each = var.env == "prod" || "stg" ? 1 : {}
   name  = "redis-connection-string"
   value = "rediss://:${urlencode(module.darts_redis.access_key)}@${module.darts_redis.host_name}:${module.darts_redis.redis_port}?tls=true"
 

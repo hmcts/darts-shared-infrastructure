@@ -53,6 +53,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
 data "azurerm_subscription" "this" {}
 
 module "postgresql_flexible" {
+  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
   providers = {
     azurerm.postgres_network = azurerm
   }
