@@ -13,7 +13,7 @@ module "sa-migration" {
   account_tier                      = var.sa_mig_account_tier
   account_replication_type          = var.sa_mig_account_replication_type
   containers                        = local.containers-mig
-  private_endpoint_subnet_id        = resource.azurerm_subnet.migration.id
+  private_endpoint_subnet_id        = resource.azurerm_subnet.migration[each.key].id
   enable_nfs                        = true
   enable_hns                        = true
   enable_data_protection            = true

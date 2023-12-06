@@ -74,6 +74,6 @@ resource "azurerm_route" "firewall_routes" {
 
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
-  subnet_id      = azurerm_subnet.migration.id
-  route_table_id = azurerm_route_table.route_table.id
+  subnet_id      = azurerm_subnet.migration[each.key].id
+  route_table_id = azurerm_route_table.route_table[each.key].id
 }

@@ -1,6 +1,6 @@
 resource "azurerm_subnet" "postgres" {
   name                 = "postgres-sn"
-  resource_group_name  = local.rg_name
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
   virtual_network_name = azurerm_virtual_network.migration.name
   address_prefixes     = [var.postgres_subnet_address_space]
   service_endpoints    = ["Microsoft.Storage"]
@@ -61,7 +61,7 @@ module "postgresql_flexible" {
   source              = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
   env                 = var.env
   product             = var.product
-  resource_group_name = local.rg_name
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
   component           = var.component
   name                = "darts-migration"
   business_area       = "sds"
@@ -71,7 +71,7 @@ module "postgresql_flexible" {
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
-  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${local.rg_name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration.name}/subnets/${azurerm_subnet.postgres.name}"
+  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[each.key].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration.name}/subnets/${azurerm_subnet.postgres.name}"
   pgsql_databases = [
     {
       name : local.db_name

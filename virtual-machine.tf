@@ -7,7 +7,7 @@ resource "azurerm_network_interface" "migration" {
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.migration.id
+    subnet_id                     = azurerm_subnet.migration[each.key].id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -97,7 +97,7 @@ resource "azurerm_network_interface" "assessment" {
 
   ip_configuration {
     name                          = "assessment-ipconfig"
-    subnet_id                     = azurerm_subnet.migration.id
+    subnet_id                     = azurerm_subnet.migration[each.key].id
     private_ip_address_allocation = "Dynamic"
   }
 }

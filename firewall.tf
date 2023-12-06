@@ -13,7 +13,7 @@ resource "azurerm_subnet" "palo" {
   for_each = contains(["stg", "prod"], var.env) ? var.palo_networks : {}
   name                 = "darts-migration-palo-${each.key}-${var.env}"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
-  virtual_network_name = azurerm_virtual_network.migration.name[each.key]
+  virtual_network_name = azurerm_virtual_network.migration[each.key].name
   address_prefixes     = [each.value.address_space]
 }
 
