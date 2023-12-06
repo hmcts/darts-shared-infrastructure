@@ -1,7 +1,7 @@
 resource "azurerm_subnet" "postgres" {
   name                 = "postgres-sn"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
-  virtual_network_name = azurerm_virtual_network.migration.name
+  virtual_network_name = azurerm_virtual_network.migration[each.key].name
   address_prefixes     = [var.postgres_subnet_address_space]
   service_endpoints    = ["Microsoft.Storage"]
   delegation {

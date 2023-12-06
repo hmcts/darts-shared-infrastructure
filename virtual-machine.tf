@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   name                            = "migration-vm"
   location                        = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[each.key].name
-  network_interface_ids           = [azurerm_network_interface.migration.id]
+  network_interface_ids           = [azurerm_network_interface.migration[each.key].id]
   size                            = "Standard_D8ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
@@ -114,7 +114,7 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
   provision_vm_agent  = true
   computer_name       = "winAssessment"
   network_interface_ids = [
-    azurerm_network_interface.assessment.id,
+    azurerm_network_interface.assessment[each.key].id,
   ]
   os_disk {
     caching              = "ReadWrite"
