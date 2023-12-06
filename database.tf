@@ -77,7 +77,7 @@ module "postgresql_flexible" {
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
-  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[each.key].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration[each.key].name}/subnets/${azurerm_subnet.postgres.name}"
+  pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[each.key].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration[each.key].name}/subnets/${azurerm_subnet.postgres[eachy.key].name}"
   pgsql_databases = [
     {
       name : local.db_name
