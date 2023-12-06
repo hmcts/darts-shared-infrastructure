@@ -64,8 +64,8 @@ resource "azurerm_linux_virtual_machine" "migration" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
-  managed_disk_id    = azurerm_managed_disk.migration_data.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration.id
+  managed_disk_id    = azurerm_managed_disk.migration_data[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
@@ -73,7 +73,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
 resource "azurerm_virtual_machine_extension" "migration_aad" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                       = "AADSSHLoginForLinux"
-  virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration[each.key].id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
