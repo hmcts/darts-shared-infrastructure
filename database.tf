@@ -17,7 +17,7 @@ resource "azurerm_subnet" "postgres" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible[0].username
   key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
