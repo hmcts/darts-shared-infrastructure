@@ -1,5 +1,5 @@
 resource "azurerm_virtual_network" "migration" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "migration-vnet"
   address_space       = concat([var.address_space, var.postgres_subnet_address_space], local.palo_address_space)
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "migration" {
 }
 
 resource "azurerm_subnet" "migration" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name = azurerm_virtual_network.migration.name
@@ -22,7 +22,7 @@ data "azurerm_virtual_network" "hub-south-vnet" {
 }
 
 resource "azurerm_virtual_network_peering" "darts_migration_to_hub" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                         = "darts-migration-to-hub-${var.env}"
   resource_group_name          = azurerm_resource_group.darts_migration_resource_group.name
   virtual_network_name         = azurerm_virtual_network.migration.name
@@ -33,7 +33,7 @@ resource "azurerm_virtual_network_peering" "darts_migration_to_hub" {
 }
 
 resource "azurerm_virtual_network_peering" "hub_to_darts_migration" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   provider                     = azurerm.hub
   name                         = "hub-to-darts-migration-${var.env}"
   resource_group_name          = local.hub[var.hub].ukSouth.name
@@ -45,7 +45,7 @@ resource "azurerm_virtual_network_peering" "hub_to_darts_migration" {
 }
 
 resource "azurerm_route_table" "route_table" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "darts-migration-rt-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
   location            = azurerm_resource_group.darts_migration_resource_group.location
@@ -53,7 +53,7 @@ resource "azurerm_route_table" "route_table" {
 }
 
 resource "azurerm_route" "route" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                   = "DefaultRoute"
   resource_group_name    = azurerm_resource_group.darts_migration_resource_group.name
   route_table_name       = azurerm_route_table.route_table.name
@@ -73,7 +73,7 @@ resource "azurerm_route" "firewall_routes" {
 }
 
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   subnet_id      = azurerm_subnet.migration.id
   route_table_id = azurerm_route_table.route_table.id
 }

@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "darts_resource_group" {
 }
 
 resource "azurerm_resource_group" "darts_migration_resource_group" {
-  for_each = var.env == "prod" || "stg" ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name     = format("%s-migration-%s-rg", var.product, var.env)
   location = var.location
 

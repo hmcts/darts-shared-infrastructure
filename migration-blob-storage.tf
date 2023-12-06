@@ -3,7 +3,7 @@ data "azurerm_resource_group" "darts_migration_resource_group" {
 }
 
 module "sa-migration" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
   storage_account_name              = local.migration_storage_account_name
@@ -24,7 +24,7 @@ module "sa-migration" {
 }
 
 resource "azurerm_storage_blob" "migration-st" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                   = "${var.product}-migration-blob-st-${var.env}"
   storage_account_name   = module.sa-migration.storageaccount_name
   storage_container_name = local.darts_migration_container

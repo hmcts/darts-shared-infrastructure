@@ -100,7 +100,9 @@ variable "address_space" {}
 variable "postgres_subnet_address_space" {
   type = string
 }
-
+variable "create_resource"{
+  default = true
+}
 variable "aks_subscription_id" {}
 
 variable "virtual_machine_admins" {

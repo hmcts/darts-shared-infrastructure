@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "migration" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "migration-nic"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "migration" {
 }
 
 resource "azurerm_managed_disk" "migration_os" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                 = "migration-osdisk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
@@ -24,7 +24,7 @@ resource "azurerm_managed_disk" "migration_os" {
 }
 
 resource "azurerm_managed_disk" "migration_data" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                 = "migration-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
@@ -35,7 +35,7 @@ resource "azurerm_managed_disk" "migration_data" {
 }
 
 resource "azurerm_linux_virtual_machine" "migration" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                            = "migration-vm"
   location                        = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
@@ -63,7 +63,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   managed_disk_id    = azurerm_managed_disk.migration_data.id
   virtual_machine_id = azurerm_linux_virtual_machine.migration.id
   lun                = "10"
@@ -71,7 +71,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
 }
 
 resource "azurerm_virtual_machine_extension" "migration_aad" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                       = "AADSSHLoginForLinux"
   virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
@@ -82,14 +82,14 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
 }
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
 
 resource "azurerm_network_interface" "assessment" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "assessment-nic"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
@@ -103,7 +103,7 @@ resource "azurerm_network_interface" "assessment" {
 }
 
 resource "azurerm_windows_virtual_machine" "assessment_windows" {
-  for_each = contains(["stg", "prod"], var.env) ? 1 : {}
+  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "assessment-windows"
   location            = azurerm_resource_group.darts_migration_resource_group.location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
