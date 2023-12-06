@@ -56,6 +56,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
   identity {
     type = "SystemAssigned"
   }
+    custom_data = filebase64("FormatDisk.sh")
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
@@ -74,6 +75,9 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   auto_upgrade_minor_version = true
   tags                       = var.common_tags
 }
+
+
+
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
   name         = "os-profile-password"
