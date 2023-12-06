@@ -26,7 +26,7 @@ module "sa-migration" {
 resource "azurerm_storage_blob" "migration-st" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                   = "${var.product}-migration-blob-st-${var.env}"
-  storage_account_name   = module.sa-migration.storageaccount_name
+  storage_account_name   = module.sa-migration[each.key].storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
 

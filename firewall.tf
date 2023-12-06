@@ -103,7 +103,7 @@ resource "azurerm_key_vault_secret" "palo_password" {
   # count        = length(var.palo_networks) > 0 ? 1 : 0
   name         = "darts-migration-palo-vm01-${var.env}"
   value        = random_password.palo_password[0].result
-  key_vault_id = module.darts_migration_key_vault.key_vault_id
+  key_vault_id = module.darts_migration_key_vault[each.key].key_vault_id
 
   depends_on = [module.darts_migration_key_vault]
 }
