@@ -16,6 +16,7 @@ module "darts_key_vault" {
 }
 
 module "darts_migration_key_vault" {
+  for_each = contains(["stg", "prod"], var.env) ? var.palo_networks : {}
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   depends_on = [module.darts_key_vault]
