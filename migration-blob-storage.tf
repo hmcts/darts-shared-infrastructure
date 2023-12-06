@@ -7,7 +7,7 @@ module "sa-migration" {
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
   storage_account_name              = local.migration_storage_account_name
-  resource_group_name               = azurerm_resource_group.darts_migration_resource_group.name
+  resource_group_name               = azurerm_resource_group.darts_migration_resource_group[each.key].name
   location                          = var.location
   account_kind                      = var.sa_mig_account_kind
   account_tier                      = var.sa_mig_account_tier

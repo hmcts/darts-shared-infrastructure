@@ -1,8 +1,8 @@
 resource "azurerm_network_interface" "migration" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "migration-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
   tags                = var.common_tags
 
   ip_configuration {
@@ -15,8 +15,8 @@ resource "azurerm_network_interface" "migration" {
 resource "azurerm_managed_disk" "migration_os" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                 = "migration-osdisk"
-  location             = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  location             = azurerm_resource_group.darts_migration_resource_group[each.key].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = "20"
@@ -26,8 +26,8 @@ resource "azurerm_managed_disk" "migration_os" {
 resource "azurerm_managed_disk" "migration_data" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                 = "migration-datadisk"
-  location             = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  location             = azurerm_resource_group.darts_migration_resource_group[each.key].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = "200"
@@ -37,8 +37,8 @@ resource "azurerm_managed_disk" "migration_data" {
 resource "azurerm_linux_virtual_machine" "migration" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                            = "migration-vm"
-  location                        = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
+  location                        = azurerm_resource_group.darts_migration_resource_group[each.key].location
+  resource_group_name             = azurerm_resource_group.darts_migration_resource_group[each.key].name
   network_interface_ids           = [azurerm_network_interface.migration.id]
   size                            = "Standard_D8ds_v5"
   tags                            = var.common_tags
@@ -91,8 +91,8 @@ resource "azurerm_key_vault_secret" "os_profile_password" {
 resource "azurerm_network_interface" "assessment" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "assessment-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
   tags                = var.common_tags
 
   ip_configuration {
@@ -105,8 +105,8 @@ resource "azurerm_network_interface" "assessment" {
 resource "azurerm_windows_virtual_machine" "assessment_windows" {
   for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
   name                = "assessment-windows"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
   size                = "Standard_D8ds_v5"
   tags                = var.common_tags
   admin_username      = var.admin_user
