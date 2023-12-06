@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "postgres" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0
   name                 = "postgres-sn"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
   virtual_network_name = azurerm_virtual_network.migration[each.key].name
