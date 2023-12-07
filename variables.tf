@@ -118,6 +118,13 @@ variable "virtual_machine_admins" {
   ]
 }
 
+variable "vm_non_admin" {
+  type        = list(string)
+  description = "Map of string describing the migration windows virtual machines to create."
+  default = [
+  ]
+}
+
 
 # variable "virtual_machine_users" {
 #   description = "List of pricipal IDs for the virtual machine users."
