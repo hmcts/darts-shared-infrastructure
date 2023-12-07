@@ -29,4 +29,4 @@ family   = "P"
 capacity = "1"
 
 palo_networks         = {}
-firewall_route_ranges = []
+firewall_route_ranges = {}

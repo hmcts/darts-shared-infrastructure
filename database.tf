@@ -67,7 +67,7 @@ module "postgresql_flexible" {
   source              = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
   env                 = var.env
   product             = var.product
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   component           = var.component
   name                = "darts-migration"
   business_area       = "sds"

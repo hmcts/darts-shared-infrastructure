@@ -17,9 +17,9 @@ module "darts_redis" {
 }
 
 resource "azurerm_key_vault_secret" "redis_connection_string" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0 
   name  = "redis-connection-string"
-  value = "rediss://:${urlencode(module.darts_redis[each.key].access_key)}@${module.darts_redis[each.key].host_name}:${module.darts_redis[each.key].redis_port}?tls=true"
+  value = "rediss://:${urlencode(module.darts_redis[0].access_key)}@${module.darts_redis[0].host_name}:${module.darts_redis[0].redis_port}?tls=true"
 
   key_vault_id = module.darts_key_vault.key_vault_id
 }
