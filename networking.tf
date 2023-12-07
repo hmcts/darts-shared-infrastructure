@@ -74,6 +74,6 @@ resource "azurerm_route" "firewall_routes" {
 
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   count = contains(["stg", "prod"], var.env) ? 1 : 0 
-  subnet_id      = azurerm_subnet.migration[1].id
-  route_table_id = azurerm_route_table.route_table[1].id
+  subnet_id      = azurerm_subnet.migration[0].id
+  route_table_id = azurerm_route_table.route_table[0].id
 }
