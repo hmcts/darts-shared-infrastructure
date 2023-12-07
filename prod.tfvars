@@ -6,23 +6,23 @@ storage_account_contributor_ids = []
 defender_enable                 = true
 defender_scan                   = true
 
-virtual_machine_admins = {
-  user1 = {
-    guid = "675f1c23-3e46-4cf8-867b-747eb60fe89d"
-  }
-  user2 = {
-    guid = "d8b336b1-91fb-4fa6-bbe2-1f197c0d52c8"
-  }
-  user3 = {
-    guid = "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d"
-  }
-  user4 = {
-    guid = "50132661-6997-484e-b0fd-5ec1052afabb"
-  }
-  user5 = {
-    guid = "e7ea2042-4ced-45dd-8ae3-e051c6551789"
-  }
-}
+# virtual_machine_admins = {
+#   user1 = {
+#     guid = "675f1c23-3e46-4cf8-867b-747eb60fe89d"
+#   }
+#   user2 = {
+#     guid = "d8b336b1-91fb-4fa6-bbe2-1f197c0d52c8"
+#   }
+#   user3 = {
+#     guid = "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d"
+#   }
+#   user4 = {
+#     guid = "50132661-6997-484e-b0fd-5ec1052afabb"
+#   }
+#   user5 = {
+#     guid = "e7ea2042-4ced-45dd-8ae3-e051c6551789"
+#   }
+# }
 
 migration_vms = {
   prddartsmig01 = {
