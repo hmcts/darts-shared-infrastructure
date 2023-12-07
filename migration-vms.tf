@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "migration_vms" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
+  for_each            = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
   name                = "${each.key}-nic"
   location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
@@ -14,7 +14,7 @@ resource "azurerm_network_interface" "migration_vms" {
 }
 
 resource "azurerm_managed_disk" "migration_vms_data" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
+  for_each             = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
   name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
@@ -25,7 +25,7 @@ resource "azurerm_managed_disk" "migration_vms_data" {
 }
 
 resource "azurerm_windows_virtual_machine" "migration_windows" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
+  for_each              = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
   name                  = each.key
   location              = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group[each.key].name
@@ -51,7 +51,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
+  for_each           = contains(["stg", "prod"], var.env) ? var.migration_vms : {}
   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = "10"
@@ -59,7 +59,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk"
 }
 
 resource "azurerm_network_interface" "migration-linux-nic" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
+  for_each            = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
   name                = "${each.key}-nic"
   location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
@@ -74,7 +74,7 @@ resource "azurerm_network_interface" "migration-linux-nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "migration-linux" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
+  for_each                        = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
   name                            = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[each.key].name
@@ -100,7 +100,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
 }
 
 resource "azurerm_managed_disk" "migration_disk" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
+  for_each             = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
   name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group[each.key].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
@@ -111,7 +111,7 @@ resource "azurerm_managed_disk" "migration_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
-  for_each = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
+  for_each           = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
   lun                = "10"

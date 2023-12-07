@@ -100,14 +100,14 @@ variable "address_space" {}
 variable "postgres_subnet_address_space" {
   type = string
 }
-variable "create_resource"{
+variable "create_resource" {
   default = true
 }
 variable "aks_subscription_id" {}
 
 
 variable "virtual_machine_admins" {
-  type = map(string)
+  type        = map(string)
   description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}
 }

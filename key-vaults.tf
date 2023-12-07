@@ -16,7 +16,7 @@ module "darts_key_vault" {
 }
 
 module "darts_migration_key_vault" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0 
+  count  = contains(["stg", "prod"], var.env) ? 1 : 0
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   depends_on = [module.darts_key_vault]

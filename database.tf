@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "postgres" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0
+  count                = contains(["stg", "prod"], var.env) ? 1 : 0
   name                 = "postgres-sn"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   virtual_network_name = azurerm_virtual_network.migration[0].name
@@ -17,7 +17,7 @@ resource "azurerm_subnet" "postgres" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0
+  count        = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible[0].username
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
@@ -25,7 +25,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_USER" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0
+  count        = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "POSTGRES-PASS"
   value        = module.postgresql_flexible[0].password
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
@@ -33,7 +33,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0
+  count        = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "POSTGRES-HOST"
   value        = module.postgresql_flexible[0].fqdn
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
@@ -41,7 +41,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0
+  count        = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "POSTGRES-PORT"
   value        = local.db_port
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
@@ -49,7 +49,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0
+  count        = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "POSTGRES-DATABASE"
   value        = local.db_name
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id

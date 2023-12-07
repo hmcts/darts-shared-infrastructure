@@ -17,7 +17,7 @@ virtual_machine_admins = {
     guid = "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d"
   }
   user4 = {
-    guid =  "50132661-6997-484e-b0fd-5ec1052afabb"
+    guid = "50132661-6997-484e-b0fd-5ec1052afabb"
   }
   user5 = {
     guid = "e7ea2042-4ced-45dd-8ae3-e051c6551789"
@@ -72,7 +72,7 @@ firewallfirewall_route_ranges = {
   }
   range10 = {
     ip_address = "10.23.253.244/32"
-  }  
+  }
   range11 = {
     ip_address = "10.63.111.175/32"
   }
@@ -86,10 +86,10 @@ firewallfirewall_route_ranges = {
     ip_address = "10.63.111.188/32"
   }
   range15 = {
-    ip_address =  "10.65.64.155/32"
+    ip_address = "10.65.64.155/32"
   }
   range16 = {
-    ip_address =  "10.65.64.180/32"
+    ip_address = "10.65.64.180/32"
   }
   range17 = {
     ip_address = "10.65.64.156/32"
@@ -101,7 +101,7 @@ firewallfirewall_route_ranges = {
     ip_address = "10.100.197.200/32"
   }
   range20 = {
-    ip_address =  "10.100.197.200/32"
+    ip_address = "10.100.197.200/32"
   }
 }
 
