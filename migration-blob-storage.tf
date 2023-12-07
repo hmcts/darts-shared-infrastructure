@@ -3,17 +3,17 @@ data "azurerm_resource_group" "darts_migration_resource_group" {
 }
 
 module "sa-migration" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
   storage_account_name              = local.migration_storage_account_name
-  resource_group_name               = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  resource_group_name               = azurerm_resource_group.darts_migration_resource_group[0].name
   location                          = var.location
   account_kind                      = var.sa_mig_account_kind
   account_tier                      = var.sa_mig_account_tier
   account_replication_type          = var.sa_mig_account_replication_type
   containers                        = local.containers-mig
-  private_endpoint_subnet_id        = resource.azurerm_subnet.migration[each.key].id
+  private_endpoint_subnet_id        = resource.azurerm_subnet.migration[0].id
   enable_nfs                        = true
   enable_hns                        = true
   enable_data_protection            = true
@@ -24,9 +24,9 @@ module "sa-migration" {
 }
 
 resource "azurerm_storage_blob" "migration-st" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0 
   name                   = "${var.product}-migration-blob-st-${var.env}"
-  storage_account_name   = module.sa-migration[each.key].storageaccount_name
+  storage_account_name   = module.sa-migration[0].storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
 

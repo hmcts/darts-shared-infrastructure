@@ -82,7 +82,7 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
 }
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0
   name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id

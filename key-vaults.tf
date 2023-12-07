@@ -16,7 +16,7 @@ module "darts_key_vault" {
 }
 
 module "darts_migration_key_vault" {
-  for_each = contains(["stg", "prod"], var.env) ? var.create_resource : {}
+  count = contains(["stg", "prod"], var.env) ? 1 : 0 
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   depends_on = [module.darts_key_vault]
@@ -25,9 +25,9 @@ module "darts_migration_key_vault" {
   product                     = var.product
   env                         = var.env
   object_id                   = var.jenkins_AAD_objectId
-  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
   product_group_name          = "DTS Darts Modernisation"
-  developers_group            = local.admin_group_map[var.env]
+  developers_group            = local.admin_group_map[0]
   create_managed_identity     = false
   managed_identity_object_ids = module.darts_key_vault.managed_identity_objectid
 
