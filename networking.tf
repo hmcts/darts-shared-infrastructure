@@ -63,10 +63,10 @@ resource "azurerm_route" "route" {
 }
 
 resource "azurerm_route" "firewall_routes" {
-  count = contains(["stg", "prod"], var.env) ? 1 : 0 
+  for_each = contains(["stg", "prod"], var.env) ? var.firewall_route_ranges : {}
   name                   = "firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
-  resource_group_name    = azurerm_resource_group.darts_migration_resource_group[0].name
-  route_table_name       = azurerm_route_table.route_table[0].name
+  resource_group_name    = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  route_table_name       = azurerm_route_table.route_table[each.key].name
   address_prefix         = each.value
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = azurerm_network_interface.palo["trust"].private_ip_address
@@ -74,6 +74,6 @@ resource "azurerm_route" "firewall_routes" {
 
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   count = contains(["stg", "prod"], var.env) ? 1 : 0 
-  subnet_id      = azurerm_subnet.migration[0].id
-  route_table_id = azurerm_route_table.route_table[0].id
+  subnet_id      = azurerm_subnet.migration[1].id
+  route_table_id = azurerm_route_table.route_table[1].id
 }
