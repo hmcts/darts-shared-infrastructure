@@ -107,16 +107,16 @@ variable "aks_subscription_id" {}
 
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
-  type        = list(string)
+  type        = map(object)
 }
 
 variable "virtual_machine_users" {
   description = "List of pricipal IDs for the virtual machine users."
-  type        = list(string)
+  type        = map(object)
 }
 
 variable "firewall_route_ranges" {
-  type        = list(string)
+  type        = map(object)
   description = "List of IP ranges to route through the firewall."
   default = [
     "10.23.253.177/32",
