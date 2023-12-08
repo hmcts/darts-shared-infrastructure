@@ -107,7 +107,7 @@ variable "aks_subscription_id" {}
 
 
 variable "virtual_machine_admins" {
-  type        = list(string)
+  type        = list
   description = "Map of string describing the migration windows virtual machines to create."
   default = [
     "675f1c23-3e46-4cf8-867b-747eb60fe89d",
