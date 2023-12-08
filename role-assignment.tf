@@ -1,6 +1,6 @@
 resource "azurerm_role_assignment" "vm-admin" {
-  for_each             = contains(["stg", "prod"], var.env) ? var.virtual_machine_admins : {}
-  scope                = azurerm_linux_virtual_machine.migration[each.value].id
+  for_each             = contains(["stg", "prod"], var.env) ? var.migration_linux_vms : {}
+  scope                = azurerm_linux_virtual_machine.migration-linux[for_each].id
   role_definition_name = "Virtual Machine Administrator Login"
   principal_id         = var.virtual_machine_admins[each.value]
 }
