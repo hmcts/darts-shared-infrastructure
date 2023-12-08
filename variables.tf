@@ -109,13 +109,13 @@ variable "aks_subscription_id" {}
 variable "virtual_machine_admins" {
   type        = map(object)
   description = "Map of string describing the migration windows virtual machines to create."
-  default = [
-    "675f1c23-3e46-4cf8-867b-747eb60fe89d",
-    "d8b336b1-91fb-4fa6-bbe2-1f197c0d52c8",
-    "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d",
-    "50132661-6997-484e-b0fd-5ec1052afabb",
-    "e7ea2042-4ced-45dd-8ae3-e051c6551789"
-  ]
+  default = {
+   1 = "675f1c23-3e46-4cf8-867b-747eb60fe89d"
+   2 = "d8b336b1-91fb-4fa6-bbe2-1f197c0d52c8"
+   3 = "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d"
+   4 = "50132661-6997-484e-b0fd-5ec1052afabb"
+   5 = "e7ea2042-4ced-45dd-8ae3-e051c6551789"
+  }
 }
 
 variable "vm_non_admin" {
