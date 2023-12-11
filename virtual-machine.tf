@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "migration" {
-  count               = contains(["stg", "prod"], var.env) ? 1 : 0
+  count               = local.is_migration_environment ? 1 : 0
   name                = "migration-nic"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "migration" {
 }
 
 resource "azurerm_managed_disk" "migration_os" {
-  count                = contains(["stg", "prod"], var.env) ? 1 : 0
+  count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-osdisk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -24,7 +24,7 @@ resource "azurerm_managed_disk" "migration_os" {
 }
 
 resource "azurerm_managed_disk" "migration_data" {
-  count                = contains(["stg", "prod"], var.env) ? 1 : 0
+  count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -35,7 +35,7 @@ resource "azurerm_managed_disk" "migration_data" {
 }
 
 resource "azurerm_linux_virtual_machine" "migration" {
-  count                           = contains(["stg", "prod"], var.env) ? 1 : 0
+  count                           = local.is_migration_environment ? 1 : 0
   name                            = "migration-vm"
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -63,7 +63,7 @@ resource "azurerm_linux_virtual_machine" "migration" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
-  count              = contains(["stg", "prod"], var.env) ? 1 : 0
+  count              = local.is_migration_environment ? 1 : 0
   managed_disk_id    = azurerm_managed_disk.migration_data[0].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration[0].id
   lun                = "10"
@@ -71,7 +71,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
 }
 
 resource "azurerm_virtual_machine_extension" "migration_aad" {
-  count                      = contains(["stg", "prod"], var.env) ? 1 : 0
+  count                      = local.is_migration_environment ? 1 : 0
   name                       = "AADSSHLoginForLinux"
   virtual_machine_id         = azurerm_linux_virtual_machine.migration[0].id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
@@ -82,14 +82,14 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
 }
 
 resource "azurerm_key_vault_secret" "os_profile_password" {
-  count        = contains(["stg", "prod"], var.env) ? 1 : 0
+  count        = local.is_migration_environment ? 1 : 0
   name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
 
 resource "azurerm_network_interface" "assessment" {
-  count               = contains(["stg", "prod"], var.env) ? 1 : 0
+  count               = local.is_migration_environment ? 1 : 0
   name                = "assessment-nic"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -103,7 +103,7 @@ resource "azurerm_network_interface" "assessment" {
 }
 
 resource "azurerm_windows_virtual_machine" "assessment_windows" {
-  count               = contains(["stg", "prod"], var.env) ? 1 : 0
+  count               = local.is_migration_environment ? 1 : 0
   name                = "assessment-windows"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name

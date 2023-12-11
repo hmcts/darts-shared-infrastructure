@@ -94,48 +94,40 @@ variable "application" {
 variable "admin_user" {
   default = "adminuser"
 }
-variable "hub" {}
 
-variable "address_space" {}
+variable "hub" {
+  type        = string
+  description = "The hub environment to peer with."
+  default     = "nonprod"
+}
+
+variable "address_space" {
+  type    = string
+  default = null
+}
+
 variable "postgres_subnet_address_space" {
-  type = string
+  type    = string
+  default = null
 }
-variable "create_resource" {
-  default = true
-}
+
 variable "aks_subscription_id" {}
 
-
 variable "virtual_machine_admins" {
-  type        = map(string)
-  description = "Map of string describing the migration windows virtual machines to create."
-  default = {
-   1 = "675f1c23-3e46-4cf8-867b-747eb60fe89d"
-   2 = "d8b336b1-91fb-4fa6-bbe2-1f197c0d52c8"
-   3 = "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d"
-   4 = "50132661-6997-484e-b0fd-5ec1052afabb"
-   5 = "e7ea2042-4ced-45dd-8ae3-e051c6551789"
-  }
-}
-
-variable "vm_non_admin" {
+  description = "List of pricipal IDs for the virtual machine administrators."
   type        = list(string)
-  description = "Map of string describing the migration windows virtual machines to create."
-  default = [
-  ]
+  default     = []
 }
 
-
-# variable "virtual_machine_users" {
-#   description = "List of pricipal IDs for the virtual machine users."
-#   type        = map(object)
-# }
+variable "virtual_machine_users" {
+  description = "List of pricipal IDs for the virtual machine users."
+  type        = list(string)
+  default     = []
+}
 
 variable "firewall_route_ranges" {
-  type = map(object({
-    ip_address = string
-  }))
-  description = "Map of objects describing the migration windows virtual machines to create."
+  type        = list(string)
+  description = "List of address ranges to route to the DARTS specific migration firewall."
   default     = {}
 }
 
@@ -211,5 +203,6 @@ variable "palo_networks" {
     })), {})
     nsg_deny_inbound = optional(bool, false)
   }))
+  default     = {}
   description = "Describes the networks and associated resources to support the Palo Alto Firewall."
 }

@@ -71,5 +71,8 @@ locals {
     "stg"  = "DTS Darts Admin (env:staging)"
     "prod" = "DTS Darts Admin (env:production)"
   }
+
+  migration_environments   = ["stg", "prod"]
+  is_migration_environment = contains(local.migration_environments, var.env)
 }
 
