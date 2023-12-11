@@ -128,7 +128,7 @@ variable "virtual_machine_users" {
 variable "firewall_route_ranges" {
   type        = list(string)
   description = "List of address ranges to route to the DARTS specific migration firewall."
-  default     = {}
+  default     = []
 }
 
 
