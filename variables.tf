@@ -94,11 +94,21 @@ variable "application" {
 variable "admin_user" {
   default = "adminuser"
 }
-variable "hub" {}
 
-variable "address_space" {}
+variable "hub" {
+  type        = string
+  description = "The hub environment to peer with."
+  default     = "nonprod"
+}
+
+variable "address_space" {
+  type    = string
+  default = null
+}
+
 variable "postgres_subnet_address_space" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "aks_subscription_id" {}
@@ -106,35 +116,21 @@ variable "aks_subscription_id" {}
 variable "virtual_machine_admins" {
   description = "List of pricipal IDs for the virtual machine administrators."
   type        = list(string)
+  default     = []
 }
 
 variable "virtual_machine_users" {
   description = "List of pricipal IDs for the virtual machine users."
   type        = list(string)
+  default     = []
 }
 
 variable "firewall_route_ranges" {
   type        = list(string)
-  description = "List of IP ranges to route through the firewall."
-  default = [
-    "10.23.253.177/32",
-    "10.23.253.178/32",
-    "10.23.253.241/32",
-    "10.23.253.242/32",
-    "10.23.253.243/32",
-    "10.23.253.244/32",
-    "10.63.111.175/32",
-    "10.63.111.187/32",
-    "10.63.111.176/32",
-    "10.63.111.188/32",
-    "10.65.64.155/32",
-    "10.65.64.180/32",
-    "10.65.64.156/32",
-    "10.65.64.181/32",
-    "10.100.197.200/32",
-    "10.100.197.200/32"
-  ]
+  description = "List of address ranges to route to the DARTS specific migration firewall."
+  default     = []
 }
+
 
 variable "storage_account_contributor_ids" {
   type        = list(string)
@@ -207,5 +203,6 @@ variable "palo_networks" {
     })), {})
     nsg_deny_inbound = optional(bool, false)
   }))
+  default     = {}
   description = "Describes the networks and associated resources to support the Palo Alto Firewall."
 }

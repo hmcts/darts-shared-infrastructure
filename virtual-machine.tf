@@ -1,41 +1,60 @@
 resource "azurerm_network_interface" "migration" {
+  count               = local.is_migration_environment ? 1 : 0
   name                = "migration-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   tags                = var.common_tags
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.migration.id
+    subnet_id                     = azurerm_subnet.migration[0].id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
+moved {
+  from = azurerm_network_interface.migration
+  to   = azurerm_network_interface.migration[0]
+}
+
 resource "azurerm_managed_disk" "migration_os" {
+  count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-osdisk"
-  location             = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = "20"
   tags                 = var.common_tags
 }
 
+moved {
+  from = azurerm_managed_disk.migration_os
+  to   = azurerm_managed_disk.migration_os[0]
+}
+
 resource "azurerm_managed_disk" "migration_data" {
+  count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-datadisk"
-  location             = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group.name
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = "200"
   tags                 = var.common_tags
 }
 
+moved {
+  from = azurerm_managed_disk.migration_data
+  to   = azurerm_managed_disk.migration_data[0]
+}
+
 resource "azurerm_linux_virtual_machine" "migration" {
+  count                           = local.is_migration_environment ? 1 : 0
   name                            = "migration-vm"
-  location                        = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name             = azurerm_resource_group.darts_migration_resource_group.name
-  network_interface_ids           = [azurerm_network_interface.migration.id]
+  location                        = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
+  network_interface_ids           = [azurerm_network_interface.migration[0].id]
   size                            = "Standard_D8ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
@@ -58,16 +77,28 @@ resource "azurerm_linux_virtual_machine" "migration" {
   }
 }
 
+moved {
+  from = azurerm_linux_virtual_machine.migration
+  to   = azurerm_linux_virtual_machine.migration[0]
+}
+
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
-  managed_disk_id    = azurerm_managed_disk.migration_data.id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration.id
+  count              = local.is_migration_environment ? 1 : 0
+  managed_disk_id    = azurerm_managed_disk.migration_data[0].id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration[0].id
   lun                = "10"
   caching            = "ReadWrite"
 }
 
+moved {
+  from = azurerm_virtual_machine_data_disk_attachment.datadisk
+  to   = azurerm_virtual_machine_data_disk_attachment.datadisk[0]
+}
+
 resource "azurerm_virtual_machine_extension" "migration_aad" {
+  count                      = local.is_migration_environment ? 1 : 0
   name                       = "AADSSHLoginForLinux"
-  virtual_machine_id         = azurerm_linux_virtual_machine.migration.id
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration[0].id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
@@ -75,29 +106,47 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   tags                       = var.common_tags
 }
 
+moved {
+  from = azurerm_virtual_machine_extension.migration_aad
+  to   = azurerm_virtual_machine_extension.migration_aad[0]
+}
+
 resource "azurerm_key_vault_secret" "os_profile_password" {
+  count        = local.is_migration_environment ? 1 : 0
   name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
 }
 
+moved {
+  from = azurerm_key_vault_secret.os_profile_password
+  to   = azurerm_key_vault_secret.os_profile_password[0]
+}
+
 resource "azurerm_network_interface" "assessment" {
+  count               = local.is_migration_environment ? 1 : 0
   name                = "assessment-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   tags                = var.common_tags
 
   ip_configuration {
     name                          = "assessment-ipconfig"
-    subnet_id                     = azurerm_subnet.migration.id
+    subnet_id                     = azurerm_subnet.migration[0].id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
+moved {
+  from = azurerm_network_interface.assessment
+  to   = azurerm_network_interface.assessment[0]
+}
+
 resource "azurerm_windows_virtual_machine" "assessment_windows" {
+  count               = local.is_migration_environment ? 1 : 0
   name                = "assessment-windows"
-  location            = azurerm_resource_group.darts_migration_resource_group.location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   size                = "Standard_D8ds_v5"
   tags                = var.common_tags
   admin_username      = var.admin_user
@@ -105,7 +154,7 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
   provision_vm_agent  = true
   computer_name       = "winAssessment"
   network_interface_ids = [
-    azurerm_network_interface.assessment.id,
+    azurerm_network_interface.assessment[0].id,
   ]
   os_disk {
     caching              = "ReadWrite"
@@ -119,4 +168,9 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
     sku       = "win11-21h2-pro"
     version   = "latest"
   }
+}
+
+moved {
+  from = azurerm_windows_virtual_machine.assessment_windows
+  to   = azurerm_windows_virtual_machine.assessment_windows[0]
 }

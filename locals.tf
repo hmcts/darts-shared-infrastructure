@@ -1,7 +1,6 @@
 locals {
   vault_name           = "${var.product}-${var.env}"
   migration_vault_name = "${var.product}-migration-${var.env}"
-  rg_name              = azurerm_resource_group.darts_migration_resource_group.name
   hub = {
     nonprod = {
       subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
@@ -66,11 +65,14 @@ locals {
   ])
 
   admin_group_map = {
-    "demo"  = "DTS Darts Admin (env:demo)"
-    "ithc"  = "DTS Darts Admin (env:ithc)"
-    "test"  = "DTS Darts Admin (env:test)"
+    "demo" = "DTS Darts Admin (env:demo)"
+    "ithc" = "DTS Darts Admin (env:ithc)"
+    "test" = "DTS Darts Admin (env:test)"
     "stg"  = "DTS Darts Admin (env:staging)"
     "prod" = "DTS Darts Admin (env:production)"
   }
+
+  migration_environments   = ["stg", "prod"]
+  is_migration_environment = contains(local.migration_environments, var.env)
 }
 
