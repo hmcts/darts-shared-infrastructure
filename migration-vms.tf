@@ -1,8 +1,8 @@
 resource "azurerm_network_interface" "migration_vms" {
-  for_each            = local.is_migration_environment ? var.migration_vms : {}
+  for_each             = var.migration_vms
   name                = "${each.key}-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   tags                = var.common_tags
 
   ip_configuration {
@@ -14,10 +14,10 @@ resource "azurerm_network_interface" "migration_vms" {
 }
 
 resource "azurerm_managed_disk" "migration_vms_data" {
-  for_each             = local.is_migration_environment ? var.migration_vms : {}
+  for_each             = var.migration_vms
   name                 = "${each.key}-datadisk"
-  location             = azurerm_resource_group.darts_migration_resource_group[each.key].location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = "255"
@@ -25,10 +25,10 @@ resource "azurerm_managed_disk" "migration_vms_data" {
 }
 
 resource "azurerm_windows_virtual_machine" "migration_windows" {
-  for_each              = local.is_migration_environment ? var.migration_vms : {}
+  for_each             = var.migration_vms
   name                  = each.key
-  location              = azurerm_resource_group.darts_migration_resource_group[each.key].location
-  resource_group_name   = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  location              = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
   size                  = "Standard_D16ds_v5"
   tags                  = var.common_tags
   admin_username        = var.admin_user
@@ -51,7 +51,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk" {
-  for_each           = local.is_migration_environment ? var.migration_vms : {}
+  for_each             = var.migration_vms
   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = "10"
@@ -59,10 +59,10 @@ resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk"
 }
 
 resource "azurerm_network_interface" "migration-linux-nic" {
-  for_each            = local.is_migration_environment ? var.migration_linux_vms : {}
+  for_each             = var.migration_linux_vms
   name                = "${each.key}-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group[each.key].location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   tags                = var.common_tags
 
   ip_configuration {
@@ -74,10 +74,10 @@ resource "azurerm_network_interface" "migration-linux-nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "migration-linux" {
-  for_each                        = local.is_migration_environment ? var.migration_linux_vms : {}
+  for_each             = var.migration_linux_vms
   name                            = each.key
-  location                        = azurerm_resource_group.darts_migration_resource_group[each.key].location
-  resource_group_name             = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  location                        = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
   network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
   size                            = "Standard_E32ds_v5"
   tags                            = var.common_tags
@@ -100,10 +100,10 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
 }
 
 resource "azurerm_managed_disk" "migration_disk" {
-  for_each             = local.is_migration_environment ? var.migration_linux_vms : {}
+  for_each             = var.migration_linux_vms
   name                 = "${each.key}-datadisk"
-  location             = azurerm_resource_group.darts_migration_resource_group[each.key].location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[each.key].name
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = "200"
@@ -111,7 +111,7 @@ resource "azurerm_managed_disk" "migration_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
-  for_each           = local.is_migration_environment ? var.migration_linux_vms : {}
+  for_each             = var.migration_linux_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
   lun                = "10"
