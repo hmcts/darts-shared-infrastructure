@@ -25,7 +25,7 @@ migration_vms = {
   }
 }
 
-firewallfirewall_route_ranges = [
+firewall_route_ranges = [
   "10.23.253.177/32",
   "10.23.253.178/32",
   "10.23.253.241/32",
