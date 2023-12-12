@@ -7,12 +7,22 @@ resource "azurerm_virtual_network" "migration" {
   tags                = var.common_tags
 }
 
+moved {
+  from = azurerm_virtual_network.migration
+  to   = azurerm_virtual_network.migration[0]
+}
+
 resource "azurerm_subnet" "migration" {
   count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-subnet"
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   virtual_network_name = azurerm_virtual_network.migration[0].name
   address_prefixes     = [var.address_space]
+}
+
+moved {
+  from = azurerm_subnet.migration
+  to   = azurerm_subnet.migration[0]
 }
 
 data "azurerm_virtual_network" "hub-south-vnet" {
@@ -33,6 +43,11 @@ resource "azurerm_virtual_network_peering" "darts_migration_to_hub" {
   allow_gateway_transit        = false
 }
 
+moved {
+  from = azurerm_virtual_network_peering.darts_migration_to_hub
+  to   = azurerm_virtual_network_peering.darts_migration_to_hub[0]
+}
+
 resource "azurerm_virtual_network_peering" "hub_to_darts_migration" {
   count                        = local.is_migration_environment ? 1 : 0
   provider                     = azurerm.hub
@@ -45,12 +60,22 @@ resource "azurerm_virtual_network_peering" "hub_to_darts_migration" {
   allow_gateway_transit        = false
 }
 
+moved {
+  from = azurerm_virtual_network_peering.hub_to_darts_migration
+  to   = azurerm_virtual_network_peering.hub_to_darts_migration[0]
+}
+
 resource "azurerm_route_table" "route_table" {
   count               = local.is_migration_environment ? 1 : 0
   name                = "darts-migration-rt-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   tags                = var.common_tags
+}
+
+moved {
+  from = azurerm_route_table.route_table
+  to   = azurerm_route_table.route_table[0]
 }
 
 resource "azurerm_route" "route" {
@@ -63,8 +88,13 @@ resource "azurerm_route" "route" {
   next_hop_in_ip_address = local.hub[var.hub].ukSouth.next_hop_ip
 }
 
+moved {
+  from = azurerm_route.route
+  to   = azurerm_route.route[0]
+}
+
 resource "azurerm_route" "firewall_routes" {
-  for_each               = local.is_migration_environment ? toset(var.firewall_route_ranges) : []
+  for_each               = toset(var.firewall_route_ranges)
   name                   = "firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
   resource_group_name    = azurerm_resource_group.darts_migration_resource_group[0].name
   route_table_name       = azurerm_route_table.route_table[0].name
@@ -77,4 +107,9 @@ resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   count          = local.is_migration_environment ? 1 : 0
   subnet_id      = azurerm_subnet.migration[0].id
   route_table_id = azurerm_route_table.route_table[0].id
+}
+
+moved {
+  from = azurerm_subnet_route_table_association.migrationRouteTable
+  to   = azurerm_subnet_route_table_association.migrationRouteTable[0]
 }

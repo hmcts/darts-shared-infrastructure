@@ -16,12 +16,22 @@ resource "azurerm_subnet" "postgres" {
   }
 }
 
+moved {
+  from = azurerm_subnet.postgres
+  to   = azurerm_subnet.postgres[0]
+}
+
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   count        = local.is_migration_environment ? 1 : 0
   name         = "POSTGRES-USER"
   value        = module.postgresql_flexible[0].username
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
   depends_on   = [module.darts_migration_key_vault]
+}
+
+moved {
+  from = azurerm_key_vault_secret.POSTGRES_USER
+  to   = azurerm_key_vault_secret.POSTGRES_USER[0]
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
@@ -32,12 +42,22 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   depends_on   = [module.darts_migration_key_vault]
 }
 
+moved {
+  from = azurerm_key_vault_secret.POSTGRES_PASS
+  to   = azurerm_key_vault_secret.POSTGRES_PASS[0]
+}
+
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
   count        = local.is_migration_environment ? 1 : 0
   name         = "POSTGRES-HOST"
   value        = module.postgresql_flexible[0].fqdn
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
   depends_on   = [module.darts_migration_key_vault]
+}
+
+moved {
+  from = azurerm_key_vault_secret.POSTGRES_HOST
+  to   = azurerm_key_vault_secret.POSTGRES_HOST[0]
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
@@ -48,12 +68,22 @@ resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
   depends_on   = [module.darts_migration_key_vault]
 }
 
+moved {
+  from = azurerm_key_vault_secret.POSTGRES_PORT
+  to   = azurerm_key_vault_secret.POSTGRES_PORT[0]
+}
+
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
   count        = local.is_migration_environment ? 1 : 0
   name         = "POSTGRES-DATABASE"
   value        = local.db_name
   key_vault_id = module.darts_migration_key_vault[0].key_vault_id
   depends_on   = [module.darts_migration_key_vault]
+}
+
+moved {
+  from = azurerm_key_vault_secret.POSTGRES_DATABASE
+  to   = azurerm_key_vault_secret.POSTGRES_DATABASE[0]
 }
 
 data "azurerm_subscription" "this" {}
@@ -85,4 +115,9 @@ module "postgresql_flexible" {
   ]
 
   pgsql_version = "15"
+}
+
+moved {
+  from = module.postgresql_flexible
+  to   = module.postgresql_flexible[0]
 }

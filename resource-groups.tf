@@ -12,3 +12,8 @@ resource "azurerm_resource_group" "darts_migration_resource_group" {
 
   tags = var.common_tags
 }
+
+moved {
+  from = azurerm_resource_group.darts_migration_resource_group
+  to   = azurerm_resource_group.darts_migration_resource_group[0]
+}

@@ -12,6 +12,11 @@ resource "azurerm_network_interface" "migration" {
   }
 }
 
+moved {
+  from = azurerm_network_interface.migration
+  to   = azurerm_network_interface.migration[0]
+}
+
 resource "azurerm_managed_disk" "migration_os" {
   count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-osdisk"
@@ -23,6 +28,11 @@ resource "azurerm_managed_disk" "migration_os" {
   tags                 = var.common_tags
 }
 
+moved {
+  from = azurerm_managed_disk.migration_os
+  to   = azurerm_managed_disk.migration_os[0]
+}
+
 resource "azurerm_managed_disk" "migration_data" {
   count                = local.is_migration_environment ? 1 : 0
   name                 = "migration-datadisk"
@@ -32,6 +42,11 @@ resource "azurerm_managed_disk" "migration_data" {
   create_option        = "Empty"
   disk_size_gb         = "200"
   tags                 = var.common_tags
+}
+
+moved {
+  from = azurerm_managed_disk.migration_data
+  to   = azurerm_managed_disk.migration_data[0]
 }
 
 resource "azurerm_linux_virtual_machine" "migration" {
@@ -62,12 +77,22 @@ resource "azurerm_linux_virtual_machine" "migration" {
   }
 }
 
+moved {
+  from = azurerm_linux_virtual_machine.migration
+  to   = azurerm_linux_virtual_machine.migration[0]
+}
+
 resource "azurerm_virtual_machine_data_disk_attachment" "datadisk" {
   count              = local.is_migration_environment ? 1 : 0
   managed_disk_id    = azurerm_managed_disk.migration_data[0].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration[0].id
   lun                = "10"
   caching            = "ReadWrite"
+}
+
+moved {
+  from = azurerm_virtual_machine_data_disk_attachment.datadisk
+  to   = azurerm_virtual_machine_data_disk_attachment.datadisk[0]
 }
 
 resource "azurerm_virtual_machine_extension" "migration_aad" {
@@ -81,11 +106,21 @@ resource "azurerm_virtual_machine_extension" "migration_aad" {
   tags                       = var.common_tags
 }
 
+moved {
+  from = azurerm_virtual_machine_extension.migration_aad
+  to   = azurerm_virtual_machine_extension.migration_aad[0]
+}
+
 resource "azurerm_key_vault_secret" "os_profile_password" {
   count        = local.is_migration_environment ? 1 : 0
   name         = "os-profile-password"
   value        = random_password.password.result
   key_vault_id = module.darts_key_vault.key_vault_id
+}
+
+moved {
+  from = azurerm_key_vault_secret.os_profile_password
+  to   = azurerm_key_vault_secret.os_profile_password[0]
 }
 
 resource "azurerm_network_interface" "assessment" {
@@ -100,6 +135,11 @@ resource "azurerm_network_interface" "assessment" {
     subnet_id                     = azurerm_subnet.migration[0].id
     private_ip_address_allocation = "Dynamic"
   }
+}
+
+moved {
+  from = azurerm_network_interface.assessment
+  to   = azurerm_network_interface.assessment[0]
 }
 
 resource "azurerm_windows_virtual_machine" "assessment_windows" {
@@ -128,4 +168,9 @@ resource "azurerm_windows_virtual_machine" "assessment_windows" {
     sku       = "win11-21h2-pro"
     version   = "latest"
   }
+}
+
+moved {
+  from = azurerm_windows_virtual_machine.assessment_windows
+  to   = azurerm_windows_virtual_machine.assessment_windows[0]
 }

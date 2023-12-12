@@ -23,6 +23,11 @@ module "sa-migration" {
   common_tags                       = var.common_tags
 }
 
+moved {
+  from = module.sa-migration
+  to   = module.sa-migration[0]
+}
+
 resource "azurerm_storage_blob" "migration-st" {
   count                  = local.is_migration_environment ? 1 : 0
   name                   = "${var.product}-migration-blob-st-${var.env}"
@@ -31,4 +36,9 @@ resource "azurerm_storage_blob" "migration-st" {
   type                   = "Block"
 
   depends_on = [module.sa-migration]
+}
+
+moved {
+  from = azurerm_storage_blob.migration-st
+  to   = azurerm_storage_blob.migration-st[0]
 }

@@ -34,6 +34,11 @@ module "darts_migration_key_vault" {
   common_tags = var.common_tags
 }
 
+moved {
+  from = module.darts_migration_key_vault
+  to   = module.darts_migration_key_vault[0]
+}
+
 resource "random_string" "session-secret" {
   length = 16
 }
