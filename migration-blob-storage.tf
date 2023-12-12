@@ -1,7 +1,3 @@
-data "azurerm_resource_group" "darts_migration_resource_group" {
-  name = format("%s-migration-%s-rg", var.product, var.env)
-}
-
 module "sa-migration" {
   count                             = local.is_migration_environment ? 1 : 0
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
