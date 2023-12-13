@@ -1,5 +1,5 @@
 module "darts_redis" {
-  source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  source                        = "git@github.com:hmcts/cnp-module-redis?ref=fix%2Fadd-null-default"
   product                       = var.product
   location                      = azurerm_resource_group.darts_resource_group.location
   env                           = var.env
