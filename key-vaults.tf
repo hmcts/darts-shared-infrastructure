@@ -17,7 +17,7 @@ module "darts_key_vault" {
 
 resource "azurerm_key_vault_secret" "MaxFileUploadSizeInMegabytes" {
    name         = "MaxFileUploadSizeInMegabytes"
-   value        = local.max-file-upload-megabytes
+   value        = var.max-file-upload-megabytes
    key_vault_id = module.darts_key_vault.key_vault_id
  }
 
