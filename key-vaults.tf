@@ -26,7 +26,7 @@ module "darts_migration_key_vault" {
   resource_group_name     = azurerm_resource_group.darts_migration_resource_group[0].name
   product_group_name      = "DTS Darts Modernisation"
   developers_group        = local.admin_group_map[var.env]
-  create_managed_identity = true
+  create_managed_identity = false
 
   common_tags = var.common_tags
 }
