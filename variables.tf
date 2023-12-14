@@ -206,3 +206,9 @@ variable "palo_networks" {
   default     = {}
   description = "Describes the networks and associated resources to support the Palo Alto Firewall."
 }
+
+variable "max-file-upload-megabytes" {
+  type        = number
+  default     = "350"
+  description = "The file upload size threshold in megabytes "
+}

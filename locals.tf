@@ -75,4 +75,3 @@ locals {
   migration_environments   = ["stg", "prod"]
   is_migration_environment = contains(local.migration_environments, var.env)
 }
-
