@@ -84,6 +84,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
   admin_username                  = var.admin_user
   admin_password                  = random_password.password.result
   disable_password_authentication = false
+  zone                            = each.value.availability_zone
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
