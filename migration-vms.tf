@@ -84,7 +84,6 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
   admin_username                  = var.admin_user
   admin_password                  = random_password.password.result
   disable_password_authentication = false
-  zone                            = each.value.availability_zone
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
@@ -113,6 +112,67 @@ resource "azurerm_managed_disk" "migration_disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
   for_each           = var.migration_linux_vms
+  managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  lun                = "10"
+  caching            = "ReadWrite"
+}
+
+resource "azurerm_network_interface" "migration-linux-nic2" {
+  for_each            = var.migration_linux_vms2
+  name                = "${each.key}-nic"
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  tags                = var.common_tags
+
+  ip_configuration {
+    name                          = "migration-ipconfig"
+    subnet_id                     = azurerm_subnet.migration[0].id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.ip_address
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "migration-linux2" {
+  for_each                        = var.migration_linux_vms2
+  name                            = each.key
+  location                        = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
+  network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
+  size                            = "Standard_E32ds_v5"
+  tags                            = var.common_tags
+  admin_username                  = var.admin_user
+  admin_password                  = random_password.password.result
+  disable_password_authentication = false
+  zone                            = each.value.availability_zone
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+  source_image_reference {
+    publisher = "canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+resource "azurerm_managed_disk" "migration_disk2" {
+  for_each             = var.migration_linux_vms2
+  name                 = "${each.key}-datadisk"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = "200"
+  tags                 = var.common_tags
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk2" {
+  for_each           = var.migration_linux_vms2
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
   lun                = "10"
