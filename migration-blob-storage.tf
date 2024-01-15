@@ -19,7 +19,7 @@ module "sa-migration" {
   common_tags                       = var.common_tags
 }
 
-module "sa-migration" {
+module "sa-migration-standard" {
   count                             = local.is_migration_environment ? 1 : 0
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
