@@ -147,7 +147,7 @@ resource "azurerm_linux_virtual_machine" "oracle" {
 }
 
 
-resource "azurerm_managed_disk" "migration_disk" {
+resource "azurerm_managed_disk" "oracle_disk" {
   for_each             = var.oracle_linux_vms
   name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -158,7 +158,7 @@ resource "azurerm_managed_disk" "migration_disk" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
+resource "azurerm_virtual_machine_data_disk_attachment" "oracle_datadisk" {
   for_each           = var.oracle_linux_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
