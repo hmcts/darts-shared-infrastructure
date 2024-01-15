@@ -156,6 +156,13 @@ variable "migration_vms" {
   default     = {}
 }
 
+variable "oracle_linux_vms" {
+  type = map(object({
+    ip_address = string
+  }))
+  description = "Map of objects describing the migration linux virtual machines to create."
+  default     = {}
+}
 variable "migration_linux_vms" {
   type = map(object({
     ip_address = string
