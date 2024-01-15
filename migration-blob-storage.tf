@@ -23,7 +23,7 @@ module "sa-migration-standard" {
   count                             = local.is_migration_environment ? 1 : 0
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
-  storage_account_name              = "sa${var.env}${var.product}mig01"
+  storage_account_name              = "sa${var.env}${var.product}mig02"
   resource_group_name               = azurerm_resource_group.darts_migration_resource_group[0].name
   location                          = var.location
   account_kind                      = "StorageV2"
