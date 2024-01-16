@@ -165,3 +165,18 @@ resource "azurerm_virtual_machine_data_disk_attachment" "oracle_datadisk" {
   lun                = "10"
   caching            = "ReadWrite"
 }
+
+resource "azurerm_network_interface" "oracle-linux-nic" {
+  for_each            = var.oracle_linux_vms
+  name                = "${each.key}-nic"
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  tags                = var.common_tags
+
+  ip_configuration {
+    name                          = "oracle-ipconfig"
+    subnet_id                     = azurerm_subnet.migration[0].id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.ip_address
+  }
+}
