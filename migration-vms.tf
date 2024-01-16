@@ -154,7 +154,7 @@ resource "azurerm_managed_disk" "oracle_disk" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
-  disk_size_gb         = "200"
+  disk_size_gb         = "8000"
   tags                 = var.common_tags
 }
 
