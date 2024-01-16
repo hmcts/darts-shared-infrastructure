@@ -58,7 +58,7 @@ migration_linux_vms = {
   }
 }
 oracle_linux_vms = {
-  prddartsmigdb03 = {
+  prddartsmigora01 = {
     ip_address = "10.24.239.15"
   }  
 }
