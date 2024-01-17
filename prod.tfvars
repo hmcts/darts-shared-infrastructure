@@ -57,6 +57,11 @@ migration_linux_vms = {
     ip_address = "10.24.239.13"
   }
 }
+oracle_linux_vms = {
+  prddartsmigora01 = {
+    ip_address = "10.24.239.15"
+  }  
+}
 
 sku_name = "Premium"
 family   = "P"
