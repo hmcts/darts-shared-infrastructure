@@ -123,7 +123,7 @@ resource "azurerm_linux_virtual_machine" "oracle" {
   name                 = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
-  network_interface_ids           = [azurerm_network_interface.oracle-linux-nic[0].id]
+  network_interface_ids           = [azurerm_network_interface.oracle-linux-nic.id]
   size                            = "Standard_D16ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
@@ -167,8 +167,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "oracle_datadisk" {
 }
 
 resource "azurerm_network_interface" "oracle-linux-nic" {
-  for_each            = var.oracle_linux_vms
-  name                = "${each.key}-nic"
+  name                = "prddartsmigora01-nic"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   tags                = var.common_tags
