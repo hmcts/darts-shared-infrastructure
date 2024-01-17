@@ -28,14 +28,9 @@ moved {
 resource "azurerm_storage_blob" "migration-st" {
   count                  = local.is_migration_environment ? 1 : 0
   name                   = "${var.product}-migration-blob-st-${var.env}"
-  storage_account_name   = module.sa-migration[0].storageaccount_name
+  storage_account_name   = module.sa-migration-standard[0].storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
-
-  depends_on = [module.sa-migration]
 }
 
-moved {
-  from = azurerm_storage_blob.migration-st
-  to   = azurerm_storage_blob.migration-st[0]
-}
+
