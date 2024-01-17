@@ -124,7 +124,7 @@ resource "azurerm_linux_virtual_machine" "oracle" {
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
   network_interface_ids           = [azurerm_network_interface.migration[0].id]
-  size                            = "Standard_D16ds_v4"
+  size                            = "Standard_D16ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
   admin_password                  = random_password.password.result
