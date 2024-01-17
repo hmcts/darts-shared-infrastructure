@@ -163,7 +163,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "oracle_datadisk" {
   managed_disk_id    = azurerm_managed_disk.oracle_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
   lun                = "10"
-  caching            = "ReadWrite"
+  caching            = "None"
 }
 
 resource "azurerm_network_interface" "oracle-linux-nic" {
