@@ -31,8 +31,6 @@ resource "azurerm_storage_blob" "migration-st" {
   storage_account_name   = "sa${var.env}${var.product}mig02"
   storage_container_name = local.darts_migration_container
   type                   = "Block"
-
-  depends_on = [module.sa-migration-standard]
 }
 
 
