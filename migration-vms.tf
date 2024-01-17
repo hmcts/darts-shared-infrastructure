@@ -290,7 +290,7 @@ resource "azurerm_managed_disk" "migration_disk2" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment2" "mig_datadisk" {
+resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk2" {
   for_each           = var.migration_linux_vms2
   managed_disk_id    = azurerm_managed_disk.migration_disk2[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux2[each.key].id
