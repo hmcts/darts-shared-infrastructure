@@ -154,6 +154,7 @@ variable "migration_vms" {
   }))
   description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}
+}
 
 variable "oracle_linux_vms" {
   type = map(object({
