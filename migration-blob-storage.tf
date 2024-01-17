@@ -35,7 +35,4 @@ resource "azurerm_storage_blob" "migration-st" {
   depends_on = [module.sa-migration]
 }
 
-moved {
-  from = azurerm_storage_blob.migration-st
-  to   = azurerm_storage_blob.migration-st[0]
-}
+
