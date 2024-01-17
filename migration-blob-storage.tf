@@ -32,7 +32,7 @@ resource "azurerm_storage_blob" "migration-st" {
   storage_container_name = local.darts_migration_container
   type                   = "Block"
 
-  depends_on = [module.sa-migration]
+  depends_on = [module.sa-migration-standard]
 }
 
 
