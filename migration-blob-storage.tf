@@ -1,13 +1,14 @@
-module "sa-migration" {
+
+module "sa-migration-standard" {
   count                             = local.is_migration_environment ? 1 : 0
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
-  storage_account_name              = local.migration_storage_account_name
+  storage_account_name              = "sa${var.env}${var.product}mig02"
   resource_group_name               = azurerm_resource_group.darts_migration_resource_group[0].name
   location                          = var.location
-  account_kind                      = var.sa_mig_account_kind
-  account_tier                      = var.sa_mig_account_tier
-  account_replication_type          = var.sa_mig_account_replication_type
+  account_kind                      = "StorageV2"
+  account_tier                      = "Standard"
+  account_replication_type          = "ZRS"
   containers                        = local.containers-mig
   private_endpoint_subnet_id        = resource.azurerm_subnet.migration[0].id
   enable_nfs                        = true
@@ -27,14 +28,9 @@ moved {
 resource "azurerm_storage_blob" "migration-st" {
   count                  = local.is_migration_environment ? 1 : 0
   name                   = "${var.product}-migration-blob-st-${var.env}"
-  storage_account_name   = module.sa-migration[0].storageaccount_name
+  storage_account_name   = module.sa-migration-standard[0].storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
-
-  depends_on = [module.sa-migration]
 }
 
-moved {
-  from = azurerm_storage_blob.migration-st
-  to   = azurerm_storage_blob.migration-st[0]
-}
+
