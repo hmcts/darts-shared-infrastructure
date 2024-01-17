@@ -53,7 +53,7 @@ migration_linux_vms = {
   prddartsmigdb01 = {
     ip_address = "10.24.239.11"
   }  
-
+}
 migration_linux_vms2 = {
   prddartsmigdb02 = {
     ip_address = "10.24.239.13"
