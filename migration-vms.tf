@@ -168,7 +168,7 @@ resource "azurerm_managed_disk" "migration_disk2" {
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = "200"
-  zone                 = each.vaue.availability_zone
+  zone                 = each.value.availability_zone
   tags                 = var.common_tags
 }
 
