@@ -172,7 +172,7 @@ variable "migration_linux_vms" {
 }
 variable "migration_linux_vms2" {
   type = map(object({
-    ip_address = string
+    ip_address        = string
     availability_zone = string
   }))
   description = "Map of objects describing the migration linux virtual machines to create."

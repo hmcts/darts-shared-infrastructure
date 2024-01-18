@@ -52,18 +52,18 @@ firewall_route_ranges = [
 migration_linux_vms = {
   prddartsmigdb01 = {
     ip_address = "10.24.239.11"
-  }  
+  }
 }
 migration_linux_vms2 = {
   prddartsmigdb02 = {
-    ip_address = "10.24.239.13"
+    ip_address        = "10.24.239.13"
     availability_zone = "2"
   }
 }
 oracle_linux_vms = {
   prddartsmigora01 = {
     ip_address = "10.24.239.12"
-  }  
+  }
 }
 
 sku_name = "Premium"

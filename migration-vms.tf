@@ -168,6 +168,7 @@ resource "azurerm_managed_disk" "migration_disk2" {
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = "200"
+  zone                 = each.vaue.availability_zone
   tags                 = var.common_tags
 }
 
@@ -177,11 +178,12 @@ resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk2" {
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux2[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
+
 }
 
 resource "azurerm_linux_virtual_machine" "oracle" {
-  for_each             = var.oracle_linux_vms
-  name                 = each.key
+  for_each                        = var.oracle_linux_vms
+  name                            = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
   network_interface_ids           = [azurerm_network_interface.oracle-linux-nic[each.key].id]
