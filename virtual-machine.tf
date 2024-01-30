@@ -174,3 +174,28 @@ moved {
   from = azurerm_windows_virtual_machine.assessment_windows
   to   = azurerm_windows_virtual_machine.assessment_windows[0]
 }
+
+resource "azurerm_virtual_machine_extension" "assessment_windows_joinad" {
+  count                = local.is_migration_environment ? 1 : 0
+  name                 = "assessment-windows-joinad"
+  virtual_machine_id   = azurerm_windows_virtual_machine.assessment_windows[0].id
+  publisher            = "Microsoft.Compute"
+  type                 = "JsonADDomainExtension"
+  type_handler_version = "1.3"
+  settings             = <<SETTINGS
+    {
+        "Name": "HMCTS.NET",
+        "OUPath": "OU=DARTS-Migration,DC=hmcts,DC=net",
+        "User": "${data.azurerm_key_vault_secret.aadds_username.value}",
+        "Restart": "true",
+        "Options": "3"
+    }
+  SETTINGS
+  protected_settings   = <<PROTECTED_SETTINGS
+    {
+      "Password": "${data.azurerm_key_vault_secret.aadds_password.value}"
+    }
+  PROTECTED_SETTINGS
+
+  tags = var.common_tags
+}
