@@ -61,7 +61,7 @@ resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
     {
         "Name": "HMCTS.NET",
         "OUPath": "OU=DARTS-Migration,DC=hmcts,DC=net",
-        "User": "${data.azurerm_key_vault_secret.aadds_username.value}",
+        "User": "HMCTS\${data.azurerm_key_vault_secret.aadds_username.value}",
         "Restart": "true",
         "Options": "3"
     }
