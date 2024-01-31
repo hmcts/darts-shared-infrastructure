@@ -50,6 +50,31 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   }
 }
 
+resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
+  for_each             = var.migration_vms
+  name                 = "${each.key}-joinad"
+  virtual_machine_id   = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  publisher            = "Microsoft.Compute"
+  type                 = "JsonADDomainExtension"
+  type_handler_version = "1.3"
+  settings             = <<SETTINGS
+    {
+        "Name": "HMCTS.NET",
+        "OUPath": "OU=DARTS-Migration,DC=hmcts,DC=net",
+        "User": "${data.azurerm_key_vault_secret.aadds_username.value}",
+        "Restart": "true",
+        "Options": "3"
+    }
+  SETTINGS
+  protected_settings   = <<PROTECTED_SETTINGS
+    {
+      "Password": "${data.azurerm_key_vault_secret.aadds_password.value}"
+    }
+  PROTECTED_SETTINGS
+
+  tags = var.common_tags
+}
+
 resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk" {
   for_each           = var.migration_vms
   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
