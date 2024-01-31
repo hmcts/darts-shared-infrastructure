@@ -4,6 +4,8 @@ resource "azurerm_virtual_network" "migration" {
   address_space       = concat([var.address_space, var.postgres_subnet_address_space], local.palo_address_space)
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+
+  dns_servers = ["10.128.0.4", "10.128.0.5"]
   tags                = var.common_tags
 }
 
