@@ -3,7 +3,7 @@
 @Library("Infrastructure") _
 
 def product = "darts"
-def branchesToSync = ['demo','ithc', 'test']
+def branchesToSync = ['demo', 'perftest']
 
 withInfraPipeline(product) {
       enableSlackNotifications('#darts-builds')
