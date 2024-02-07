@@ -23,6 +23,9 @@ migration_vms = {
   prddartsmig05 = {
     ip_address = "10.24.239.10"
   }
+  assessment-windows = {
+    ip_address = "10.24.239.5"
+  }
 }
 
 firewall_route_ranges = [
