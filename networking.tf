@@ -1,7 +1,7 @@
 resource "azurerm_virtual_network" "migration" {
   count               = local.is_migration_environment ? 1 : 0
   name                = "migration-vnet"
-  address_space       = concat([var.address_space, var.postgres_subnet_address_space], local.palo_address_space)
+  address_space       = concat([var.address_space, var.postgres_subnet_address_space, var.external_services_subnet_address_space], local.palo_address_space)
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
 
@@ -25,6 +25,14 @@ resource "azurerm_subnet" "migration" {
 moved {
   from = azurerm_subnet.migration
   to   = azurerm_subnet.migration[0]
+}
+
+resource "azurerm_subnet" "external_services" {
+  count                = local.is_migration_environment && var.external_services_subnet_address_space != null ? 1 : 0
+  name                 = "external-services"
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  virtual_network_name = azurerm_virtual_network.migration[0].name
+  address_prefixes     = [var.external_services_subnet_address_space]
 }
 
 data "azurerm_virtual_network" "hub-south-vnet" {
