@@ -63,6 +63,8 @@ locals {
     ]
   ])
 
+  vnet_address_space = var.external_services_subnet_address_space != null ? [var.address_space, var.postgres_subnet_address_space, var.external_services_subnet_address_space] : [var.address_space, var.postgres_subnet_address_space]
+
   admin_group_map = {
     "demo" = "DTS Darts Admin (env:demo)"
     "ithc" = "DTS Darts Admin (env:ithc)"

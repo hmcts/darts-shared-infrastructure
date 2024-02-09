@@ -1,7 +1,7 @@
 resource "azurerm_virtual_network" "migration" {
   count               = local.is_migration_environment ? 1 : 0
   name                = "migration-vnet"
-  address_space       = concat([var.address_space, var.postgres_subnet_address_space, var.external_services_subnet_address_space], local.palo_address_space)
+  address_space       = concat(local.vnet_address_space, local.palo_address_space)
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
 
