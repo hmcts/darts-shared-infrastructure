@@ -20,7 +20,7 @@ resource "azurerm_managed_disk" "migration_vms_data" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
-  disk_size_gb         = "255"
+  disk_size_gb         = each.value.data_disk_size
   tags                 = var.common_tags
 }
 
@@ -74,7 +74,6 @@ resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
 
   tags = var.common_tags
 }
-
 
 resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk" {
   for_each           = var.migration_vms
