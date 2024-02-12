@@ -25,7 +25,14 @@ locals {
     }
   }
   storage_account_name = "${var.product}sa${var.env}"
-
+  flattened_subnet_nsg_associations = flatten([
+  for nsg_key, nsg in var.network_security_groups : [
+    for subnet in nsg.subnets : {
+      nsg_key = nsg_key
+      subnet  = subnet
+    }
+  ]
+  ])
   containers = [{
     name        = "darts-outbound"
     access_type = "private"
