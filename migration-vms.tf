@@ -75,6 +75,7 @@ resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
   tags = var.common_tags
 }
 
+
 resource "azurerm_virtual_machine_data_disk_attachment" "migration_vms_datadisk" {
   for_each           = var.migration_vms
   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
@@ -299,7 +300,7 @@ resource "azurerm_linux_virtual_machine" "oracle" {
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
   network_interface_ids           = [azurerm_network_interface.oracle-linux-nic[each.key].id]
-  size                            = "Standard_D16ds_v5"
+  size                            = "Standard_D4ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
   admin_password                  = random_password.password.result

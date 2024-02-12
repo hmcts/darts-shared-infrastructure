@@ -111,6 +111,11 @@ variable "postgres_subnet_address_space" {
   default = null
 }
 
+variable "external_services_subnet_address_space" {
+  type    = string
+  default = null
+}
+
 variable "aks_subscription_id" {}
 
 variable "virtual_machine_admins" {
