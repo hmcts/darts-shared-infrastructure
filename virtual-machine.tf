@@ -122,4 +122,3 @@ moved {
   from = azurerm_key_vault_secret.os_profile_password
   to   = azurerm_key_vault_secret.os_profile_password[0]
 }
-
