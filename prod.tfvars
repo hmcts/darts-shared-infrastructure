@@ -24,7 +24,7 @@ migration_vms = {
   prddartsmig05 = {
     ip_address = "10.24.239.10"
   }
-  assessment-windows = {
+  assessment-win = {
     ip_address     = "10.24.239.5"
     data_disk_size = "500"
   }
