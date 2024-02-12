@@ -122,23 +122,3 @@ moved {
   from = azurerm_key_vault_secret.os_profile_password
   to   = azurerm_key_vault_secret.os_profile_password[0]
 }
-
-resource "azurerm_network_interface" "assessment" {
-  count               = local.is_migration_environment ? 1 : 0
-  name                = "assessment-nic"
-  location            = azurerm_resource_group.darts_migration_resource_group[0].location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  tags                = var.common_tags
-
-  ip_configuration {
-    name                          = "assessment-ipconfig"
-    subnet_id                     = azurerm_subnet.migration[0].id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
-
-moved {
-  from = azurerm_network_interface.assessment
-  to   = azurerm_network_interface.assessment[0]
-}
-
