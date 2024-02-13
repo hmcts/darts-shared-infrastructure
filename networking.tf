@@ -27,6 +27,35 @@ moved {
   to   = azurerm_subnet.migration[0]
 }
 
+resource "azurerm_network_security_group" "migration" {
+  count               = local.is_migration_environment ? 1 : 0
+  name                = "darts-${var.env}-migration-nsg"
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  tags                = var.common_tags
+}
+
+resource "azurerm_subnet_network_security_group_association" "migration" {
+  count                     = local.is_migration_environment ? 1 : 0
+  subnet_id                 = azurerm_subnet.migration[0].id
+  network_security_group_id = azurerm_network_security_group.migration[0].id
+}
+
+resource "azurerm_network_security_rule" "block_internet" {
+  count                       = local.is_migration_environment ? 1 : 0
+  name                        = "BlockInternet"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "Internet"
+  network_security_group_name = azurerm_network_security_group.migration[0].name
+  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
+}
+
 resource "azurerm_subnet" "external_services" {
   count                = local.is_migration_environment && var.external_services_subnet_address_space != null ? 1 : 0
   name                 = "external-services"
