@@ -199,6 +199,16 @@ variable "capacity" {
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
 }
 
+variable "maxmemory_reserved" {
+  default     = "642"
+  description = "The maxmemory_reserved setting for the Redis cache"
+}
+
+variable "maxfragmentationmemory_reserved" {
+  default     = "642"
+  description = "The maxfragmentationmemory_reserved setting for the Redis cache"
+}
+
 variable "palo_networks" {
   type = map(object({
     address_space        = string
