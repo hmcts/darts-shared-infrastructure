@@ -28,6 +28,10 @@ migration_vms = {
     ip_address     = "10.24.239.5"
     data_disk_size = "500"
   }
+  prddartsassure = {
+    ip_address     = "10.24.239.15"
+    sku            = "Standard_D4ds_v5"
+  }
 }
 
 firewall_route_ranges = [
