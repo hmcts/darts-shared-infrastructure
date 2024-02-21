@@ -29,7 +29,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   name                  = each.key
   location              = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
-  size                  = "Standard_D16ds_v5"
+  size                  = each.value.sku
   tags                  = var.common_tags
   admin_username        = var.admin_user
   admin_password        = random_password.password.result

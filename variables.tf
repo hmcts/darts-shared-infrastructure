@@ -157,6 +157,7 @@ variable "migration_vms" {
   type = map(object({
     ip_address     = string
     data_disk_size = optional(string, "255")
+    sku            = optional(string, "Standard_D16ds_v5")
   }))
   description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}
