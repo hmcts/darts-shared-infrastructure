@@ -111,6 +111,7 @@ module "postgresql_flexible" {
   pgsql_databases = [
     {
       name : local.db_name
+      name : local.db_name_dets
     }
   ]
 
