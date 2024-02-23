@@ -111,7 +111,7 @@ variable "postgres_subnet_address_space" {
   default = null
 }
 
-variable "external_services_subnet_address_space" {
+variable "extended_address_space" {
   type    = string
   default = null
 }
@@ -156,6 +156,7 @@ variable "defender_scan" {
 variable "migration_vms" {
   type = map(object({
     ip_address     = string
+    subnet         = optional(string, "migration-subnet")
     data_disk_size = optional(string, "255")
     sku            = optional(string, "Standard_D16ds_v5")
   }))
