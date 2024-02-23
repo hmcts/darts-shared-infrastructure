@@ -64,6 +64,12 @@ resource "azurerm_subnet" "migration-extended" {
   address_prefixes     = [var.extended_address_space]
 }
 
+resource "azurerm_subnet_network_security_group_association" "migration-extended" {
+  count                     = local.is_migration_environment && var.extended_address_space != null ? 1 : 0
+  subnet_id                 = azurerm_subnet.migration-extended[0].id
+  network_security_group_id = azurerm_network_security_group.migration[0].id
+}
+
 data "azurerm_virtual_network" "hub-south-vnet" {
   count               = local.is_migration_environment ? 1 : 0
   provider            = azurerm.hub
@@ -145,6 +151,12 @@ resource "azurerm_route" "firewall_routes" {
 resource "azurerm_subnet_route_table_association" "migrationRouteTable" {
   count          = local.is_migration_environment ? 1 : 0
   subnet_id      = azurerm_subnet.migration[0].id
+  route_table_id = azurerm_route_table.route_table[0].id
+}
+
+resource "azurerm_subnet_route_table_association" "migration-extended" {
+  count          = local.is_migration_environment && var.extended_address_space != null ? 1 : 0
+  subnet_id      = azurerm_subnet.migration-extended[0].id
   route_table_id = azurerm_route_table.route_table[0].id
 }
 

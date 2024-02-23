@@ -159,6 +159,7 @@ variable "migration_vms" {
     subnet         = optional(string, "migration-subnet")
     data_disk_size = optional(string, "255")
     sku            = optional(string, "Standard_D16ds_v5")
+    join_ad        = optional(bool, true)
   }))
   description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}

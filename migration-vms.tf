@@ -51,7 +51,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
 }
 
 resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
-  for_each             = var.migration_vms
+  for_each             = { for key, value in var.migration_vms : key => value if value.join_ad == true }
   name                 = "${each.key}-joinad"
   virtual_machine_id   = azurerm_windows_virtual_machine.migration_windows[each.key].id
   publisher            = "Microsoft.Compute"
