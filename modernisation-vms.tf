@@ -16,8 +16,8 @@ resource "azurerm_network_interface" "modernisation_vms" {
 resource "azurerm_managed_disk" "modernisation_vms_data" {
   for_each             = var.modernisation_vms
   name                 = "${each.key}-datadisk"
-  location             = azurerm_resource_group.darts_resource_group[0].location
-  resource_group_name  = azurerm_resource_group.darts_resource_group[0].name
+  location             = azurerm_resource_group.darts_resource_group.location
+  resource_group_name  = azurerm_resource_group.darts_resource_group.name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = each.value.data_disk_size
@@ -27,8 +27,8 @@ resource "azurerm_managed_disk" "modernisation_vms_data" {
 resource "azurerm_windows_virtual_machine" "modernisation_windows" {
   for_each              = var.modernisation_vms
   name                  = each.key
-  location              = azurerm_resource_group.darts_resource_group[0].location
-  resource_group_name   = azurerm_resource_group.darts_resource_group[0].name
+  location              = azurerm_resource_group.darts_resource_group.location
+  resource_group_name   = azurerm_resource_group.darts_resource_group.name
   size                  = each.value.sku
   tags                  = var.common_tags
   admin_username        = var.admin_user
