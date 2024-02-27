@@ -10,6 +10,6 @@ capacity = "1"
 
 modernisation_vms = {
   stgdartsmidmock = {
-    ip_address = "10.24.239.150/28"
+    ip_address = "10.24.239.142"
   }
 }
