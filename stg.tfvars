@@ -11,5 +11,6 @@ capacity = "1"
 modernisation_vms = {
   stgdartsmidmock = {
     ip_address = "10.24.239.142"
+    sku        = "Standard_D4ds_v5"
   }
 }
