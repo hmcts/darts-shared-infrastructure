@@ -9,7 +9,7 @@ family   = "P"
 capacity = "1"
 
 modernisation_vms = {
-  stgdartsmidtier = {
+  stgdartsmidmock = {
     ip_address = "10.24.239.150/28"
   }
 }
