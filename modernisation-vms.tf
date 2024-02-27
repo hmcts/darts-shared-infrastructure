@@ -1,8 +1,8 @@
 resource "azurerm_network_interface" "modernisation_vms" {
   for_each            = var.modernisation_vms
   name                = "${each.key}-nic"
-  location            = azurerm_resource_group.darts_resource_group[0].location
-  resource_group_name = azurerm_resource_group.darts_resource_group[0].name
+  location            = azurerm_resource_group.darts_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_resource_group.name
   tags                = var.common_tags
 
   ip_configuration {
