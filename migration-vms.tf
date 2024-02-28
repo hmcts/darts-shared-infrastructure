@@ -124,6 +124,17 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
   }
 }
 
+resource "azurerm_virtual_machine_extension" "migration-linux-aad" {
+  for_each                   = var.migration_linux_vms
+  name                       = "AADSSHLoginForLinux"
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADSSHLoginForLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = var.common_tags
+}
+
 resource "azurerm_managed_disk" "migration_disk" {
   for_each             = var.migration_linux_vms
   name                 = "${each.key}-datadisk"
@@ -185,6 +196,17 @@ resource "azurerm_linux_virtual_machine" "migration-linux2" {
   }
 }
 
+resource "azurerm_virtual_machine_extension" "migration-linux2-aad" {
+  for_each                   = var.migration_linux_vms2
+  name                       = "AADSSHLoginForLinux"
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration-linux2[each.key].id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADSSHLoginForLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = var.common_tags
+}
+
 resource "azurerm_managed_disk" "migration_disk2" {
   for_each             = var.migration_linux_vms2
   name                 = "${each.key}-datadisk"
@@ -234,6 +256,16 @@ resource "azurerm_linux_virtual_machine" "oracle" {
   }
 }
 
+resource "azurerm_virtual_machine_extension" "oracle-aad" {
+  for_each                   = var.oracle_linux_vms
+  name                       = "AADSSHLoginForLinux"
+  virtual_machine_id         = azurerm_linux_virtual_machine.oracle[each.key].id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADSSHLoginForLinux"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = var.common_tags
+}
 
 resource "azurerm_managed_disk" "oracle_disk" {
   for_each             = var.oracle_linux_vms
