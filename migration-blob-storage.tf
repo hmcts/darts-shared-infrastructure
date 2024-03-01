@@ -17,7 +17,7 @@ module "sa-migration-standard" {
   enable_versioning                 = false
   defender_enabled                  = var.defender_enable
   defender_malware_scanning_enabled = var.defender_scan
-  defender_malware_scanning_cap_gb_per_month = 10000
+  defender_malware_scanning_cap_gb_per_month = 150000
   common_tags                       = var.common_tags
 }
 
