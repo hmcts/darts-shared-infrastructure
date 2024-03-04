@@ -32,8 +32,6 @@ migration_vms = {
     ip_address = "10.24.239.164"
     subnet     = "migration-subnet-extended"
     sku        = "Standard_D4ds_v5"
-    # temp pending fw rules
-    join_ad = false
   }
 }
 
