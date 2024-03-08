@@ -1,24 +1,24 @@
 
 module "sa-migration-standard" {
-  count                             = local.is_migration_environment ? 1 : 0
-  source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  env                               = var.env
-  storage_account_name              = "sa${var.env}${var.product}mig02"
-  resource_group_name               = azurerm_resource_group.darts_migration_resource_group[0].name
-  location                          = var.location
-  account_kind                      = "StorageV2"
-  account_tier                      = "Standard"
-  account_replication_type          = "ZRS"
-  containers                        = local.containers-mig
-  private_endpoint_subnet_id        = resource.azurerm_subnet.migration[0].id
-  enable_nfs                        = true
-  enable_hns                        = true
-  enable_data_protection            = true
-  enable_versioning                 = false
-  defender_enabled                  = var.defender_enable
-  defender_malware_scanning_enabled = var.defender_scan
+  count                                      = local.is_migration_environment ? 1 : 0
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                                        = var.env
+  storage_account_name                       = "sa${var.env}${var.product}mig02"
+  resource_group_name                        = azurerm_resource_group.darts_migration_resource_group[0].name
+  location                                   = var.location
+  account_kind                               = "StorageV2"
+  account_tier                               = "Standard"
+  account_replication_type                   = "ZRS"
+  containers                                 = local.containers-mig
+  private_endpoint_subnet_id                 = resource.azurerm_subnet.migration[0].id
+  enable_nfs                                 = true
+  enable_hns                                 = true
+  enable_data_protection                     = true
+  enable_versioning                          = false
+  defender_enabled                           = var.defender_enable
+  defender_malware_scanning_enabled          = var.defender_scan
   defender_malware_scanning_cap_gb_per_month = 150000
-  common_tags                       = var.common_tags
+  common_tags                                = var.common_tags
 }
 
 moved {
