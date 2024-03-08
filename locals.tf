@@ -76,6 +76,8 @@ locals {
 
   migration_environments   = ["stg", "prod"]
   is_migration_environment = contains(local.migration_environments, var.env)
+  blocked_traffic          = ["prod"]
+  block_inbound_traffic   = contains(local.blocked_traffic, var.env)
 }
 
 data "azurerm_key_vault_secret" "aadds_username" {
