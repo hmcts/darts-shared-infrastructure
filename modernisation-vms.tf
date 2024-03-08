@@ -58,5 +58,5 @@ resource "azurerm_virtual_machine_data_disk_attachment" "modernisation_vms_datad
   virtual_machine_id = azurerm_windows_virtual_machine.modernisation_windows[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
-  
+
 }
