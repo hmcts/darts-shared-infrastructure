@@ -4,6 +4,7 @@ resource "azurerm_recovery_services_vault" "darts-migration-backup" {
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   sku                 = "Standard"
+  tags                = var.common_tags
 }
 
 resource "azurerm_role_assignment" "backup-operator" {
