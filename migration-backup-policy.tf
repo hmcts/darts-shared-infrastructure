@@ -27,7 +27,7 @@ resource "azurerm_backup_protected_vm" "vm" {
   for_each            = var.migration_vms
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   recovery_vault_name = "darts-prod-rsv"
-  source_vm_id        = resource.azurerm_windows_virtual_machine.migration_windows[each.key].id
+  source_vm_id        = azurerm_windows_virtual_machine.migration_windows[each.key].id
 }
 
 resource "azurerm_backup_protected_vm" "oracle" {
