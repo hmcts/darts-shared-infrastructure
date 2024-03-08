@@ -19,7 +19,7 @@ resource "azurerm_backup_policy_vm" "darts-migration-backup" {
   }
 
   retention_daily {
-    count = 5
+    count = 7
 }
 }
 
