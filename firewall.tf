@@ -26,7 +26,7 @@ resource "azurerm_network_security_group" "palo" {
 }
 
 resource "azurerm_network_security_rule" "deny_inbound" {
-  for_each                    = { for key, value in var.palo_networks : key => value if value.nsg_deny_inbound && local.block_inbound_traffic ? 1 : 0}
+  for_each                    = { for key, value in var.palo_networks : key => value if value.nsg_deny_inbound && local.block_inbound_traffic? [] : toset(["blocked"])}
   network_security_group_name = azurerm_network_security_group.palo[each.key].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
   name                        = "DenyAllInbound"
