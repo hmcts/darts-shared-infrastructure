@@ -67,8 +67,8 @@ resource "azurerm_virtual_machine_data_disk_attachment" "modernisation_vms_datad
 resource "azurerm_network_interface" "modernisation-linux-nic" {
   for_each            = var.modernisation_linux_vms
   name                = "${each.key}-nic"
-  location            = azurerm_resource_group.darts_resource_group[0].location
-  resource_group_name = azurerm_resource_group.darts_resource_group[0].name
+  location            = azurerm_resource_group.darts_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_resource_group.name
   tags                = var.common_tags
 
   ip_configuration {
@@ -82,8 +82,8 @@ resource "azurerm_network_interface" "modernisation-linux-nic" {
 resource "azurerm_linux_virtual_machine" "modernisation-linux" {
   for_each                        = var.modernisation_linux_vms
   name                            = each.key
-  location                        = azurerm_resource_group.darts_resource_group[0].location
-  resource_group_name             = azurerm_resource_group.darts_resource_group[0].name
+  location                        = azurerm_resource_group.darts_resource_group.location
+  resource_group_name             = azurerm_resource_group.darts_resource_group.name
   network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
   size                            = "Standard_D4ds_v5"
   tags                            = var.common_tags
@@ -119,8 +119,8 @@ resource "azurerm_virtual_machine_extension" "modernisation-linux-aad" {
 resource "azurerm_managed_disk" "modernisation_disk" {
   for_each             = var.modernisation_linux_vms
   name                 = "${each.key}-datadisk"
-  location             = azurerm_resource_group.darts_resource_group[0].location
-  resource_group_name  = azurerm_resource_group.darts_resource_group[0].name
+  location             = azurerm_resource_group.darts_resource_group.location
+  resource_group_name  = azurerm_resource_group.darts_resource_group.name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
   disk_size_gb         = "200"
