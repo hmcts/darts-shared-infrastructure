@@ -48,7 +48,7 @@ resource "azurerm_backup_protected_vm" "mig1" {
 }
 
 resource "azurerm_backup_protected_vm" "mig2" {
-  for_each            = var.oracle_linux_vms
+  for_each            = var.migration_linux_vms2
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
   source_vm_id        = azurerm_linux_virtual_machine.migration-linux2[each.key].id
