@@ -85,7 +85,7 @@ resource "azurerm_linux_virtual_machine" "modernisation-linux" {
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
   network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
-  size                            = "Standard_E32ds_v5"
+  size                            = "Standard_D4ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
   admin_password                  = random_password.password.result
@@ -127,7 +127,7 @@ resource "azurerm_managed_disk" "modernisation_disk" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "mOD_datadisk" {
+resource "azurerm_virtual_machine_data_disk_attachment" "mod_datadisk" {
   for_each           = var.modernisation_linux_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
