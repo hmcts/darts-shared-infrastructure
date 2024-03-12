@@ -67,6 +67,6 @@ resource "azurerm_backup_protected_vm" "modernisationLinux" {
   for_each            = var.modernisation_linux_vms
   resource_group_name = azurerm_resource_group.darts_resource_group
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
-  source_vm_id        = azurerm_linux_virtual_machine.modernisation_linux_vms[each.key].id
+  source_vm_id        = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
 }
