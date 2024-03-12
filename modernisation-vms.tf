@@ -84,7 +84,7 @@ resource "azurerm_linux_virtual_machine" "modernisation-linux" {
   name                            = each.key
   location                        = azurerm_resource_group.darts_resource_group.location
   resource_group_name             = azurerm_resource_group.darts_resource_group.name
-  network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
+  network_interface_ids           = [azurerm_network_interface.modernisation-linux-nic[each.key].id]
   size                            = "Standard_D4ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
@@ -108,7 +108,7 @@ resource "azurerm_linux_virtual_machine" "modernisation-linux" {
 resource "azurerm_virtual_machine_extension" "modernisation-linux-aad" {
   for_each                   = var.modernisation_linux_vms
   name                       = "AADSSHLoginForLinux"
-  virtual_machine_id         = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  virtual_machine_id         = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
@@ -130,7 +130,7 @@ resource "azurerm_managed_disk" "modernisation_disk" {
 resource "azurerm_virtual_machine_data_disk_attachment" "mod_datadisk" {
   for_each           = var.modernisation_linux_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
