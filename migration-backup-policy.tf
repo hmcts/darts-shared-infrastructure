@@ -63,7 +63,7 @@ resource "azurerm_backup_protected_vm" "modernisationVMs" {
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
 }
 
-resource "azurerm_backup_protected_vm" "mig2" {
+resource "azurerm_backup_protected_vm" "modernisationLinux" {
   for_each            = var.modernisation_linux_vms
   resource_group_name = azurerm_resource_group.darts_resource_group
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
