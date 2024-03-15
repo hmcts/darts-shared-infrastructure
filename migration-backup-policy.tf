@@ -30,7 +30,7 @@ resource "azurerm_backup_protected_vm" "vm" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup[0].name
   source_vm_id        = azurerm_windows_virtual_machine.migration_windows[each.key].id
-  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
+  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup[0].id
 }
 
 resource "azurerm_backup_protected_vm" "oracle" {
@@ -38,7 +38,7 @@ resource "azurerm_backup_protected_vm" "oracle" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup[0].name
   source_vm_id        = azurerm_linux_virtual_machine.oracle[each.key].id
-  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
+  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup[0].id
 }
 
 resource "azurerm_backup_protected_vm" "mig1" {
@@ -46,7 +46,7 @@ resource "azurerm_backup_protected_vm" "mig1" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup[0].name
   source_vm_id        = azurerm_linux_virtual_machine.migration-linux[each.key].id
-  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
+  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup[0].id
 }
 
 resource "azurerm_backup_protected_vm" "mig2" {
@@ -54,5 +54,5 @@ resource "azurerm_backup_protected_vm" "mig2" {
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup[0].name
   source_vm_id        = azurerm_linux_virtual_machine.migration-linux2[each.key].id
-  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
+  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup[0].id
 }
