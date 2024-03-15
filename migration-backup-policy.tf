@@ -31,7 +31,6 @@ resource "azurerm_backup_protected_vm" "vm" {
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
   source_vm_id        = azurerm_windows_virtual_machine.migration_windows[each.key].id
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
-  depends_on = [  local.is_migration_environment == 1 ]
 }
 
 resource "azurerm_backup_protected_vm" "oracle" {
@@ -40,7 +39,6 @@ resource "azurerm_backup_protected_vm" "oracle" {
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
   source_vm_id        = azurerm_linux_virtual_machine.oracle[each.key].id
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
-  depends_on = [  local.is_migration_environment == 1 ]
 }
 
 resource "azurerm_backup_protected_vm" "mig1" {
@@ -49,7 +47,6 @@ resource "azurerm_backup_protected_vm" "mig1" {
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
   source_vm_id        = azurerm_linux_virtual_machine.migration-linux[each.key].id
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
-  depends_on = [  local.is_migration_environment == 1 ]
 }
 
 resource "azurerm_backup_protected_vm" "mig2" {
@@ -58,5 +55,4 @@ resource "azurerm_backup_protected_vm" "mig2" {
   recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup.name
   source_vm_id        = azurerm_linux_virtual_machine.migration-linux2[each.key].id
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup.id
-  depends_on = [  local.is_migration_environment == 1 ]
 }
