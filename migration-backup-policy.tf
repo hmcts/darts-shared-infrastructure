@@ -1,6 +1,5 @@
 
 resource "azurerm_recovery_services_vault" "darts-migration-backup" {
-  count               = local.is_migration_environment ? 1 : 0
   name                = "darts-prod-rsv"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
