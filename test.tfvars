@@ -7,8 +7,8 @@ modernisation_vms = {
     sku        = "Standard_D4ds_v5"
   }
 }
-modernisation_linux_vms ={
-   perftstlindarts = {
+modernisation_linux_vms = {
+  perftstlindarts = {
     ip_address = "10.24.239.146"
     sku        = "Standard_D4ds_v5"
   }
