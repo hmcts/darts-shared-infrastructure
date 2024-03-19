@@ -7,7 +7,7 @@ resource "azurerm_network_interface" "modernisation_vms" {
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = each.value.subnet == "migration-subnet" ? azurerm_subnet.migration[0].id : azurerm_subnet.migration-extended[0].id
+    subnet_id                     = each.value.subnet == "migration-subnet" ? azurerm_subnet.migration.id : azurerm_subnet.migration-extended.id
     private_ip_address_allocation = "Static"
     private_ip_address            = each.value.ip_address
   }
@@ -73,7 +73,7 @@ resource "azurerm_network_interface" "modernisation-linux-nic" {
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.migration[0].id
+    subnet_id                     = each.value.subnet == "migration-subnet" ? azurerm_subnet.migration.id : azurerm_subnet.migration-extended.id
     private_ip_address_allocation = "Static"
     private_ip_address            = each.value.ip_address
   }
