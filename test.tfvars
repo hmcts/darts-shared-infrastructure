@@ -3,7 +3,7 @@ hub                             = "nonprod"
 address_space                   = "10.24.239.128/28"
 postgres_subnet_address_space   = "10.24.239.144/28"
 
-modernisation_vms = {
+modernisation_vms_test = {
   perftstwindarts = {
     ip_address = "10.24.239.144"
     sku        = "Standard_D4ds_v5"
