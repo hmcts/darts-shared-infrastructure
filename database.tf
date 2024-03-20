@@ -114,6 +114,9 @@ module "postgresql_flexible" {
     },
     {
       name : local.db_name_dets
+    },
+    {
+      name : local.db_name_replica
     }
   ]
 
