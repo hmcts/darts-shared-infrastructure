@@ -49,7 +49,7 @@ resource "azurerm_subnet_network_security_group_association" "modernisation" {
 
 
 
-data "azurerm_virtual_network" "hub-south-vnet" {
+data "azurerm_virtual_network" "hub-south-vnet-modern" {
   count               = local.is_test_environment ? 1 : 0
   provider            = azurerm.hub
   name                = local.hub[var.hub].ukSouth.name
