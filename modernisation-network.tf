@@ -28,8 +28,8 @@ resource "azurerm_network_security_group" "modernisation" {
 
 resource "azurerm_subnet_network_security_group_association" "modernisation" {
   count                     = local.is_test_environment ? 1 : 0
-  subnet_id                 = azurerm_subnet.modernisation.id
-  network_security_group_id = azurerm_network_security_group.modernisation.id
+  subnet_id                 = azurerm_subnet.modernisation[0].id
+  network_security_group_id = azurerm_network_security_group.modernisation[0].id
 }
 
 # resource "azurerm_network_security_rule" "block_internet" {
@@ -109,6 +109,6 @@ resource "azurerm_route" "firewall_routes_modern" {
 
 resource "azurerm_subnet_route_table_association" "modernisationRouteTable" {
   count          = local.is_test_environment ? 1 : 0
-  subnet_id      = azurerm_subnet.modernisation.id
-  route_table_id = azurerm_route_table.route_table_modern.id
+  subnet_id      = azurerm_subnet.modernisation[0].id
+  route_table_id = azurerm_route_table.route_table_modern[0].id
 }

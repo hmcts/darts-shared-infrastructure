@@ -135,7 +135,7 @@ resource "azurerm_network_interface" "modernisation-linux-nic" {
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.modernisation.id
+    subnet_id                     = azurerm_subnet.modernisation[0].id
     private_ip_address_allocation = "Static"
     private_ip_address            = each.value.ip_address
   }
