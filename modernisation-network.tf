@@ -14,7 +14,7 @@ resource "azurerm_subnet" "modernisation" {
   count                = local.is_test_environment ? 1 : 0
   name                 = "modernisation-subnet"
   resource_group_name  = azurerm_resource_group.darts_resource_group.name
-  virtual_network_name = azurerm_virtual_network.modernisation.name
+  virtual_network_name = azurerm_virtual_network.modernisation[0].name
   address_prefixes     = [var.address_space]
 }
 
@@ -60,7 +60,7 @@ resource "azurerm_virtual_network_peering" "darts_modernisation_to_hub" {
   count                        = local.is_test_environment ? 1 : 0
   name                         = "darts-modernisation-to-hub-${var.env}"
   resource_group_name          = azurerm_resource_group.darts_resource_group.name
-  virtual_network_name         = azurerm_virtual_network.modernisation.name
+  virtual_network_name         = azurerm_virtual_network.modernisation[0].name
   remote_virtual_network_id    = data.azurerm_virtual_network.hub-south-vnet[0].id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
@@ -73,7 +73,7 @@ resource "azurerm_virtual_network_peering" "hub_to_darts_modernisation" {
   name                         = "hub-to-darts-modernisation-${var.env}"
   resource_group_name          = local.hub[var.hub].ukSouth.name
   virtual_network_name         = local.hub[var.hub].ukSouth.name
-  remote_virtual_network_id    = azurerm_virtual_network.modernisation.id
+  remote_virtual_network_id    = azurerm_virtual_network.modernisation[0].id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
   allow_gateway_transit        = false
