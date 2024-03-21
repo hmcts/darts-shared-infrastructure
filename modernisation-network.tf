@@ -9,7 +9,6 @@ resource "azurerm_virtual_network" "modernisation" {
   tags        = var.common_tags
 }
 
-
 resource "azurerm_subnet" "modernisation" {
   count                = local.is_test_environment ? 1 : 0
   name                 = "modernisation-subnet"
@@ -31,23 +30,6 @@ resource "azurerm_subnet_network_security_group_association" "modernisation" {
   subnet_id                 = azurerm_subnet.modernisation[0].id
   network_security_group_id = azurerm_network_security_group.modernisation[0].id
 }
-
-# resource "azurerm_network_security_rule" "block_internet" {
-#   count                       = local.is_test_environment ? 1 : 0
-#   name                        = "BlockInternet"
-#   priority                    = 100
-#   direction                   = "Outbound"
-#   access                      = "allow"
-#   protocol                    = "*"
-#   source_port_range           = "*"
-#   destination_port_range      = "*"
-#   source_address_prefix       = "*"
-#   destination_address_prefix  = "Internet"
-#   network_security_group_name = azurerm_network_security_group.migration[0].name
-#   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-# }
-
-
 
 data "azurerm_virtual_network" "hub-south-vnet-modern" {
   count               = local.is_test_environment ? 1 : 0
