@@ -77,6 +77,9 @@ locals {
 
   migration_environments   = ["stg", "prod", "test"]
   is_migration_environment = contains(local.migration_environments, var.env)
+
+  migration_prd   = [ "prod"]
+  is_migration_prd = contains(local.migration_prd, var.env)
 }
 
 data "azurerm_key_vault_secret" "aadds_username" {
