@@ -2,8 +2,8 @@ resource "azurerm_virtual_network" "modernisation" {
   count               = local.is_test_environment ? 1 : 0
   name                = "modernisation-vnet"
   address_space       = concat(local.vnet_address_space, local.palo_address_space)
-  location            = azurerm_resource_group.darts_migration_resource_group[0].location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  location            = azurerm_resource_group.darts_resource_group.location
+  resource_group_name = azurerm_resource_group.darts_resource_group.name
 
   dns_servers = ["10.128.0.4", "10.128.0.5"]
   tags        = var.common_tags
@@ -63,7 +63,7 @@ resource "azurerm_virtual_network_peering" "hub_to_darts_modernisation" {
 
 resource "azurerm_route_table" "route_table_modern" {
   count               = local.is_test_environment ? 1 : 0
-  name                = "darts-migration-rt-${var.env}"
+  name                = "darts-modernisation-rt-${var.env}"
   resource_group_name = azurerm_resource_group.darts_resource_group.name
   location            = azurerm_resource_group.darts_resource_group.location
   tags                = var.common_tags
