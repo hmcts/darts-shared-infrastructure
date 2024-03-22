@@ -4,7 +4,6 @@ resource "azurerm_virtual_network" "modernisation" {
   address_space       = concat(local.vnet_address_space, local.palo_address_space)
   location            = azurerm_resource_group.darts_resource_group.location
   resource_group_name = azurerm_resource_group.darts_resource_group.name
-
   dns_servers = ["10.128.0.4", "10.128.0.5"]
   tags        = var.common_tags
 }
