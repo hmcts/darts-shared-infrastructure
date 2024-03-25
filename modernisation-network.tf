@@ -72,7 +72,7 @@ resource "azurerm_route" "route_modern" {
   count                  = local.is_test_environment ? 1 : 0
   name                   = "DefaultRoute"
   resource_group_name    = azurerm_resource_group.darts_resource_group.name
-  route_table_name       = azurerm_route_table.route_table.name
+  route_table_name       = azurerm_route_table.route_table[0].name
   address_prefix         = "0.0.0.0/0"
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = local.hub[var.hub].ukSouth.next_hop_ip
