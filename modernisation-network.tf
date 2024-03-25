@@ -4,7 +4,6 @@ resource "azurerm_virtual_network" "modernisation" {
   address_space       = concat(local.vnet_address_space, local.palo_address_space)
   location            = azurerm_resource_group.darts_resource_group.location
   resource_group_name = azurerm_resource_group.darts_resource_group.name
-
   dns_servers = ["10.128.0.4", "10.128.0.5"]
   tags        = var.common_tags
 }
@@ -77,6 +76,16 @@ resource "azurerm_route" "route_modern" {
   address_prefix         = "0.0.0.0/0"
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = local.hub[var.hub].ukSouth.next_hop_ip
+}
+
+resource "azurerm_route" "firewall_routes_modern" {
+  for_each               = toset(var.firewall_route_ranges)
+  name                   = "firewall_routes_${replace(split("/", each.value)[0], ".", "_")}"
+  resource_group_name    = azurerm_resource_group.darts_resource_group.name
+  route_table_name       = azurerm_route_table.route_table[0].name
+  address_prefix         = each.value
+  next_hop_type          = "VirtualAppliance"
+  next_hop_in_ip_address = azurerm_network_interface.palo["trust"].private_ip_address
 }
 
 resource "azurerm_subnet_route_table_association" "modernisationRouteTable" {
