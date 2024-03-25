@@ -1,6 +1,6 @@
 storage_account_contributor_ids = ["87c8cf3d-ff9d-4d8f-8430-ccc737764435"]
 hub                             = "nonprod"
-address_space                   = "10.24.239.128/28"
+address_space                   = "10.24.239.144/28"
 postgres_subnet_address_space   = "10.24.239.144/28"
 
 modernisation_vms_test = {

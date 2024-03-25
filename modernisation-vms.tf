@@ -50,8 +50,6 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows" {
   }
 }
 
-
-
 resource "azurerm_virtual_machine_data_disk_attachment" "modernisation_vms_datadisk" {
   for_each           = var.modernisation_vms
   managed_disk_id    = azurerm_managed_disk.modernisation_vms_data[each.key].id
@@ -70,7 +68,7 @@ resource "azurerm_network_interface" "modernisation_vms_test" {
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.modernisation
+    subnet_id                     = azurerm_subnet.modernisation.id
     private_ip_address_allocation = "Static"
     private_ip_address            = each.value.ip_address
   }
@@ -117,8 +115,8 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows_test" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "modernisation_vms_datadisk_test" {
   for_each           = var.modernisation_vms_test
-  managed_disk_id    = azurerm_managed_disk.modernisation_vms_data[each.key].id
-  virtual_machine_id = azurerm_windows_virtual_machine.modernisation_windows[each.key].id
+  managed_disk_id    = azurerm_managed_disk.modernisation_vms_data_test[each.key].id
+  virtual_machine_id = azurerm_windows_virtual_machine.modernisation_windows_test[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
@@ -191,7 +189,7 @@ resource "azurerm_managed_disk" "modernisation_disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "mod_datadisk" {
   for_each           = var.modernisation_linux_vms
-  managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
+  managed_disk_id    = azurerm_managed_disk.modernisation_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
