@@ -42,7 +42,7 @@ resource "azurerm_virtual_network_peering" "darts_modernisation_to_hub" {
   name                         = "darts-modernisation-to-hub-${var.env}"
   resource_group_name          = azurerm_resource_group.darts_resource_group.name
   virtual_network_name         = azurerm_virtual_network.modernisation[0].name
-  remote_virtual_network_id    = data.azurerm_virtual_network.hub-south-vnet.id
+  remote_virtual_network_id    = data.azurerm_virtual_network.hub-south-vnet-modern[0].id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
   allow_gateway_transit        = false
@@ -72,7 +72,7 @@ resource "azurerm_route" "route_modern" {
   count                  = local.is_test_environment ? 1 : 0
   name                   = "DefaultRoute"
   resource_group_name    = azurerm_resource_group.darts_resource_group.name
-  route_table_name       = azurerm_route_table.route_table.name
+  route_table_name       = azurerm_route_table.route_table_modern[0].name
   address_prefix         = "0.0.0.0/0"
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = local.hub[var.hub].ukSouth.next_hop_ip
