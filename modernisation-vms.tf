@@ -96,7 +96,7 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows_test" {
   admin_password        = random_password.password.result
   provision_vm_agent    = true
   computer_name         = each.key
-  network_interface_ids = [azurerm_network_interface.modernisation_vms[each.key].id]
+  network_interface_ids = [azurerm_network_interface.modernisation_vms_test[each.key].id]
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
