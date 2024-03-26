@@ -5,13 +5,13 @@ postgres_subnet_address_space   = "10.24.239.144/28"
 
 modernisation_vms_test = {
   perftstwindarts = {
-    ip_address = "10.24.239.144"
+    ip_address = "10.24.239.140"
     sku        = "Standard_D4ds_v5"
   }
 }
 modernisation_linux_vms = {
   perftstlindarts = {
-    ip_address = "10.24.239.146"
+    ip_address = "10.24.239.138"
     sku        = "Standard_D4ds_v5"
   }
 }
