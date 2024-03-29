@@ -46,7 +46,7 @@ resource "azurerm_network_security_rule" "block_internet" {
   name                        = "BlockInternet"
   priority                    = 100
   direction                   = "Outbound"
-  access                      = "Allow"
+  access                      = "Deny"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
