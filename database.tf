@@ -102,7 +102,7 @@ module "postgresql_flexible" {
   name                = "darts-migration"
   business_area       = "sds"
   location            = var.location
-  pgsql_storage_mb    = 4194304
+  pgsql_storage_mb    = 8388608
   pgsql_sku           = "GP_Standard_D8ds_v4"
 
   common_tags               = var.common_tags
