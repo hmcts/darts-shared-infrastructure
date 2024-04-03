@@ -51,6 +51,7 @@ locals {
   darts_migration_container = "darts-migration"
   db_name                   = "psql-${var.env}-dartsmig-01"
   db_name_dets              = "psql-${var.env}-detsmig-01"
+  db_name_replica           = "psql-${var.env}-darts-replica"
   db_port                   = 5432
 
   palo_address_space = [for network in var.palo_networks : network.address_space]
@@ -76,6 +77,8 @@ locals {
 
   migration_environments   = ["stg", "prod"]
   is_migration_environment = contains(local.migration_environments, var.env)
+  test_environments   = ["test"]
+  is_test_environment = contains(local.test_environments, var.env)
 }
 
 data "azurerm_key_vault_secret" "aadds_username" {

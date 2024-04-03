@@ -176,6 +176,18 @@ variable "modernisation_vms" {
   default     = {}
 }
 
+variable "modernisation_vms_test" {
+  type = map(object({
+    ip_address     = string
+    subnet         = optional(string, "migration-subnet")
+    data_disk_size = optional(string, "255")
+    sku            = optional(string, "Standard_D16ds_v5")
+    join_ad        = optional(bool, true)
+  }))
+  description = "Map of objects describing the modernisation windows virtual machines to create."
+  default     = {}
+}
+
 
 variable "oracle_linux_vms" {
   type = map(object({
@@ -185,6 +197,14 @@ variable "oracle_linux_vms" {
   default     = {}
 }
 variable "migration_linux_vms" {
+  type = map(object({
+    ip_address = string
+  }))
+  description = "Map of objects describing the migration linux virtual machines to create."
+  default     = {}
+}
+
+variable "modernisation_linux_vms" {
   type = map(object({
     ip_address = string
   }))
