@@ -54,8 +54,8 @@ resource "azurerm_logic_app_workflow" "example" {
 EOF
 }
 
-resource "azurerm_eventgrid_event_subscription" "example" {
-  name                  = "example-event-subscription"
+resource "azurerm_eventgrid_event_subscription" "mig-event-supscription" {
+  name                  = "${var.product}-event-${var.env}-subscription"
   scope                 = azurerm_resource_group.example.id
   event_delivery_schema = "EventGridSchema"
   
