@@ -46,7 +46,7 @@ resource "azurerm_network_security_rule" "block_internet" {
   name                        = "BlockInternet"
   priority                    = 100
   direction                   = "Outbound"
-  access                      = "Deny"
+  access                      = var.env == "prod" ? "Deny" : "Allow"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
