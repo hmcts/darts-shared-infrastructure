@@ -1,4 +1,4 @@
-resource "azurerm_logic_app_workflow" "example" {
+resource "azurerm_logic_app_workflow" "migration_scan" {
   name                = "example-logic-app"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -56,16 +56,8 @@ EOF
 
 resource "azurerm_eventgrid_event_subscription" "mig-event-supscription" {
   name                  = "${var.product}-event-${var.env}-subscription"
-  scope                 = azurerm_resource_group.example.id
+  scope                 =  azurerm_resource_group.darts_migration_resource_group[0].id
   event_delivery_schema = "EventGridSchema"
   
-  webhook_endpoint {
-    url = azurerm_logic_app_workflow.example.workflow_endpoint
-  }
-
-  storage_queue_endpoint {
-    storage_account_id = module.sa-migration-standard[0].id
-    queue_name         = azurerm_storage_queue.example.name
-  }
 }
 
