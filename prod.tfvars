@@ -31,7 +31,7 @@ migration_vms = {
   prddartsassure = {
     ip_address = "10.24.239.164"
     subnet     = "migration-subnet-extended"
-    sku        = "Standard_D4ds_v5"
+    sku        = "Standard_D8ds_v5"
     data_disk_size = "1000"
   }
 }
