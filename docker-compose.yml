@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres_db_latest:
+    image: postgres:latest
+    restart: unless-stopped
+    container_name: postgres-latest
+    environment:
+      POSTGRES_USER: system
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./tablespace:/u01
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
+      - type: bind
+        source: ./migration
+        target: /app/migration
+    ports:
+      - 5432:5432  
+  ora2pg:
+    image: ora2pg
+    restart: unless-stopped
+    container_name: ora2pg
+    environment:
+      ORACLE_USERNAME: $ORACLE_USERNAME
+      ORACLE_PASSWORD: $ORACLE_PASSWORD
+      PG_USERNAME: $POSTGRES_USERNAME
+      PG_PASSWORD: $POSTGRES_PASSWORD
+    volumes:
+        - type: bind
+          source: ./migration
+          target: /app/migration
+    network_mode: "bridge"
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.4
+networks:
+  bridge:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/24  
