@@ -64,7 +64,7 @@ migration_linux_vms = {
     ip_address = "10.24.239.11"
   }
   prddartsmigdock = {
-    ip_address = "10.24.239.15"
+    ip_address = "10.24.239.137"
   }
 }
 migration_linux_vms2 = {
