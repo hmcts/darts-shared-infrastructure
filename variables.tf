@@ -199,6 +199,7 @@ variable "oracle_linux_vms" {
 variable "migration_linux_vms" {
   type = map(object({
     ip_address = string
+    subnet         = optional(string, "migration-subnet")
   }))
   description = "Map of objects describing the migration linux virtual machines to create."
   default     = {}

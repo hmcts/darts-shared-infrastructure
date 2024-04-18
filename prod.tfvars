@@ -65,6 +65,7 @@ migration_linux_vms = {
   }
   prddartsmigdock = {
     ip_address = "10.24.239.137"
+    subnet     = "migration-subnet-extended"
   }
 }
 migration_linux_vms2 = {
