@@ -95,3 +95,9 @@ palo_networks = {
     enable_ip_forwarding = true
   }
 }
+
+backup_operators = [
+  "e1ba3996-34e9-4ce2-b34f-4d5f28a9310c", // Richard Penswick
+  "675f1c23-3e46-4cf8-867b-747eb60fe89d", // Scott Robertson
+  "1d52a6eb-aa62-4dff-a7ac-3d71bccb67fc"  // Ben Neill
+]

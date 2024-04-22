@@ -279,3 +279,9 @@ variable "max-file-upload-megabytes" {
   default     = "350"
   description = "The file upload size threshold in megabytes "
 }
+
+variable "backup_operators" {
+  description = "List of pricipal IDs to assign the 'Backup Operator' role over the RSV."
+  type        = list(string)
+  default     = []
+}
