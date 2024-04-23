@@ -279,3 +279,9 @@ variable "max-file-upload-megabytes" {
   default     = "350"
   description = "The file upload size threshold in megabytes "
 }
+
+variable "max-file-upload-request-megabytes" {
+  type        = number
+  default     = "360"
+  description = "The file upload request size threshold in megabytes "
+}

@@ -21,6 +21,12 @@ resource "azurerm_key_vault_secret" "MaxFileUploadSizeInMegabytes" {
   key_vault_id = module.darts_key_vault.key_vault_id
 }
 
+resource "azurerm_key_vault_secret" "MaxFileUploadRequestSizeInMegabytes" {
+  name         = "MaxFileUploadRequestSizeInMegabytes"
+  value        = var.max-file-upload-request-megabytes
+  key_vault_id = module.darts_key_vault.key_vault_id
+}
+
 module "darts_migration_key_vault" {
   count  = local.is_migration_environment ? 1 : 0
   source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
