@@ -301,7 +301,7 @@ resource "azurerm_network_interface" "oracle-linux-nic" {
   }
 }
 
-resource "azurerm_network_interface" "migration-linux-nic" {
+resource "azurerm_network_interface" "docker-linux-nic" {
   for_each            = var.migration_docker_vms
   name                = "${each.key}-nic"
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -316,7 +316,7 @@ resource "azurerm_network_interface" "migration-linux-nic" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "migration-linux" {
+resource "azurerm_linux_virtual_machine" "dock-linux" {
   for_each                        = var.migration_docker_vms
   name                            = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -342,7 +342,7 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
   }
 }
 
-resource "azurerm_managed_disk" "migration_disk" {
+resource "azurerm_managed_disk" "dock_disk" {
   for_each             = var.migration_docker_vms
   name                 = "${each.key}-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -353,7 +353,7 @@ resource "azurerm_managed_disk" "migration_disk" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "mig_datadisk" {
+resource "azurerm_virtual_machine_data_disk_attachment" "dock_datadisk" {
   for_each           = var.migration_docker_vms
   managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
