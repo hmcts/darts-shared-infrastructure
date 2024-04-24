@@ -321,7 +321,7 @@ resource "azurerm_linux_virtual_machine" "dock-linux" {
   name                            = each.key
   location                        = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
-  network_interface_ids           = [azurerm_network_interface.migration-linux-nic[each.key].id]
+  network_interface_ids           = [azurerm_network_interface.docker-linux-nic[each.key].id]
   size                            = "Standard_E32ds_v5"
   tags                            = var.common_tags
   admin_username                  = var.admin_user
@@ -355,8 +355,8 @@ resource "azurerm_managed_disk" "dock_disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "dock_datadisk" {
   for_each           = var.migration_docker_vms
-  managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  managed_disk_id    = azurerm_managed_disk.dock_disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.dock-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
