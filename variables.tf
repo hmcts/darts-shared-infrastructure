@@ -205,6 +205,15 @@ variable "migration_linux_vms" {
   default     = {}
 }
 
+variable "migration_docker_vms" {
+  type = map(object({
+    ip_address = string
+    subnet         = optional(string, "migration-subnet")
+  }))
+  description = "Map of objects describing the migration linux docker virtual machines to create."
+  default     = {}
+}
+
 variable "modernisation_linux_vms" {
   type = map(object({
     ip_address = string
