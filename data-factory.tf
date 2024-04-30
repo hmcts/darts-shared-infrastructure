@@ -6,7 +6,7 @@ module "datafactory" {
   
   env    = var.env
   product   = var.product
-  component = var.componant
+  component = var.component
   location = var.location
   common_tags = var.common_tags
 
