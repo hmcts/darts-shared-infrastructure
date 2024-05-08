@@ -157,7 +157,7 @@ variable "migration_vms" {
   type = map(object({
     ip_address     = string
     subnet         = optional(string, "migration-subnet")
-    data_disk_size = optional(string, "255")
+    data_disk_size = optional(string, "500")
     sku            = optional(string, "Standard_D16ds_v5")
     join_ad        = optional(bool, true)
   }))
