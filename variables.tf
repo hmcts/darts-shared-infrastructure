@@ -189,7 +189,7 @@ variable "modernisation_vms_test" {
 }
 
 variable "vm_subnet_id"{
-  
+  default =""
 }
 
 variable "oracle_linux_vms" {
