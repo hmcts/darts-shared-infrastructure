@@ -11,7 +11,7 @@ resource "azurerm_monitor_metric_alert" "example" {
     metric_name       = "BlobIngress"
     aggregation       = "Average"
     operator          = "LessThan"
-    threshold         = 90000  # Adjust the threshold as per your requirement
+    threshold         = 96636764160  # Adjust the threshold as per your requirement
     # window_size       = "PT30M"
     # time_aggregation  = "Average"
   }
