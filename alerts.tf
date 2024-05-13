@@ -20,9 +20,7 @@ resource "azurerm_monitor_metric_alert" "example" {
     action_group_id = azurerm_monitor_action_group.blob-action-group.id
   }
 
-  tags = {
-    environment = "Production"
-  }
+  tags = var.common_tags
 }
 
 resource "azurerm_monitor_action_group" "blob-action-group" {
