@@ -1,5 +1,5 @@
 
-resource "azurerm_monitor_metric_alert" "example" {
+resource "azurerm_monitor_metric_alert" "blob-alert" {
   name                = "blob-alert"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   scopes              = ["/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Storage/storageAccounts/saproddartsmig02"]
@@ -8,12 +8,10 @@ resource "azurerm_monitor_metric_alert" "example" {
 
   criteria {
     metric_namespace  = "Microsoft.Storage/storageAccounts"
-    metric_name       = "BlobIngress"
+    metric_name       = "Ingress to Blob by 30 Minutes"
     aggregation       = "Average"
     operator          = "LessThan"
-    threshold         = 96636764160  # Adjust the threshold as per your requirement
-    # window_size       = "PT30M"
-    # time_aggregation  = "Average"
+    threshold         = 96636764160 
   }
 
   action {
@@ -26,7 +24,7 @@ resource "azurerm_monitor_metric_alert" "example" {
 resource "azurerm_monitor_action_group" "blob-action-group" {
   name                = "blob-ingress-action-group"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  short_name          = "example"
+  short_name          = "alert-group"
   email_receiver {
     name                    = "Sean Bulley"
     email_address           = "sean.bulley@hmcts.net"
