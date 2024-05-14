@@ -8,10 +8,10 @@ resource "azurerm_monitor_metric_alert" "blob-alert" {
 
   criteria {
     metric_namespace  = "Microsoft.Storage/storageAccounts"
-    metric_name       = "Ingress to Blob by 30 Minutes"
+    metric_name       = "Total Ingress"
     aggregation       = "Average"
     operator          = "LessThan"
-    threshold         = 96636764160 
+    threshold         = 3221225472
   }
 
   action {
