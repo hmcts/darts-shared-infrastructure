@@ -16,7 +16,7 @@ resource "azurerm_monitor_metric_alert" "blob-alert" {
   }
 
   action {
-    action_group_id = azurerm_monitor_action_group.blob-action-group.id
+    action_group_id = azurerm_monitor_action_group.blob-action-group[0].id
   }
 
   tags = var.common_tags
