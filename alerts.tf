@@ -8,8 +8,8 @@ resource "azurerm_monitor_metric_alert" "blob-alert" {
 
   criteria {
     metric_namespace  = "Microsoft.Storage/storageAccounts"
-    metric_name       = "Total Ingress"
-    aggregation       = "Average"
+    metric_name       = "Ingress"
+    aggregation       = "Total"
     operator          = "LessThan"
     threshold         = 3221225472
   }
