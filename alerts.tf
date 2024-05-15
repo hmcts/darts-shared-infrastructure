@@ -1,5 +1,6 @@
 
 resource "azurerm_monitor_metric_alert" "blob-alert" {
+  count                = local.is_migration_environment ? 1 : 0
   name                = "blob-alert"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   scopes              = ["/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Storage/storageAccounts/saproddartsmig02"]
@@ -22,6 +23,7 @@ resource "azurerm_monitor_metric_alert" "blob-alert" {
 }
 
 resource "azurerm_monitor_action_group" "blob-action-group" {
+  count                = local.is_migration_environment ? 1 : 0
   name                = "blob-ingress-action-group"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   short_name          = "alert-group"
