@@ -188,6 +188,9 @@ variable "modernisation_vms_test" {
   default     = {}
 }
 
+variable "vm_subnet_id"{
+  default =""
+}
 
 variable "oracle_linux_vms" {
   type = map(object({
