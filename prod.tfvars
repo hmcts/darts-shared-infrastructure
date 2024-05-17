@@ -31,11 +31,13 @@ migration_vms = {
   }
   prddartsassess = {
     ip_address = "10.24.239.5"
+    scope      = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsassess"
   }
   prddartsassure = {
     ip_address     = "10.24.239.164"
     subnet         = "migration-subnet-extended"
     data_disk_size = "1000"
+    scope       = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsassure"
   }
 }
 
