@@ -188,8 +188,11 @@ variable "modernisation_vms_test" {
   default     = {}
 }
 
-variable "vm_subnet_id"{
-  default =""
+variable "vm_subnet_id" {
+  default = ""
+}
+variable "scope" {
+  default = ""
 }
 
 variable "oracle_linux_vms" {
@@ -202,7 +205,7 @@ variable "oracle_linux_vms" {
 variable "migration_linux_vms" {
   type = map(object({
     ip_address = string
-    subnet         = optional(string, "migration-subnet")
+    subnet     = optional(string, "migration-subnet")
   }))
   description = "Map of objects describing the migration linux virtual machines to create."
   default     = {}
@@ -211,7 +214,7 @@ variable "migration_linux_vms" {
 variable "migration_docker_vms" {
   type = map(object({
     ip_address = string
-    subnet         = optional(string, "migration-subnet")
+    subnet     = optional(string, "migration-subnet")
   }))
   description = "Map of objects describing the migration linux docker virtual machines to create."
   default     = {}
