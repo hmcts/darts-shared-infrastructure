@@ -71,7 +71,7 @@ resource "azurerm_monitor_metric_alert" "partition_capacity_alert" {
 resource "azurerm_monitor_action_group" "partition-capacity" {
   name                = "partition-space-group"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  short_name          = "capacity-alert"
+  short_name          = "capacity"
 
   email_receiver {
     name                    = "email1"
