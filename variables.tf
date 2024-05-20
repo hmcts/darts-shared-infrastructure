@@ -179,7 +179,6 @@ variable "modernisation_vms" {
 
 variable "modernisation_vms_test" {
   type = map(object({
-    sku     = string
     subnet         = optional(string, "migration-subnet")
     data_disk_size = optional(string, "255")
     sku            = optional(string, "Standard_D16ds_v5")
