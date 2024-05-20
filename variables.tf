@@ -159,7 +159,8 @@ variable "migration_vms" {
     subnet         = optional(string, "migration-subnet")
     data_disk_size = optional(string, "500")
     sku            = optional(string, "Standard_D16ds_v5")
-    join_ad        = optional(bool, true)
+    join_ad        = optional(bool, true)  
+    scope          = optional(string, "")
   }))
   description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}
@@ -178,7 +179,7 @@ variable "modernisation_vms" {
 
 variable "modernisation_vms_test" {
   type = map(object({
-    ip_address     = string
+    sku     = string
     subnet         = optional(string, "migration-subnet")
     data_disk_size = optional(string, "255")
     sku            = optional(string, "Standard_D16ds_v5")
@@ -188,8 +189,11 @@ variable "modernisation_vms_test" {
   default     = {}
 }
 
-variable "vm_subnet_id"{
-  default =""
+variable "vm_subnet_id" {
+  default = ""
+}
+variable "scope" {
+  default = ""
 }
 
 variable "oracle_linux_vms" {
@@ -202,7 +206,7 @@ variable "oracle_linux_vms" {
 variable "migration_linux_vms" {
   type = map(object({
     ip_address = string
-    subnet         = optional(string, "migration-subnet")
+    subnet     = optional(string, "migration-subnet")
   }))
   description = "Map of objects describing the migration linux virtual machines to create."
   default     = {}
@@ -211,7 +215,7 @@ variable "migration_linux_vms" {
 variable "migration_docker_vms" {
   type = map(object({
     ip_address = string
-    subnet         = optional(string, "migration-subnet")
+    subnet     = optional(string, "migration-subnet")
   }))
   description = "Map of objects describing the migration linux docker virtual machines to create."
   default     = {}
@@ -219,7 +223,7 @@ variable "migration_docker_vms" {
 
 variable "modernisation_linux_vms" {
   type = map(object({
-    ip_address = string
+    sku = string
   }))
   description = "Map of objects describing the migration linux virtual machines to create."
   default     = {}
