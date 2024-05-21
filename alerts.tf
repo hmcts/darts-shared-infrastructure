@@ -71,10 +71,10 @@ resource "azurerm_monitor_metric_alert" "partition_capacity_alert_01" {
 
   criteria {
     metric_namespace = "Microsoft.Compute/virtualMachines"
-    metric_name      = "LogicalDisk % Free Space"
+    metric_name      = "Available Memory Bytes"
     aggregation      = "Average"
     operator         = "LessThanOrEqual"
-    threshold        = 20 # 100 - 80 (80% capacity)
+    threshold        = 107374182400
 
     dimension {
       name     = "ResourceId"
