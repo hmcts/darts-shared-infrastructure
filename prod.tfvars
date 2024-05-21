@@ -11,23 +11,18 @@ defender_scan                   = true
 migration_vms = {
   prddartsmig01 = {
     ip_address = "10.24.239.6"
-    scope      = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig01"
   }
   prddartsmig02 = {
     ip_address = "10.24.239.7"
-    scope      = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/DARTS-MIGRATION-PROD-RG/providers/Microsoft.Compute/virtualMachines/prddartsmig02"
   }
   prddartsmig03 = {
     ip_address = "10.24.239.8"
-    scope      = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig03"
   }
   prddartsmig04 = {
     ip_address = "10.24.239.9"
-    scope      = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig04"
   }
   prddartsmig05 = {
     ip_address = "10.24.239.10"
-    scope      = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig05"
   }
   prddartsassess = {
     ip_address = "10.24.239.5"
@@ -37,7 +32,7 @@ migration_vms = {
     ip_address     = "10.24.239.164"
     subnet         = "migration-subnet-extended"
     data_disk_size = "1000"
-    scope       = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsassure"
+    scope          = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsassure"
   }
 }
 
