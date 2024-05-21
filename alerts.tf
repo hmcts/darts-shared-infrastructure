@@ -41,7 +41,7 @@ resource "azurerm_monitor_action_group" "blob-action-group" {
 resource "azurerm_monitor_metric_alert" "partition_capacity_alert_01" {
   name                = "partition-capacity-alert"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  scopes              = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig01"
+  scopes              = ["/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig01","/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/DARTS-MIGRATION-PROD-RG/providers/Microsoft.Compute/virtualMachines/prddartsmig02", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig03", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig04"]
   description         = "Alert triggered when a partition on the Windows VM reaches 80% capacity"
   enabled             = true
 
@@ -59,73 +59,13 @@ resource "azurerm_monitor_metric_alert" "partition_capacity_alert_01" {
     }
   }
 }
-  resource "azurerm_monitor_metric_alert" "partition_capacity_alert_02" {
+  
+
+
+  resource "azurerm_monitor_metric_alert" "partition_capacity_alert" {
   name                = "partition-capacity-alert"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  scopes              = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/DARTS-MIGRATION-PROD-RG/providers/Microsoft.Compute/virtualMachines/prddartsmig02"
-  description         = "Alert triggered when a partition on the Windows VM reaches 80% capacity"
-  enabled             = true
-
-  criteria {
-    metric_namespace = "Microsoft.Compute/virtualMachines"
-    metric_name      = "LogicalDisk % Free Space"
-    aggregation      = "Average"
-    operator         = "LessThanOrEqual"
-    threshold        = 20 # 100 - 80 (80% capacity)
-
-    dimension {
-      name     = "ResourceId"
-      operator = "Include"
-      values   = ["<vm-id>"]
-    }
-  }
-  }
-  resource "azurerm_monitor_metric_alert" "partition_capacity_alert_03" {
-  name                = "partition-capacity-alert"
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  scopes              = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig03"
-  description         = "Alert triggered when a partition on the Windows VM reaches 80% capacity"
-  enabled             = true
-
-  criteria {
-    metric_namespace = "Microsoft.Compute/virtualMachines"
-    metric_name      = "LogicalDisk % Free Space"
-    aggregation      = "Average"
-    operator         = "LessThanOrEqual"
-    threshold        = 20 # 100 - 80 (80% capacity)
-
-    dimension {
-      name     = "ResourceId"
-      operator = "Include"
-      values   = ["<vm-id>"]
-    }
-  }
-  }
-  resource "azurerm_monitor_metric_alert" "partition_capacity_alert_04" {
-  name                = "partition-capacity-alert"
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  scopes              = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig04"
-  description         = "Alert triggered when a partition on the Windows VM reaches 80% capacity"
-  enabled             = true
-
-  criteria {
-    metric_namespace = "Microsoft.Compute/virtualMachines"
-    metric_name      = "LogicalDisk % Free Space"
-    aggregation      = "Average"
-    operator         = "LessThanOrEqual"
-    threshold        = 20 # 100 - 80 (80% capacity)
-
-    dimension {
-      name     = "ResourceId"
-      operator = "Include"
-      values   = ["<vm-id>"]
-    }
-  }
-  }
-  resource "azurerm_monitor_metric_alert" "partition_capacity_alert_05" {
-  name                = "partition-capacity-alert"
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  scopes              = "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig05"
+  scopes              = ["/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig01","/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/DARTS-MIGRATION-PROD-RG/providers/Microsoft.Compute/virtualMachines/prddartsmig02", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig03", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig04", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig05"]
   description         = "Alert triggered when a partition on the Windows VM reaches 80% capacity"
   enabled             = true
 
