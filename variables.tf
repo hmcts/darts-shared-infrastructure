@@ -179,7 +179,6 @@ variable "modernisation_vms" {
 
 variable "modernisation_vms_test" {
   type = map(object({
-    ip_address     = string
     subnet         = optional(string, "migration-subnet")
     data_disk_size = optional(string, "255")
     sku            = optional(string, "Standard_D16ds_v5")
@@ -223,7 +222,7 @@ variable "migration_docker_vms" {
 
 variable "modernisation_linux_vms" {
   type = map(object({
-    ip_address = string
+    sku = string
   }))
   description = "Map of objects describing the migration linux virtual machines to create."
   default     = {}
