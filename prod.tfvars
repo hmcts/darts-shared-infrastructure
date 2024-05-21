@@ -30,7 +30,12 @@ migration_vms = {
   prddartsassure = {
     ip_address = "10.24.239.164"
     subnet     = "migration-subnet-extended"
-    data_disk_size = "1000"
+    data_disk_size = "2000"
+  }
+  prddartsoracle = {
+    ip_address = "10.24.239.166"
+    subnet     = "migration-subnet-extended"
+    data_disk_size = "2000"
   }
 }
 
