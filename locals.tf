@@ -77,6 +77,8 @@ locals {
 
   migration_environments   = ["stg", "prod"]
   is_migration_environment = contains(local.migration_environments, var.env)
+  production_environments   = ["prod"]
+  is_production_environment = contains(local.migration_environments, var.env)
   test_environments        = ["test"]
   is_test_environment      = contains(local.test_environments, var.env)
 }

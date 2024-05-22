@@ -63,6 +63,7 @@ resource "azurerm_monitor_metric_alert" "partition_capacity_alert_01" {
 
 
   resource "azurerm_monitor_metric_alert" "partition_capacity_alert" {
+  count               = local.is_production_environment ? 1 : 0
   name                = "partition-capacity-alert"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   scopes              = ["/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig01","/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/DARTS-MIGRATION-PROD-RG/providers/Microsoft.Compute/virtualMachines/prddartsmig02", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig03", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig04", "/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Compute/virtualMachines/prddartsmig05"]
