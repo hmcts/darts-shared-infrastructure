@@ -25,11 +25,11 @@ migration_vms = {
     ip_address = "10.24.239.10"
   }
   prddartsassess = {
-    ip_address     = "10.24.239.5"
+    ip_address = "10.24.239.5"
   }
   prddartsassure = {
-    ip_address = "10.24.239.164"
-    subnet     = "migration-subnet-extended"
+    ip_address     = "10.24.239.164"
+    subnet         = "migration-subnet-extended"
     data_disk_size = "1000"
     sku        = "Standard_D32d_v5"
   }
