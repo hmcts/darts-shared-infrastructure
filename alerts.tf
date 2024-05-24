@@ -70,7 +70,6 @@ resource "azurerm_monitor_action_group" "blob-action-group" {
 }
 
 resource "azurerm_monitor_action_group" "partition-capacity" {
-  count               = local.is_production_environment ? 1 : 0
   name                = "partition-space-group"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   short_name          = "capacity"
