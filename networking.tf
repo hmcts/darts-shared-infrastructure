@@ -44,7 +44,7 @@ resource "azurerm_subnet_network_security_group_association" "migration" {
 resource "azurerm_network_security_rule" "allow_outbound_prddartsoracle" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "allow-outbound-prddartsoracle"
-  priority                    = 110
+  priority                    = 90
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
