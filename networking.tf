@@ -50,8 +50,8 @@ resource "azurerm_network_security_rule" "allow_outbound_prddartsoracle" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "10.24.239.166"  
+  source_address_prefix       = "10.24.239.166"  
+  destination_address_prefix  = "*"
   network_security_group_name = azurerm_network_security_group.migration[0].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
 }
