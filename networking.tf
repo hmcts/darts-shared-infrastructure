@@ -89,7 +89,7 @@ resource "azurerm_network_security_rule" "allow_mgmt_traffic" {
 
 resource "azurerm_network_security_rule" "deny_inbound_prddartsoracle" {
   count                       = local.is_migration_environment ? 1 : 0
-  name                        = "allow-outbound-prddartsoracle"
+  name                        = "deny-inbound-prddartsoracle"
   priority                    = 130
   direction                   = "Inbound"
   access                      = "Deny"
@@ -104,7 +104,7 @@ resource "azurerm_network_security_rule" "deny_inbound_prddartsoracle" {
 
 resource "azurerm_network_security_rule" "deny_outbound_prddartsoracle" {
   count                       = local.is_migration_environment ? 1 : 0
-  name                        = "allow-outbound-prddartsoracle"
+  name                        = "deny-outbound-prddartsoracle"
   priority                    = 140
   direction                   = "Outbound"
   access                      = "Deny"
