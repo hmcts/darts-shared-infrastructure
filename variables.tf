@@ -86,7 +86,7 @@ variable "builtFrom" {
   default = "https://github.com/hmcts/darts-shared-infrastructure.git"
 }
 variable "businessArea" {
-  default = "Cross-Cutting"
+  default = "sds"
 }
 variable "application" {
   default = "core"
