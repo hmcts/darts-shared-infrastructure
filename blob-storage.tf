@@ -2,6 +2,12 @@ data "azurerm_resource_group" "darts_resource_group" {
   name = format("%s-%s-rg", var.product, var.env)
 }
 
+data "azurerm_subnet" "private_endpoints" {
+  resource_group_name  = local.private_endpoint_rg_name
+  virtual_network_name = local.private_endpoint_vnet_name
+  name                 = "private-endpoints"
+}
+
 module "sa" {
   source = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
 
@@ -21,6 +27,7 @@ module "sa" {
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
   enable_change_feed              = true
+  private_endpoint_subnet_id = data.azurerm_subnet.private_endpoints.id
 
   enable_data_protection = true
 
