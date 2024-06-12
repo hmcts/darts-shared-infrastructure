@@ -74,6 +74,10 @@ locals {
     "stg"  = "DTS Darts Admin (env:staging)"
     "prod" = "DTS Darts Admin (env:production)"
   }
+  
+  private_endpoint_rg_name   = var.businessArea == "sds" ? "ss-${var.env}-network-rg" : "${var.businessArea}-${var.env}-network-rg"
+  private_endpoint_vnet_name = var.businessArea == "sds" ? "ss-${var.env}-vnet" : "${var.businessArea}-${var.env}-vnet"
+
 
   migration_environments   = ["stg", "prod"]
   is_migration_environment = contains(local.migration_environments, var.env)
@@ -92,3 +96,4 @@ data "azurerm_key_vault_secret" "aadds_password" {
   name         = "domain-join-password"
   key_vault_id = "/subscriptions/17390ec1-5a5e-4a20-afb3-38d8d726ae45/resourceGroups/PINT-RG/providers/Microsoft.KeyVault/vaults/hmcts-kv-prod-int"
 }
+
