@@ -92,7 +92,7 @@ resource "azurerm_network_interface" "migration-linux-nic" {
 
   ip_configuration {
     name                          = "migration-ipconfig"
-    subnet_id                     = azurerm_subnet.migration[0].id
+    subnet_id                     = each.value.subnet == "migration-subnet" ? azurerm_subnet.migration[0].id : azurerm_subnet.migration-extended[0].id
     private_ip_address_allocation = "Static"
     private_ip_address            = each.value.ip_address
   }
@@ -301,3 +301,62 @@ resource "azurerm_network_interface" "oracle-linux-nic" {
   }
 }
 
+resource "azurerm_network_interface" "docker-linux-nic" {
+  for_each            = var.migration_docker_vms
+  name                = "${each.key}-nic"
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  tags                = var.common_tags
+
+  ip_configuration {
+    name                          = "migration-ipconfig"
+    subnet_id                     = each.value.subnet == "migration-subnet" ? azurerm_subnet.migration[0].id : azurerm_subnet.migration-extended[0].id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.ip_address
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "dock-linux" {
+  for_each                        = var.migration_docker_vms
+  name                            = each.key
+  location                        = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name             = azurerm_resource_group.darts_migration_resource_group[0].name
+  network_interface_ids           = [azurerm_network_interface.docker-linux-nic[each.key].id]
+  size                            = "Standard_E32ds_v5"
+  tags                            = var.common_tags
+  admin_username                  = var.admin_user
+  admin_password                  = random_password.password.result
+  disable_password_authentication = false
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+  source_image_reference {
+    publisher = "canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+resource "azurerm_managed_disk" "dock_disk" {
+  for_each             = var.migration_docker_vms
+  name                 = "${each.key}-datadisk"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = "200"
+  tags                 = var.common_tags
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "dock_datadisk" {
+  for_each           = var.migration_docker_vms
+  managed_disk_id    = azurerm_managed_disk.dock_disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.dock-linux[each.key].id
+  lun                = "10"
+  caching            = "ReadWrite"
+}

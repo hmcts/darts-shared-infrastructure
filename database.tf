@@ -94,9 +94,10 @@ module "postgresql_flexible" {
     azurerm.postgres_network = azurerm
   }
 
-  source              = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
-  env                 = var.env
-  product             = var.product
+  source  = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
+  env     = var.env
+  product = var.product
+
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   component           = var.component
   name                = "darts-migration"

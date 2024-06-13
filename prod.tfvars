@@ -25,13 +25,18 @@ migration_vms = {
     ip_address = "10.24.239.10"
   }
   prddartsassess = {
-    ip_address     = "10.24.239.5"
-    data_disk_size = "500"
+    ip_address = "10.24.239.5"
   }
   prddartsassure = {
-    ip_address = "10.24.239.164"
-    subnet     = "migration-subnet-extended"
+    ip_address     = "10.24.239.164"
+    subnet         = "migration-subnet-extended"
     data_disk_size = "1000"
+    sku        = "Standard_D32ds_v5"
+  }
+  prddartsoracle = {
+    ip_address = "10.24.239.166"
+    subnet     = "migration-subnet-extended"
+    data_disk_size = "2000"
   }
 }
 
@@ -62,6 +67,12 @@ firewall_route_ranges = [
 migration_linux_vms = {
   prddartsmigdb01 = {
     ip_address = "10.24.239.11"
+  }
+}
+migration_docker_vms = {
+  prddartsmigdock = {
+    ip_address = "10.24.239.167"
+    subnet     = "migration-subnet-extended"
   }
 }
 migration_linux_vms2 = {
