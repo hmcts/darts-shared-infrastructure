@@ -9,7 +9,7 @@ resource "azurerm_subnet" "logic" {
   virtual_network_name = azurerm_virtual_network.migration[0].name
   address_prefixes     = [var.logic_apps_address_space]
   delegation {
-    name = app-service-delegation
+    name = "app-service-delegation"
     service_delegation {
       name = "Microsoft.Web/serverFarms"
       actions = [
