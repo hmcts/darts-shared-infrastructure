@@ -25,7 +25,7 @@ resource "azurerm_service_plan" "logic" {
   name                = "darts-migration-app-service-plan-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
-  os_type             = "Linux"
+  os_type             = "Windows"
   sku_name            = "WS1"
   tags                = var.common_tags
 }
