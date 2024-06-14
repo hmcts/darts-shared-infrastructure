@@ -27,7 +27,7 @@ module "sa" {
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
   enable_change_feed              = true
-  private_endpoint_subnet_id = data.azurerm_subnet.private_endpoints.id
+  private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints.id
 
   enable_data_protection = true
 

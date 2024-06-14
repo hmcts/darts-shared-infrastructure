@@ -6,11 +6,11 @@ vm_subnet_id                    = "/subscriptions/3eec5bde-7feb-4566-bfb6-805df6
 
 modernisation_vms_test = {
   perftstwindarts = {
-    sku        = "Standard_D4ds_v5"
+    sku = "Standard_D4ds_v5"
   }
 }
 modernisation_linux_vms = {
   perftstlindarts = {
-    sku        = "Standard_D4ds_v5"
+    sku = "Standard_D4ds_v5"
   }
 }
