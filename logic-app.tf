@@ -3,7 +3,7 @@ resource "azurerm_logic_app_workflow" "migration_scan" {
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
 
-  workflow_schema = <<EOF
+   template_content = <<TEMPLATE
 {
     "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
     "contentVersion": "1.0.0.0",
@@ -51,7 +51,10 @@ resource "azurerm_logic_app_workflow" "migration_scan" {
     },
     "outputs": {}
 }
-EOF
+TEMPLATE
+depends_on = [
+  azurerm_logic_app_workflow.example
+]
 }
 
 resource "azurerm_eventgrid_event_subscription" "mig-event-supscription" {
