@@ -116,6 +116,11 @@ variable "extended_address_space" {
   default = null
 }
 
+variable "logic_apps_address_space" {
+  type    = string
+  default = null
+}
+
 variable "aks_subscription_id" {}
 
 variable "virtual_machine_admins" {
