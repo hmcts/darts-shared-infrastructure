@@ -65,7 +65,7 @@ locals {
     ]
   ])
 
-  vnet_address_space = var.extended_address_space != null ? [var.address_space, var.postgres_subnet_address_space, var.extended_address_space] : [var.address_space, var.postgres_subnet_address_space]
+  vnet_address_space = var.logic_apps_address_space != null && var.extended_address_space != null ? [var.address_space, var.postgres_subnet_address_space, var.extended_address_space, var.logic_apps_address_space] : [var.address_space, var.postgres_subnet_address_space]
 
   admin_group_map = {
     "demo" = "DTS Darts Admin (env:demo)"

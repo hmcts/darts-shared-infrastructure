@@ -37,6 +37,7 @@ resource "azurerm_monitor_action_group" "blob-action-group" {
     email_address           = "scott.robertson@hmcts.net"
     use_common_alert_schema = true
   }
+  tags = var.common_tags
 }
 
 #   resource "azurerm_monitor_metric_alert" "partition_capacity_alert" {
