@@ -49,7 +49,7 @@ resource "azurerm_storage_account_network_rules" "logic" {
 
   default_action             = "Deny"
   ip_rules                   = []
-  virtual_network_subnet_ids = var.env == "prod" ? [azurerm_subnet.migration[0].id, azurerm_subnet.migration-extended[0].id, azurerm_subnet.logic[0].id] : [azurerm_subnet.migration[0].id, azurerm_subnet.logic[0].id]
+  virtual_network_subnet_ids = [azurerm_subnet.logic[0].id]
   bypass                     = ["AzureServices"]
 }
 
