@@ -16,8 +16,8 @@ resource "azurerm_subnet" "logic" {
         "Microsoft.Network/virtualNetworks/subnets/action"
       ]
     }
-
   }
+  service_endpoints = ["Microsoft.Storage"]
 }
 
 resource "azurerm_service_plan" "logic" {
