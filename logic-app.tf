@@ -1,4 +1,5 @@
 resource "azurerm_service_plan" "logic" {
+  count               = local.is_migration_environment ? 1 : 0
   name                = "darts-migration-app-service-plan-${var.env}"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -8,6 +9,7 @@ resource "azurerm_service_plan" "logic" {
 }
 
 resource "azurerm_storage_account" "logic" {
+  count                     = local.is_migration_environment ? 1 : 0
   name                      = "sadartslogic${var.env}"
   resource_group_name       = azurerm_resource_group.darts_migration_resource_group[0].name
   location                  = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -19,7 +21,8 @@ resource "azurerm_storage_account" "logic" {
 }
 
 resource "azurerm_storage_account_network_rules" "logic" {
-  storage_account_id = azurerm_storage_account.logic.id
+  count              = local.is_migration_environment ? 1 : 0
+  storage_account_id = azurerm_storage_account.logic[0].id
   depends_on         = [azurerm_logic_app_standard.logic]
 
   default_action             = "Deny"
@@ -29,6 +32,7 @@ resource "azurerm_storage_account_network_rules" "logic" {
 }
 
 resource "azurerm_private_endpoint" "logic" {
+  count               = local.is_migration_environment ? 1 : 0
   name                = "sadartslogic${var.env}-pe"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
@@ -36,9 +40,9 @@ resource "azurerm_private_endpoint" "logic" {
   tags                = var.common_tags
 
   private_service_connection {
-    name                           = azurerm_storage_account.logic.name
+    name                           = azurerm_storage_account.logic[0].name
     is_manual_connection           = false
-    private_connection_resource_id = azurerm_storage_account.logic.id
+    private_connection_resource_id = azurerm_storage_account.logic[0].id
     subresource_names              = ["blob"]
   }
 
@@ -49,12 +53,13 @@ resource "azurerm_private_endpoint" "logic" {
 }
 
 resource "azurerm_logic_app_standard" "logic" {
+  count                      = local.is_migration_environment ? 1 : 0
   name                       = "darts-migration-logic-${var.env}"
   resource_group_name        = azurerm_resource_group.darts_migration_resource_group[0].name
   location                   = azurerm_resource_group.darts_migration_resource_group[0].location
-  app_service_plan_id        = azurerm_service_plan.logic.id
-  storage_account_name       = azurerm_storage_account.logic.name
-  storage_account_access_key = azurerm_storage_account.logic.primary_access_key
+  app_service_plan_id        = azurerm_service_plan.logic[0].id
+  storage_account_name       = azurerm_storage_account.logic[0].name
+  storage_account_access_key = azurerm_storage_account.logic[0].primary_access_key
   version                    = "~4"
   tags                       = var.common_tags
 
