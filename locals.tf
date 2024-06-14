@@ -74,17 +74,17 @@ locals {
     "stg"  = "DTS Darts Admin (env:staging)"
     "prod" = "DTS Darts Admin (env:production)"
   }
-  
+
   private_endpoint_rg_name   = var.businessArea == "sds" ? "ss-${var.env}-network-rg" : "${var.businessArea}-${var.env}-network-rg"
   private_endpoint_vnet_name = var.businessArea == "sds" ? "ss-${var.env}-vnet" : "${var.businessArea}-${var.env}-vnet"
 
 
-  migration_environments   = ["stg", "prod"]
-  is_migration_environment = contains(local.migration_environments, var.env)
+  migration_environments    = ["stg", "prod"]
+  is_migration_environment  = contains(local.migration_environments, var.env)
   production_environments   = ["prod"]
   is_production_environment = contains(local.production_environments, var.env)
-  test_environments        = ["test"]
-  is_test_environment      = contains(local.test_environments, var.env)
+  test_environments         = ["test"]
+  is_test_environment       = contains(local.test_environments, var.env)
 }
 
 data "azurerm_key_vault_secret" "aadds_username" {

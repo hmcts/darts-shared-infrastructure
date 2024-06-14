@@ -31,11 +31,11 @@ migration_vms = {
     ip_address     = "10.24.239.164"
     subnet         = "migration-subnet-extended"
     data_disk_size = "1000"
-    sku        = "Standard_D32ds_v5"
+    sku            = "Standard_D32ds_v5"
   }
   prddartsoracle = {
-    ip_address = "10.24.239.166"
-    subnet     = "migration-subnet-extended"
+    ip_address     = "10.24.239.166"
+    subnet         = "migration-subnet-extended"
     data_disk_size = "2000"
   }
 }
