@@ -58,7 +58,7 @@ resource "azurerm_private_endpoint" "logic" {
   name                = "sadartslogic${var.env}-pe"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   location            = azurerm_resource_group.darts_migration_resource_group[0].location
-  subnet_id           = azurerm_subnet.logic[0].id
+  subnet_id           = azurerm_subnet.migration-extended[0].id
   tags                = var.common_tags
 
   private_service_connection {
