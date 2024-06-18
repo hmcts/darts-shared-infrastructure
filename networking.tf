@@ -41,26 +41,10 @@ resource "azurerm_subnet_network_security_group_association" "migration" {
   network_security_group_id = azurerm_network_security_group.migration[0].id
 }
 
-resource "azurerm_network_security_rule" "allow_outbound_prddartsoracle" {
-  count                       = local.is_migration_environment ? 1 : 0
-  name                        = "allow-outbound-prddartsoracle"
-  priority                    = 100
-  direction                   = "Outbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "10.24.239.166"
-  destination_address_prefix  = "*"
-  network_security_group_name = azurerm_network_security_group.migration[0].name
-  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-}
-
-
 resource "azurerm_network_security_rule" "block_internet" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "BlockInternet"
-  priority                    = 110
+  priority                    = 100
   direction                   = "Outbound"
   access                      = var.env == "prod" ? "Deny" : "Allow"
   protocol                    = "*"
@@ -68,51 +52,6 @@ resource "azurerm_network_security_rule" "block_internet" {
   destination_port_range      = "*"
   source_address_prefix       = "*"
   destination_address_prefix  = "Internet"
-  network_security_group_name = azurerm_network_security_group.migration[0].name
-  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-}
-
-resource "azurerm_network_security_rule" "allow_mgmt_traffic" {
-  count                       = local.is_migration_environment ? 1 : 0
-  name                        = "allow-mgmt-traffic"
-  priority                    = 120
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "10.24.239.32/28"
-  destination_address_prefix  = "10.24.239.166"
-  network_security_group_name = azurerm_network_security_group.migration[0].name
-  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-}
-
-# resource "azurerm_network_security_rule" "deny_inbound_prddartsoracle" {
-#   count                       = local.is_migration_environment ? 1 : 0
-#   name                        = "deny-inbound-prddartsoracle"
-#   priority                    = 130
-#   direction                   = "Inbound"
-#   access                      = "Deny"
-#   protocol                    = "*"
-#   source_port_range           = "*"
-#   destination_port_range      = "*"
-#   source_address_prefix       = "*"  
-#   destination_address_prefix  = "10.24.239.166"
-#   network_security_group_name = azurerm_network_security_group.migration[0].name
-#   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-# }
-
-resource "azurerm_network_security_rule" "deny_outbound_prddartsoracle" {
-  count                       = local.is_migration_environment ? 1 : 0
-  name                        = "deny-outbound-prddartsoracle"
-  priority                    = 140
-  direction                   = "Outbound"
-  access                      = "Deny"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "10.24.239.166"
-  destination_address_prefix  = "*"
   network_security_group_name = azurerm_network_security_group.migration[0].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
 }
