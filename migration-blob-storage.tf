@@ -45,13 +45,13 @@ module "sa-dets-standard" {
   source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                                        = var.env
   storage_account_name                       = "${var.env}dets${var.product}"
-  resource_group_name                        = azurerm_resource_group.darts_resource_group[0].name
+  resource_group_name                        = azurerm_resource_group.darts_resource_group.name
   location                                   = var.location
   account_kind                               = "StorageV2"
   account_tier                               = "Standard"
   account_replication_type                   = "ZRS"
   containers                                 = local.containers-mig
-  private_endpoint_subnet_id                 = data.azurerm_subnet.private_endpoints_dets[0].id
+  private_endpoint_subnet_id                 = data.azurerm_subnet.private_endpoints_dets.id
   enable_nfs                                 = true
   enable_hns                                 = true
   enable_data_protection                     = true
