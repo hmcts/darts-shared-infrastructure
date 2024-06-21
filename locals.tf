@@ -49,6 +49,7 @@ locals {
   darts_container_name      = "darts-st-container"
   darts_inbound_container   = "darts-inbound-container"
   darts_migration_container = "darts-migration"
+  darts_dets_container      = "darts-dets"
   db_name                   = "psql-${var.env}-dartsmig-01"
   db_name_dets              = "psql-${var.env}-detsmig-01"
   db_name_replica           = "psql-${var.env}-darts-replica"
@@ -83,7 +84,7 @@ locals {
   is_migration_environment  = contains(local.migration_environments, var.env)
   production_environments   = ["prod"]
   is_production_environment = contains(local.production_environments, var.env)
-  test_environments         = ["test"]
+  test_environments         = ["test","demo", "stg"]
   is_test_environment       = contains(local.test_environments, var.env)
 }
 
