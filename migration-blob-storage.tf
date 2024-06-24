@@ -66,6 +66,6 @@ resource "azurerm_storage_blob" "dets-st" {
   count                  = local.is_test_environment ? 1 : 0
   name                   = "${var.product}-dets-blob-st-${var.env}"
   storage_account_name   = module.sa-dets-standard[0].storageaccount_name
-  storage_container_name = local.darts_dets_container
+  storage_container_name = local.darts_migration_container
   type                   = "Block"
 }
