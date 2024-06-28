@@ -120,6 +120,16 @@ module "postgresql_flexible" {
       name : local.db_name_replica
     }
   ]
+  pgsql_server_configuration = [
+    {
+      name  = "azure.enable_temp_tablespaces_on_local_ssd"
+      value = "off"
+    },
+    {
+      name  = "backslash_quote"
+      value = "on"
+    }
+  ]
 
   pgsql_version = "15"
 }
