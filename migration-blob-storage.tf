@@ -73,7 +73,7 @@ resource "azurerm_storage_blob" "dets-st" {
 module "sa-dets-standard2" {
   source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                                        = var.env
-  storage_account_name                       = "${var.env}dets${var.product}"
+  storage_account_name                       = "${var.env}dets${var.product}2"
   resource_group_name                        = azurerm_resource_group.darts_resource_group.name
   location                                   = var.location
   account_kind                               = "StorageV2"
