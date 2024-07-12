@@ -91,9 +91,9 @@ module "sa-dets-standard2" {
   common_tags                                = var.common_tags
 }
 
-resource "azurerm_storage_blob" "dets-st2" {
-  name                   = "${var.product}-dets-blob-st-${var.env}"
-  storage_account_name   = module.sa-dets-standard.storageaccount_name
-  storage_container_name = local.darts_migration_container
-  type                   = "Block"
-}
+# resource "azurerm_storage_blob" "dets-st2" {
+#   name                   = "${var.product}-dets-blob-st-${var.env}"
+#   storage_account_name   = module.sa-dets-standard.storageaccount_name
+#   storage_container_name = local.darts_migration_container
+#   type                   = "Block"
+# }
