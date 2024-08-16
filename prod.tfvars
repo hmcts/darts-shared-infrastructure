@@ -40,8 +40,8 @@ migration_vms = {
     data_disk_size = "2000"
   }
   prddartsunstr = {
-    ip_address     = "10.24.239.168"
-    subnet         = "migration-subnet-extended"
+    ip_address = "10.24.239.168"
+    subnet     = "migration-subnet-extended"
   }
 }
 
