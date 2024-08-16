@@ -39,6 +39,10 @@ migration_vms = {
     subnet         = "migration-subnet-extended"
     data_disk_size = "2000"
   }
+  prddartsunstr = {
+    ip_address     = "10.24.239.168"
+    subnet         = "migration-subnet-extended"
+  }
 }
 
 firewall_route_ranges = [
