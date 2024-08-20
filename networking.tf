@@ -44,7 +44,7 @@ resource "azurerm_subnet_network_security_group_association" "migration" {
 resource "azurerm_network_security_rule" "allow_outbound_prddartsunstr" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "allow-outbound-prddartsoracle"
-  priority                    = 120
+  priority                    = 140
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
@@ -59,7 +59,7 @@ resource "azurerm_network_security_rule" "allow_outbound_prddartsunstr" {
 resource "azurerm_network_security_rule" "dets-to-bias" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "DetsToBIAS"
-  priority                    = 130
+  priority                    = 150
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
@@ -74,7 +74,7 @@ resource "azurerm_network_security_rule" "dets-to-bias" {
 resource "azurerm_network_security_rule" "block_internet" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "BlockInternet"
-  priority                    = 140
+  priority                    = 160
   direction                   = "Outbound"
   access                      = var.env == "prod" ? "Deny" : "Allow"
   protocol                    = "*"
@@ -89,7 +89,7 @@ resource "azurerm_network_security_rule" "block_internet" {
 resource "azurerm_network_security_rule" "deny_outbound_prddartsunstr" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "deny-outbound-prddartsunstr"
-  priority                    = 150
+  priority                    = 170
   direction                   = "Outbound"
   access                      = "Deny"
   protocol                    = "*"
