@@ -128,6 +128,10 @@ module "postgresql_flexible" {
     {
       name  = "backslash_quote"
       value = "on"
+    },
+    {
+      name  = "azure.extensions"
+      value = "pg_trgm"
     }
   ]
 
