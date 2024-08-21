@@ -131,7 +131,7 @@ module "postgresql_flexible" {
     },
     {
       name  = "azure.extensions"
-      value = "pg_trgm"
+      value = "pg_trgm, pg_stat_statements"
     }
   ]
 
