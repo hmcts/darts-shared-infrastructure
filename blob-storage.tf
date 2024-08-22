@@ -16,7 +16,7 @@ module "sa" {
   storage_account_name = local.storage_account_name
   common_tags          = var.common_tags
 
-  default_action = "Allow"
+  default_action = "Deny"
 
   resource_group_name = azurerm_resource_group.darts_resource_group.name
   location            = var.location
