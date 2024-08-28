@@ -27,6 +27,7 @@ resource "azurerm_monitor_action_group" "blob-action-group" {
   name                = "blob-ingress-action-group"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   short_name          = "alert-group"
+  location            = "global"
   email_receiver {
     name                    = "Sean Bulley"
     email_address           = "sean.bulley@hmcts.net"
