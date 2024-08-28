@@ -132,6 +132,14 @@ module "postgresql_flexible" {
     {
       name  = "azure.extensions"
       value = "pg_trgm, pg_stat_statements"
+    },
+    {
+      name  = "logfiles.download_enable"
+      value = "ON"
+    },
+    {
+      name  = "logfiles.retention_days"
+      value = "7"
     }
   ]
 
