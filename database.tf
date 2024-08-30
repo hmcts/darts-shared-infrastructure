@@ -105,7 +105,7 @@ module "postgresql_flexible" {
   location            = var.location
   pgsql_storage_mb    = 8388608
   pgsql_sku           = "GP_Standard_D16ds_v4"
-  
+
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
   pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[0].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration[0].name}/subnets/${azurerm_subnet.postgres[0].name}"
