@@ -140,6 +140,14 @@ module "postgresql_flexible" {
     {
       name  = "logfiles.retention_days"
       value = "7"
+    },
+    {
+      name  = "pg_qs.query_capture_mode"
+      value = "ALL"
+    },
+    {
+      name  = "pgms_wait_sampling.query_capture_mode"
+      value = "ALL"
     }
   ]
 
