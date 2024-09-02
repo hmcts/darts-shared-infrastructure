@@ -4,5 +4,5 @@ sku_name = "Standard"
 family   = "C"
 capacity = "3"
 
-maxmemory_reserved = "614"
+maxmemory_reserved              = "614"
 maxfragmentationmemory_reserved = "300"
