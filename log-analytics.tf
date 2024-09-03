@@ -17,3 +17,37 @@ resource "azurerm_log_analytics_workspace" "postgres-analytics" {
   retention_in_days   = 30
   tags                = var.common_tags
 }
+
+resource "azurerm_monitor_diagnostic_setting" "example" {
+  name               = "example-postgres-diagnostics"
+  target_resource_id = azurerm_postgresql_flexible_server.postgresql_flexible.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.postgres-analytics.id
+
+  # Enable diagnostic logs and metrics
+  log {
+    category = "PostgreSQLLogs"   # Logs for PostgreSQL
+    enabled  = true
+
+    retention_policy {
+      enabled = false
+    }
+  }
+
+  log {
+    category = "PostgreSQLQps"   # Query Per Second metrics for PostgreSQL
+    enabled  = true
+
+    retention_policy {
+      enabled = false
+    }
+  }
+
+  metric {
+    category = "AllMetrics"  # All available metrics for PostgreSQL Flexible Server
+    enabled  = true
+
+    retention_policy {
+      enabled = false
+    }
+  }
+}
