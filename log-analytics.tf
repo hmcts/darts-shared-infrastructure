@@ -23,31 +23,10 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
   target_resource_id = azurerm_postgresql_flexible_server.postgresql_flexible.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.postgres-analytics.id
 
-  # Enable diagnostic logs and metrics
-  log {
-    category = "PostgreSQLLogs"   # Logs for PostgreSQL
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
+  enabled_log {
+    category = "AuditEvent"
   }
-
-  log {
-    category = "PostgreSQLQps"   # Query Per Second metrics for PostgreSQL
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
-  }
-
   metric {
-    category = "AllMetrics"  # All available metrics for PostgreSQL Flexible Server
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
+    category = "AllMetrics"
   }
 }
