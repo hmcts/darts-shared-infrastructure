@@ -159,7 +159,7 @@ moved {
   to   = module.postgresql_flexible[0]
 }
 
-resource "azurerm_monitor_diagnostic_setting" "example" {
+resource "azurerm_monitor_diagnostic_setting" "migration-diagnostic" {
   count               = local.is_migration_environment ? 1 : 0
   name                       = "migration-postgres-diagnostics"
   target_resource_id         = azurerm_postgresql_flexible_server.postgresql_flexible.id
