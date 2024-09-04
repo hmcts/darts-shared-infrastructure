@@ -158,3 +158,35 @@ moved {
   from = module.postgresql_flexible
   to   = module.postgresql_flexible[0]
 }
+
+resource "azurerm_monitor_diagnostic_setting" "example" {
+  count               = local.is_migration_environment ? 1 : 0
+  name                       = "migration-postgres-diagnostics"
+  target_resource_id         = azurerm_postgresql_flexible_server.postgresql_flexible.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.postgres-analytics.id
+
+  enabled_log {
+    category = "AuditEvent"
+  }
+  enabled_log {
+    category = "PostgreSQLLogs"
+  }
+  enabled_log {
+    category = "PostgreSQLFlexSessions"
+  }
+  enabled_log {
+    category = "PostgreSQLFlexQueryStoreRuntime"
+  }
+  enabled_log {
+    category = "PostgreSQLFlexQueryStoreWaitStats"
+  }
+  enabled_log {
+    category = "PostgreSQLFlexTableStats"
+  }
+  enabled_log {
+    category = "PostgreSQLFlexDatabaseXacts"
+  }
+  metric {
+    category = "AllMetrics"
+  }
+}
