@@ -19,7 +19,7 @@ resource "azurerm_log_analytics_workspace" "postgres-analytics" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "example" {
-  count               = local.is_migration_environment ? 1 : 0
+  count                      = local.is_migration_environment ? 1 : 0
   name                       = "example-postgres-diagnostics"
   target_resource_id         = azurerm_postgresql_flexible_server.postgresql_flexible.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.postgres-analytics.id
