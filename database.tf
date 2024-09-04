@@ -162,7 +162,7 @@ moved {
 resource "azurerm_monitor_diagnostic_setting" "migration-diagnostic" {
   count                      = local.is_migration_environment ? 1 : 0
   name                       = "migration-postgres-diagnostics"
-  target_resource_id         = module.postgresql_flexible.id
+  target_resource_id         = module.postgresql_flexible[0].id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.postgres-analytics.id
 
   enabled_log {
