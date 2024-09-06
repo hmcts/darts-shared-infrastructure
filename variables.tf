@@ -305,3 +305,6 @@ variable "max-file-upload-request-megabytes" {
   default     = "360"
   description = "The file upload request size threshold in megabytes "
 }
+variable "log_analytics_subscription_id" {}
+variable "log_analytics_workspace_name" {}
+variable "log_analytics_workspace_rg" {}
