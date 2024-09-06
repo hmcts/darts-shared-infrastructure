@@ -8,14 +8,9 @@ resource "azurerm_log_analytics_workspace" "migration-analytics" {
   tags                = var.common_tags
 }
 
-resource "azurerm_log_analytics_workspace" "postgres-analytics" {
-  count               = local.is_migration_environment ? 1 : 0
-  name                = "darts-postgres-analytics-workspace"
-  location            = azurerm_resource_group.darts_migration_resource_group[0].location
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-  tags                = var.common_tags
+data "azurerm_log_analytics_workspace" "hmcts" {
+  provider            = azurerm.log-analytics-subscription
+  name                = var.log_analytics_workspace_name
+  resource_group_name = var.log_analytics_workspace_rg
 }
-
 
