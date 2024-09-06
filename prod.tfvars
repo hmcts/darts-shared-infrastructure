@@ -8,8 +8,8 @@ virtual_machine_users           = []
 storage_account_contributor_ids = []
 defender_enable                 = true
 defender_scan                   = true
-log_analytics_workspace_name = "hmcts-prod"
-log_analytics_workspace_rg   = "oms-automation"
+log_analytics_workspace_name    = "hmcts-prod"
+log_analytics_workspace_rg      = "oms-automation"
 
 migration_vms = {
   prddartsmig01 = {
