@@ -166,9 +166,6 @@ resource "azurerm_monitor_diagnostic_setting" "migration-diagnostic" {
   log_analytics_workspace_id = data.azurerm_log_analytics_workspace.hmcts.id
 
   enabled_log {
-    category = "AuditEvent"
-  }
-  enabled_log {
     category = "PostgreSQLLogs"
   }
   enabled_log {
