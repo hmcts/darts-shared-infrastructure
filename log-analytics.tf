@@ -1,3 +1,9 @@
+provider "azurerm" {
+  subscription_id = var.log_analytics_subscription_id
+  alias           = "log-analytics-subscription"
+  features {}
+}
+
 resource "azurerm_log_analytics_workspace" "migration-analytics" {
   count               = local.is_migration_environment ? 1 : 0
   name                = "darts-migration-analytics-workspace"
@@ -7,3 +13,11 @@ resource "azurerm_log_analytics_workspace" "migration-analytics" {
   retention_in_days   = 30
   tags                = var.common_tags
 }
+
+
+data "azurerm_log_analytics_workspace" "hmcts" {
+  provider            = azurerm.log-analytics-subscription
+  name                = var.log_analytics_workspace_name
+  resource_group_name = var.log_analytics_workspace_rg
+}
+
