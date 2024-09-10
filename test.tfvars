@@ -6,9 +6,9 @@ vm_subnet_id                    = "/subscriptions/3eec5bde-7feb-4566-bfb6-805df6
 log_analytics_workspace_name    = "hmcts-nonprod"
 log_analytics_workspace_rg      = "oms-automation"
 log_analytics_subscription_id   = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-sku_name = "Premium"
-family   = "P"
-capacity = "1"
+sku_name                        = "Premium"
+family                          = "P"
+capacity                        = "1"
 
 modernisation_vms_test = {
   perftstwindarts = {
