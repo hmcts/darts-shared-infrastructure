@@ -308,3 +308,8 @@ variable "max-file-upload-request-megabytes" {
 variable "log_analytics_subscription_id" {}
 variable "log_analytics_workspace_name" {}
 variable "log_analytics_workspace_rg" {}
+
+variable "default_action" {
+  description = "Whether to block public access to the storage account"
+  default     = "Deny"
+}
