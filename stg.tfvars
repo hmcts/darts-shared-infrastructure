@@ -16,3 +16,5 @@ modernisation_vms = {
     sku        = "Standard_D4ds_v5"
   }
 }
+
+install_azure_monitor = true
