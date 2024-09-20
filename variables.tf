@@ -349,3 +349,9 @@ variable "install_azure_monitor" {
   description = "Install Azure Monitor Agent on the virtual machine."
   default     = false
 }
+
+variable "enable_sftp" {
+  type        = bool
+  description = "Enable storage account SFTP"
+  default     = false
+}
