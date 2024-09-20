@@ -122,3 +122,29 @@ moved {
   from = azurerm_key_vault_secret.os_profile_password
   to   = azurerm_key_vault_secret.os_profile_password[0]
 }
+
+
+
+module "vm-bootstrap" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+
+  count  = local.is_migration_environment ? 1 : 0
+  source = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type       = "vm"
+  virtual_machine_id         = azurerm_linux_virtual_machine.migration[0].id
+  install_splunk_uf          = var.install_splunk_uf
+  splunk_username            = var.splunk_username
+  splunk_password            = var.splunk_password
+  install_nessus_agent       = var.install_nessus_agent
+  os_type                    = "Linux"
+  env                        = var.env
+  install_dynatrace_oneagent = var.install_dynatrace_oneagent
+  common_tags                = var.common_tags
+
+  install_azure_monitor = var.install_azure_monitor
+}

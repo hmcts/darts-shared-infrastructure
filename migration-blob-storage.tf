@@ -14,6 +14,7 @@ module "sa-migration-standard" {
   enable_nfs                                 = true
   enable_hns                                 = true
   enable_data_protection                     = true
+  enable_sftp                                = var.enable_sftp
   enable_versioning                          = false
   defender_enabled                           = var.defender_enable
   defender_malware_scanning_enabled          = var.defender_scan
@@ -55,6 +56,7 @@ module "sa-dets-standard" {
   enable_nfs                                 = true
   enable_hns                                 = true
   enable_data_protection                     = true
+  enable_sftp                                = var.enable_sftp
   enable_versioning                          = false
   defender_enabled                           = var.defender_enable
   defender_malware_scanning_enabled          = var.defender_scan
