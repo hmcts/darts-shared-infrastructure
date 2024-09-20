@@ -313,3 +313,39 @@ variable "default_action" {
   description = "Whether to block public access to the storage account"
   default     = "Deny"
 }
+
+
+variable "install_splunk_uf" {
+  type        = bool
+  description = "Install splunk uniforwarder on the virtual machine."
+  default     = false
+}
+
+variable "splunk_username" {
+  type    = string
+  default = ""
+}
+variable "splunk_password" {
+  type        = string
+  description = "Splunk password"
+  sensitive   = true
+  default     = ""
+}
+
+variable "install_dynatrace_oneagent" {
+  type        = bool
+  description = "Install dynatrace agent on the virtual machine."
+  default     = false
+}
+
+variable "install_nessus_agent" {
+  type        = bool
+  description = "Install nessus agent on the virtual machine."
+  default     = false
+}
+
+variable "install_azure_monitor" {
+  type        = bool
+  description = "Install Azure Monitor Agent on the virtual machine."
+  default     = false
+}
