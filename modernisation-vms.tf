@@ -42,6 +42,9 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows" {
     name                 = "${each.key}-OsDisk"
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
@@ -49,7 +52,29 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows" {
     version   = "latest"
   }
 }
+module "vm-bootstrap-modernisation-windows" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
 
+  for_each = var.modernisation_vms
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type       = "vm"
+  virtual_machine_id         = azurerm_windows_virtual_machine.modernisation_windows[each.key].id
+  install_splunk_uf          = var.install_splunk_uf
+  splunk_username            = var.splunk_username
+  splunk_password            = var.splunk_password
+  install_nessus_agent       = var.install_nessus_agent
+  os_type                    = "Windows"
+  env                        = var.env
+  install_dynatrace_oneagent = var.install_dynatrace_oneagent
+  common_tags                = var.common_tags
+
+  install_azure_monitor = var.install_azure_monitor
+}
 resource "azurerm_virtual_machine_data_disk_attachment" "modernisation_vms_datadisk" {
   for_each           = var.modernisation_vms
   managed_disk_id    = azurerm_managed_disk.modernisation_vms_data[each.key].id
@@ -101,7 +126,9 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows_test" {
     storage_account_type = "Standard_LRS"
     name                 = "${each.key}-OsDisk"
   }
-
+  identity {
+    type = "SystemAssigned"
+  }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
@@ -110,7 +137,29 @@ resource "azurerm_windows_virtual_machine" "modernisation_windows_test" {
   }
 }
 
+module "vm-bootstrap-modernisation-windows-test" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
 
+  for_each = var.modernisation_vms_test
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type       = "vm"
+  virtual_machine_id         = azurerm_windows_virtual_machine.modernisation_windows_test[each.key].id
+  install_splunk_uf          = var.install_splunk_uf
+  splunk_username            = var.splunk_username
+  splunk_password            = var.splunk_password
+  install_nessus_agent       = var.install_nessus_agent
+  os_type                    = "Windows"
+  env                        = var.env
+  install_dynatrace_oneagent = var.install_dynatrace_oneagent
+  common_tags                = var.common_tags
+
+  install_azure_monitor = var.install_azure_monitor
+}
 
 resource "azurerm_virtual_machine_data_disk_attachment" "modernisation_vms_datadisk_test" {
   for_each           = var.modernisation_vms_test
@@ -180,4 +229,28 @@ resource "azurerm_virtual_machine_data_disk_attachment" "mod_datadisk" {
   virtual_machine_id = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
+}
+
+module "vm-bootstrap-modernisation" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+
+  for_each = var.modernisation_linux_vms
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type       = "vm"
+  virtual_machine_id         = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
+  install_splunk_uf          = var.install_splunk_uf
+  splunk_username            = var.splunk_username
+  splunk_password            = var.splunk_password
+  install_nessus_agent       = var.install_nessus_agent
+  os_type                    = "Linux"
+  env                        = var.env
+  install_dynatrace_oneagent = var.install_dynatrace_oneagent
+  common_tags                = var.common_tags
+
+  install_azure_monitor = var.install_azure_monitor
 }
