@@ -85,7 +85,20 @@ resource "azurerm_network_security_rule" "block_internet" {
   network_security_group_name = azurerm_network_security_group.migration[0].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
 }
-
+resource "azurerm_network_security_rule" "block_internet" {
+  count                       = local.is_migration_environment && var.env == "prod" ? 1 : 0
+  name                        = "AllowAzureMonitor"
+  priority                    = 155
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "AzureMonitor"
+  network_security_group_name = azurerm_network_security_group.migration[0].name
+  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
+}
 resource "azurerm_network_security_rule" "deny_outbound_prddartsunstr" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "deny-outbound-prddartsunstr"
