@@ -110,3 +110,5 @@ palo_networks = {
     enable_ip_forwarding = true
   }
 }
+
+install_azure_monitor = true
