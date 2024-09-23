@@ -355,3 +355,9 @@ variable "enable_sftp" {
   description = "Enable storage account SFTP"
   default     = false
 }
+
+variable "install_endpoint_protection" {
+  type        = bool
+  description = "Install endpoint protection extension"
+  default     = false
+}
