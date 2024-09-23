@@ -85,7 +85,7 @@ resource "azurerm_network_security_rule" "block_internet" {
   network_security_group_name = azurerm_network_security_group.migration[0].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
 }
-resource "azurerm_network_security_rule" "block_internet" {
+resource "azurerm_network_security_rule" "allow_azure_monitor" {
   count                       = local.is_migration_environment && var.env == "prod" ? 1 : 0
   name                        = "AllowAzureMonitor"
   priority                    = 155
