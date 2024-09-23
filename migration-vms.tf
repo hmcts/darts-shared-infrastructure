@@ -48,6 +48,34 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
     sku       = "2022-Datacenter"
     version   = "latest"
   }
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+module "vm-bootstrap-migration_vms" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+
+  for_each = var.migration_vms
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type        = "vm"
+  virtual_machine_id          = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  install_splunk_uf           = var.install_splunk_uf
+  splunk_username             = var.splunk_username
+  splunk_password             = var.splunk_password
+  install_nessus_agent        = var.install_nessus_agent
+  os_type                     = "Windows"
+  env                         = var.env
+  install_dynatrace_oneagent  = var.install_dynatrace_oneagent
+  common_tags                 = var.common_tags
+  install_endpoint_protection = var.install_endpoint_protection
+
+  install_azure_monitor = var.install_azure_monitor
 }
 
 resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
@@ -123,6 +151,29 @@ resource "azurerm_linux_virtual_machine" "migration-linux" {
     type = "SystemAssigned"
   }
 }
+module "vm-bootstrap-migration_linux_vms" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+
+  for_each = var.migration_linux_vms
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type        = "vm"
+  virtual_machine_id          = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  install_splunk_uf           = var.install_splunk_uf
+  splunk_username             = var.splunk_username
+  splunk_password             = var.splunk_password
+  install_nessus_agent        = var.install_nessus_agent
+  os_type                     = "Linux"
+  env                         = var.env
+  install_dynatrace_oneagent  = var.install_dynatrace_oneagent
+  common_tags                 = var.common_tags
+  install_endpoint_protection = var.install_endpoint_protection
+  install_azure_monitor       = var.install_azure_monitor
+}
 
 resource "azurerm_virtual_machine_extension" "migration-linux-aad" {
   for_each                   = var.migration_linux_vms
@@ -196,6 +247,30 @@ resource "azurerm_linux_virtual_machine" "migration-linux2" {
   }
 }
 
+module "vm-bootstrap-migration_linux_vms2" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+
+  for_each = var.migration_linux_vms2
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type        = "vm"
+  virtual_machine_id          = azurerm_linux_virtual_machine.migration-linux2[each.key].id
+  install_splunk_uf           = var.install_splunk_uf
+  splunk_username             = var.splunk_username
+  splunk_password             = var.splunk_password
+  install_nessus_agent        = var.install_nessus_agent
+  os_type                     = "Linux"
+  env                         = var.env
+  install_dynatrace_oneagent  = var.install_dynatrace_oneagent
+  common_tags                 = var.common_tags
+  install_endpoint_protection = var.install_endpoint_protection
+  install_azure_monitor       = var.install_azure_monitor
+}
+
 resource "azurerm_virtual_machine_extension" "migration-linux2-aad" {
   for_each                   = var.migration_linux_vms2
   name                       = "AADSSHLoginForLinux"
@@ -255,7 +330,29 @@ resource "azurerm_linux_virtual_machine" "oracle" {
     type = "SystemAssigned"
   }
 }
+module "vm-bootstrap-oracle_linux_vms" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
 
+  for_each = var.oracle_linux_vms
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type        = "vm"
+  virtual_machine_id          = azurerm_linux_virtual_machine.oracle[each.key].id
+  install_splunk_uf           = var.install_splunk_uf
+  splunk_username             = var.splunk_username
+  splunk_password             = var.splunk_password
+  install_nessus_agent        = var.install_nessus_agent
+  os_type                     = "Linux"
+  env                         = var.env
+  install_dynatrace_oneagent  = var.install_dynatrace_oneagent
+  common_tags                 = var.common_tags
+  install_endpoint_protection = var.install_endpoint_protection
+  install_azure_monitor       = var.install_azure_monitor
+}
 resource "azurerm_virtual_machine_extension" "oracle-aad" {
   for_each                   = var.oracle_linux_vms
   name                       = "AADSSHLoginForLinux"
@@ -341,7 +438,29 @@ resource "azurerm_linux_virtual_machine" "dock-linux" {
     type = "SystemAssigned"
   }
 }
+module "vm-bootstrap-migration_docker_vms" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
 
+  for_each = var.migration_docker_vms
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+
+  virtual_machine_type        = "vm"
+  virtual_machine_id          = azurerm_linux_virtual_machine.dock-linux[each.key].id
+  install_splunk_uf           = var.install_splunk_uf
+  splunk_username             = var.splunk_username
+  splunk_password             = var.splunk_password
+  install_nessus_agent        = var.install_nessus_agent
+  os_type                     = "Linux"
+  env                         = var.env
+  install_dynatrace_oneagent  = var.install_dynatrace_oneagent
+  common_tags                 = var.common_tags
+  install_endpoint_protection = var.install_endpoint_protection
+  install_azure_monitor       = var.install_azure_monitor
+}
 resource "azurerm_managed_disk" "dock_disk" {
   for_each             = var.migration_docker_vms
   name                 = "${each.key}-datadisk"
