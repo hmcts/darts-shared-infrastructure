@@ -29,7 +29,7 @@ migration_vms = {
     ip_address = "10.24.239.10"
   }
   prddartsassess = {
-    ip_address = "10.24.239.5"
+    ip_address     = "10.24.239.5"
     data_disk_size = "2000"
   }
   prddartsassure = {
