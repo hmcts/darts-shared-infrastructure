@@ -12,7 +12,7 @@ capacity                        = "1"
 
 modernisation_vms_test = {
   perftstwindarts = {
-    sku = "Standard_D4ds_v5"
+    sku = "Standard_D8ds_v5"
   }
 }
 modernisation_linux_vms = {
