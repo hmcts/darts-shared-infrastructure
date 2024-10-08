@@ -60,7 +60,7 @@ module "vm-bootstrap-modernisation-windows" {
   }
 
   for_each = var.modernisation_vms
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type       = "vm"
   virtual_machine_id         = azurerm_windows_virtual_machine.modernisation_windows[each.key].id
@@ -145,7 +145,7 @@ module "vm-bootstrap-modernisation-windows-test" {
   }
 
   for_each = var.modernisation_vms_test
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type       = "vm"
   virtual_machine_id         = azurerm_windows_virtual_machine.modernisation_windows_test[each.key].id
@@ -239,7 +239,7 @@ module "vm-bootstrap-modernisation" {
   }
 
   for_each = var.modernisation_linux_vms
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type       = "vm"
   virtual_machine_id         = azurerm_linux_virtual_machine.modernisation-linux[each.key].id
