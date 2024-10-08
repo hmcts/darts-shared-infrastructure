@@ -133,7 +133,7 @@ module "vm-bootstrap" {
   }
 
   count  = local.is_migration_environment ? 1 : 0
-  source = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type       = "vm"
   virtual_machine_id         = azurerm_linux_virtual_machine.migration[0].id

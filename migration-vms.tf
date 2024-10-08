@@ -61,7 +61,7 @@ module "vm-bootstrap-migration_vms" {
   }
 
   for_each = var.migration_vms
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type        = "vm"
   virtual_machine_id          = azurerm_windows_virtual_machine.migration_windows[each.key].id
@@ -159,7 +159,7 @@ module "vm-bootstrap-migration_linux_vms" {
   }
 
   for_each = var.migration_linux_vms
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type        = "vm"
   virtual_machine_id          = azurerm_linux_virtual_machine.migration-linux[each.key].id
@@ -255,7 +255,7 @@ module "vm-bootstrap-migration_linux_vms2" {
   }
 
   for_each = var.migration_linux_vms2
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type        = "vm"
   virtual_machine_id          = azurerm_linux_virtual_machine.migration-linux2[each.key].id
@@ -424,7 +424,7 @@ module "vm-bootstrap-migration_docker_vms" {
   }
 
   for_each = var.migration_docker_vms
-  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=ieuanb74-patch-1"
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type        = "vm"
   virtual_machine_id          = azurerm_linux_virtual_machine.dock-linux[each.key].id
