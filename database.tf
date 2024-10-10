@@ -104,7 +104,7 @@ module "postgresql_flexible" {
   business_area       = "sds"
   location            = var.location
   pgsql_storage_mb    = 8388608
-  pgsql_sku           = "GP_Standard_D16ds_v5"
+  pgsql_sku           = "Standard_D16ds_v5"
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
