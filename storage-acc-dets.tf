@@ -16,7 +16,7 @@ module "sa_dets" {
 
   default_action = "Allow"
 
-  resource_group_name = azurerm_resource_group.darts_migration_resource_group.name
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   location            = var.location
 
   account_tier                    = var.sa_account_tier
