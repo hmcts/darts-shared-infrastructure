@@ -1,6 +1,6 @@
 
 
-data "azurerm_subnet" "private_endpoints_dets" {
+data "azurerm_subnet" "private_endpoints_dets_sa" {
   resource_group_name  = local.private_endpoint_rg_name
   virtual_network_name = local.private_endpoint_vnet_name
   name                 = "private-endpoints"
@@ -25,7 +25,7 @@ module "sa_dets" {
   access_tier                     = var.sa_access_tier
   allow_nested_items_to_be_public = "true"
   enable_change_feed              = true
-  private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints_dets.id
+  private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints_dets_sa.id
 
   enable_data_protection = true
 
