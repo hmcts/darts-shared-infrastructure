@@ -25,7 +25,7 @@ module "sa_dets" {
   defender_malware_scanning_enabled          = var.defender_scan
   defender_malware_scanning_cap_gb_per_month = 90
   enable_data_protection                     = true
-  containers                                 = local.containers-mig
+  containers                                 = local.containers-dets
   enable_versioning                          = false
 }
 
