@@ -24,7 +24,8 @@ locals {
       }
     }
   }
-  storage_account_name = "${var.product}sa${var.env}"
+  storage_account_name      = "${var.product}sa${var.env}"
+  dets_storage_account_name = "sa${var.env}${var.product}artefacts"
 
   containers = [{
     name        = "darts-outbound"
@@ -39,6 +40,10 @@ locals {
       access_type = "private"
     },
     {
+      name        = local.dets_container_name
+      access_type = "container"
+    },
+    {
       name        = local.darts_container_name
       access_type = "container"
   }]
@@ -51,6 +56,7 @@ locals {
     access_type = "private"
   }]
   darts_container_name      = "darts-st-container"
+  dets_container_name      = "dets-st-container"
   darts_inbound_container   = "darts-inbound-container"
   darts_migration_container = "darts-migration"
   db_name                   = "psql-${var.env}-dartsmig-01"
