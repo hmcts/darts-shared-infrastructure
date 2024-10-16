@@ -72,10 +72,10 @@ resource "azurerm_network_security_rule" "dets-to-bias" {
 }
 
 resource "azurerm_network_security_rule" "block_internet" {
-  count                       = local.is_migration_environment ? 1 : 0
-  name                        = "BlockInternet"
-  priority                    = 160
-  direction                   = "Outbound"
+  count     = local.is_migration_environment ? 1 : 0
+  name      = "BlockInternet"
+  priority  = 160
+  direction = "Outbound"
   # access                      = var.env == "prod" ? "Deny" : "Allow"
   access                      = "Allow"
   protocol                    = "*"
