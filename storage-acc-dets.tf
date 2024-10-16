@@ -26,16 +26,15 @@ module "sa_dets" {
   defender_malware_scanning_cap_gb_per_month = 90
   enable_data_protection                     = true
   containers                                 = local.containers-mig
-  enable_sftp                                = var.enable_sftp
   enable_versioning                          = false
 }
 
-resource "azurerm_storage_blob" "dets" {
-  name                   = "${var.product}-dets-blob-st-${var.env}"
-  storage_account_name   = module.sa_dets.storageaccount_name
-  storage_container_name = local.darts_container_name
-  type                   = "Block"
+# resource "azurerm_storage_blob" "dets" {
+#   name                   = "${var.product}-dets-blob-st-${var.env}"
+#   storage_account_name   = module.sa_dets.storageaccount_name
+#   storage_container_name = local.darts_container_name
+#   type                   = "Block"
 
-  depends_on = [module.sa]
-}
+#   depends_on = [module.sa]
+# }
 
