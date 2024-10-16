@@ -32,7 +32,7 @@ module "sa_dets" {
 resource "azurerm_storage_blob" "dets" {
   name                   = "${var.product}-dets-blob-st-${var.env}"
   storage_account_name   = module.sa_dets.storageaccount_name
-  storage_container_name = local.darts_container_name
+  storage_container_name = local.dets_container_name
   type                   = "Block"
 
   depends_on = [module.sa]
