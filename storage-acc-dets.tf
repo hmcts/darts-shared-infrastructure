@@ -26,7 +26,6 @@ module "sa_dets" {
   defender_malware_scanning_cap_gb_per_month = 90
   enable_data_protection                     = true
   containers                                 = local.containers-mig
-  enable_nfs                                 = true
   enable_sftp                                = var.enable_sftp
   enable_versioning                          = false
 }
