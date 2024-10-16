@@ -56,7 +56,7 @@ locals {
     access_type = "private"
   }]
   darts_container_name      = "darts-st-container"
-  dets_container_name      = "dets-st-container"
+  dets_container_name       = "dets-st-container"
   darts_inbound_container   = "darts-inbound-container"
   darts_migration_container = "darts-migration"
   db_name                   = "psql-${var.env}-dartsmig-01"
