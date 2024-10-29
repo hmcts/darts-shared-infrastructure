@@ -7,10 +7,6 @@ data "azurerm_subnet" "private_endpoints_dets_sa" {
 }
 
 module "sa_dets" {
-  azapi = {
-      source  = "Azure/azapi"
-      version = "~> 1.15.0"
-    }
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
   storage_account_name              = local.dets_storage_account_name
