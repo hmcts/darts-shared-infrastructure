@@ -42,6 +42,8 @@ data "azurerm_subnet" "private_endpoints_dets" {
 }
 
 module "sa-dets-standard" {
+
+
   count                                      = local.is_test_environment ? 1 : 0
   source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                                        = var.env
@@ -71,4 +73,3 @@ resource "azurerm_storage_blob" "dets-st" {
   storage_container_name = local.darts_migration_container
   type                   = "Block"
 }
-
