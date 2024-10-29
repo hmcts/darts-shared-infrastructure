@@ -52,7 +52,7 @@ locals {
     access_type = "private"
   }]
   containers-dets = [{
-    name        = "darts-dets-migration"
+    name        = "darts-st-migration"
     access_type = "private"
   }]
   darts_container_name      = "darts-st-container"
