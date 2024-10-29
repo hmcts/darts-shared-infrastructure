@@ -22,7 +22,6 @@ module "sa_dets" {
   private_endpoint_subnet_id                 = data.azurerm_subnet.private_endpoints_dets_sa.id
   defender_enabled                           = var.defender_enable
   defender_malware_scanning_enabled          = var.defender_scan
-  defender_malware_scanning_cap_gb_per_month = 90
   enable_data_protection                     = true
   containers                                 = local.containers-dets
   enable_versioning                          = false
