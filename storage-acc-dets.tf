@@ -25,7 +25,6 @@ module "sa_dets" {
   enable_data_protection            = true
   containers                        = local.containers-dets
   enable_versioning                 = false
-  enable_sftp                       = var.enable_sftp
 }
 
 # resource "azurerm_storage_blob" "dets" {
