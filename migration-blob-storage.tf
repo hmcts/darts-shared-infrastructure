@@ -71,4 +71,3 @@ resource "azurerm_storage_blob" "dets-st" {
   storage_container_name = local.darts_migration_container
   type                   = "Block"
 }
-
