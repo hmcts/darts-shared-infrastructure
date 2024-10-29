@@ -43,9 +43,9 @@ data "azurerm_subnet" "private_endpoints_dets" {
 
 module "sa-dets-standard" {
   azapi = {
-      source  = "Azure/azapi"
-      version = "~> 1.15.0"
-    }
+    source  = "Azure/azapi"
+    version = "~> 1.15.0"
+  }
   count                                      = local.is_test_environment ? 1 : 0
   source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                                        = var.env
