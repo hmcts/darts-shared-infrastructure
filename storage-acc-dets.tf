@@ -7,6 +7,7 @@ data "azurerm_subnet" "private_endpoints_dets_sa" {
 }
 
 module "sa_dets" {
+  count                             = local.is_test_environment ? 1 : 0
   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                               = var.env
   storage_account_name              = local.dets_storage_account_name
@@ -28,11 +29,18 @@ module "sa_dets" {
 }
 
 resource "azurerm_storage_blob" "dets" {
+  count                  = local.is_test_environment ? 1 : 0
   name                   = "${var.product}-dets-blob-st-${var.env}"
-  storage_account_name   = module.sa_dets.storageaccount_name
+  storage_account_name   = module.sa_dets[0].storageaccount_name
   storage_container_name = local.dets_container_name
   type                   = "Block"
 
   depends_on = [module.sa_dets]
 }
 
+resource "azurerm_storage_share" "dets-file-share" {
+  count                = local.is_test_environment ? 1 : 0
+  name                 = "sharename"
+  storage_account_name = module.sa_dets[0].storageaccount_name
+  quota                = 50
+}
