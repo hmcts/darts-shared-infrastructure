@@ -38,9 +38,9 @@ resource "azurerm_storage_blob" "dets" {
   depends_on = [module.sa_dets]
 }
 
-# resource "azurerm_storage_share" "dets-file-share" {
-#   count                = local.is_test_environment ? 1 : 0
-#   name                 = "dets-file-share"
-#   storage_account_name = module.sa_dets[0].storageaccount_name
-#   quota                = 50
-# }
+resource "azurerm_storage_share" "dets-file-share" {
+  count                = local.is_test_environment ? 1 : 0
+  name                 = "dets-file-share"
+  storage_account_name = module.sa_dets[0].storageaccount_name
+  quota                = 50
+}
