@@ -26,7 +26,6 @@ module "sa_dets" {
   enable_data_protection            = true
   containers                        = local.containers-dets
   enable_versioning                 = false
-  replication_type                  = local.storage_account_repl_type
 }
 
 resource "azurerm_storage_share" "dets-file-share" {
