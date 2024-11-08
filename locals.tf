@@ -24,6 +24,7 @@ locals {
       }
     }
   }
+  storage_account_repl_type = var.env == "stg" || var.env == "ithc" || var.env == "prod" ? "ZRS" : "LRS"
   storage_account_name      = "${var.product}sa${var.env}"
   dets_storage_account_name = "sa${var.env}${var.product}artefacts"
 

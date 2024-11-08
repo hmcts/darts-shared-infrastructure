@@ -26,16 +26,7 @@ module "sa_dets" {
   enable_data_protection            = true
   containers                        = local.containers-dets
   enable_versioning                 = false
-}
-
-resource "azurerm_storage_blob" "dets" {
-  count                  = local.is_migration_environment ? 1 : 0
-  name                   = "${var.product}-dets-blob-st-${var.env}"
-  storage_account_name   = module.sa_dets[0].storageaccount_name
-  storage_container_name = local.dets_container_name
-  type                   = "Block"
-
-  depends_on = [module.sa_dets]
+  replication_type                  = local.storage_account_repl_type
 }
 
 resource "azurerm_storage_share" "dets-file-share" {
@@ -43,4 +34,6 @@ resource "azurerm_storage_share" "dets-file-share" {
   name                 = "dets-file-share"
   storage_account_name = module.sa_dets[0].storageaccount_name
   quota                = 50
+
+  depends_on = [module.sa_dets]
 }
