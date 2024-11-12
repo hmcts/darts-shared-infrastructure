@@ -148,6 +148,38 @@ module "postgresql_flexible" {
     {
       name  = "pgms_wait_sampling.query_capture_mode"
       value = "ALL"
+    },
+    {
+      name  = "track_io_timing"
+      value = "ON"
+    },
+    {
+      name  = "metrics.collector_database_activity"
+      value = "ON"
+    },
+    {
+      name  = "effective_io_concurrency"
+      value = "200"
+    },
+    {
+      name  = "random_page_cost"
+      value = "1.1"
+    },
+    {
+      name  = "maintenance_work_mem"
+      value = "1568768"
+    },
+    {
+      name  = "work_mem"
+      value = "8388"
+    },
+    {
+      name  = "min_wal_size"
+      value = "1024"
+    },
+    {
+      name  = "max_worker_processes"
+      value = "16"
     }
   ]
 
