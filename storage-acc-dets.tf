@@ -24,7 +24,6 @@ module "sa_dets" {
   defender_enabled                  = var.defender_enable
   defender_malware_scanning_enabled = var.defender_scan
   enable_data_protection            = true
-  containers                        = local.containers-dets
   enable_versioning                 = false
 }
 
