@@ -30,7 +30,8 @@ resource "azurerm_service_plan" "logic" {
   tags                = var.common_tags
 }
 
-resource "azurerm_storage_account" "logic" {
+module "logic-sa" {
+  source                    = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   count                     = local.deploy_logic_app ? 1 : 0
   name                      = "sadartslogic${var.env}"
   resource_group_name       = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -44,7 +45,7 @@ resource "azurerm_storage_account" "logic" {
 
 resource "azurerm_storage_account_network_rules" "logic" {
   count              = local.deploy_logic_app ? 1 : 0
-  storage_account_id = azurerm_storage_account.logic[0].id
+  storage_account_id = module.logic-sa[0].id
   depends_on         = [azurerm_logic_app_standard.logic]
 
   default_action             = "Deny"
@@ -80,8 +81,8 @@ resource "azurerm_logic_app_standard" "logic" {
   resource_group_name        = azurerm_resource_group.darts_migration_resource_group[0].name
   location                   = azurerm_resource_group.darts_migration_resource_group[0].location
   app_service_plan_id        = azurerm_service_plan.logic[0].id
-  storage_account_name       = azurerm_storage_account.logic[0].name
-  storage_account_access_key = azurerm_storage_account.logic[0].primary_access_key
+  storage_account_name       = module.logic-sa[0].storageaccount_name
+  storage_account_access_key = module.logic-sa[0].primary_access_key
   version                    = "~4"
   tags                       = var.common_tags
 
