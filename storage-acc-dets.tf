@@ -8,7 +8,7 @@ data "azurerm_subnet" "private_endpoints_dets_sa" {
 
 module "sa_dets" {
   count                             = local.is_migration_environment ? 1 : 0
-  source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                               = var.env
   storage_account_name              = local.dets_storage_account_name
   common_tags                       = var.common_tags
@@ -30,6 +30,6 @@ module "sa_dets" {
 resource "azurerm_storage_share" "dets-file-share" {
   count                = local.is_migration_environment ? 1 : 0
   name                 = "dets-file-share"
-  storage_account_name = module.sa_dets[0].storage_account_name
+  storage_account_name = module.sa_dets[0].storageaccount_name
   quota                = 50
 }
