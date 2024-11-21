@@ -78,6 +78,11 @@ migration_linux_vms = {
     ip_address = "10.24.239.11"
   }
 }
+migration_gitlab_vms = {
+  prddartsgitlab = {
+    ip_address = "10.24.239.169"
+  }
+}
 migration_docker_vms = {
   prddartsmigdock = {
     ip_address = "10.24.239.167"

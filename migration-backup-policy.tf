@@ -57,3 +57,11 @@ resource "azurerm_backup_protected_vm" "mig2" {
   source_vm_id        = azurerm_linux_virtual_machine.migration-linux2[each.key].id
   backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup[0].id
 }
+
+resource "azurerm_backup_protected_vm" "mig3" {
+  for_each            = var.migration_gitlab_vms
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  recovery_vault_name = azurerm_recovery_services_vault.darts-migration-backup[0].name
+  source_vm_id        = azurerm_linux_virtual_machine.migration-gitlab[each.key].id
+  backup_policy_id    = azurerm_backup_policy_vm.darts-migration-backup[0].id
+}
