@@ -215,6 +215,14 @@ variable "migration_linux_vms" {
   description = "Map of objects describing the migration linux virtual machines to create."
   default     = {}
 }
+variable "migration_gitlab_vms" {
+  type = map(object({
+    ip_address = string
+    subnet     = optional(string, "migration-subnet")
+  }))
+  description = "Map of objects describing the migration linux virtual machines to create."
+  default     = {}
+}
 
 variable "migration_docker_vms" {
   type = map(object({
