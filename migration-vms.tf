@@ -526,7 +526,7 @@ module "vm-bootstrap-migration_gitlab_vms" {
 resource "azurerm_virtual_machine_extension" "gitlab-linux-aad" {
   for_each                   = var.migration_gitlab_vms
   name                       = "AADSSHLoginForLinux"
-  virtual_machine_id         = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  virtual_machine_id         = azurerm_linux_virtual_machine.gitlab-linux[each.key].id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
@@ -547,8 +547,8 @@ resource "azurerm_managed_disk" "gitlab_disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   for_each           = var.migration_gitlab_vms
-  managed_disk_id    = azurerm_managed_disk.migration_disk[each.key].id
-  virtual_machine_id = azurerm_linux_virtual_machine.migration-linux[each.key].id
+  managed_disk_id    = azurerm_managed_disk.gitlab_disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.gitlab-linux[each.key].id
   lun                = "10"
   caching            = "ReadWrite"
 }
