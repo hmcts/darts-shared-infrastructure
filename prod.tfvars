@@ -81,6 +81,7 @@ migration_linux_vms = {
 migration_gitlab_vms = {
   prddartsgitlab = {
     ip_address = "10.24.239.169"
+    subnet     = "migration-subnet-extended"
   }
 }
 migration_docker_vms = {
