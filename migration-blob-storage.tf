@@ -1,7 +1,7 @@
 
 module "sa-migration-standard" {
   count                                      = local.is_migration_environment ? 1 : 0
-  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                                        = var.env
   storage_account_name                       = "sa${var.env}${var.product}mig02"
   resource_group_name                        = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -20,6 +20,7 @@ module "sa-migration-standard" {
   defender_malware_scanning_enabled          = var.defender_scan
   defender_malware_scanning_cap_gb_per_month = 250000
   common_tags                                = var.common_tags
+  # https_traffic_only_enabled                 = true
 }
 
 moved {
@@ -43,7 +44,7 @@ data "azurerm_subnet" "private_endpoints_dets" {
 
 module "sa-dets-standard" {
   count                                      = local.is_test_environment ? 1 : 0
-  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                                        = var.env
   storage_account_name                       = "${var.env}dets${var.product}"
   resource_group_name                        = azurerm_resource_group.darts_resource_group.name

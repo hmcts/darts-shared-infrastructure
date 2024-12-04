@@ -71,11 +71,11 @@ resource "azurerm_subnet_network_security_group_association" "palo" {
 }
 
 resource "azurerm_network_interface" "palo" {
-  for_each             = var.palo_networks
-  name                 = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
-  location             = azurerm_resource_group.darts_migration_resource_group[0].location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  enable_ip_forwarding = each.value.enable_ip_forwarding
+  for_each              = var.palo_networks
+  name                  = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
+  location              = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
+  ip_forwarding_enabled = each.value.enable_ip_forwarding
 
   ip_configuration {
     name                          = "darts-migration-palo-vm01-${each.key}-nic-${var.env}"
