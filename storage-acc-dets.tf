@@ -30,7 +30,7 @@ module "sa_dets" {
   defender_malware_scanning_enabled = var.defender_scan
   enable_data_protection            = true
   enable_versioning                 = false
-  sa_subnets                        = data.azurerm_subnet.jenkins_agents.id
+  sa_subnets                        = [data.azurerm_subnet.jenkins_agents.id]
 }
 
 resource "azurerm_storage_share" "dets-file-share" {
