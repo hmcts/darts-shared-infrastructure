@@ -9,7 +9,7 @@ data "azurerm_subnet" "private_endpoints" {
 }
 
 module "sa" {
-  source = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
 
   env = var.env
 
