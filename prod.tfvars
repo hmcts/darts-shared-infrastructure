@@ -46,6 +46,7 @@ migration_vms = {
   prddartsunstr = {
     ip_address = "10.24.239.168"
     subnet     = "migration-subnet-extended"
+    sku        = "Standard_D4ds_v5"
   }
 }
 
