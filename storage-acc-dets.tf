@@ -13,7 +13,7 @@ data "azurerm_subnet" "jenkins_agents" {
 
 module "sa_dets" {
   count                             = local.is_migration_environment ? 1 : 0
-  source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                               = var.env
   storage_account_name              = local.dets_storage_account_name
   common_tags                       = var.common_tags
