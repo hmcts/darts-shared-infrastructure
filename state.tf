@@ -18,12 +18,12 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  alias                      = "hub"
+  alias = "hub"
   features {}
   subscription_id = local.hub[var.hub].subscription
 }
 provider "azurerm" {
-  alias                      = "dcr"
+  alias = "dcr"
   features {}
   subscription_id = var.env == "prod" || var.env == "production" ? "8999dec3-0104-4a27-94ee-6588559729d1" : var.env == "sbox" || var.env == "sandbox" ? "bf308a5c-0624-4334-8ff8-8dca9fd43783" : "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 }

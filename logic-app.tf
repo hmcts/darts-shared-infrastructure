@@ -31,14 +31,14 @@ resource "azurerm_service_plan" "logic" {
 }
 
 resource "azurerm_storage_account" "logic" {
-  count                     = local.deploy_logic_app ? 1 : 0
-  name                      = "sadartslogic${var.env}"
-  resource_group_name       = azurerm_resource_group.darts_migration_resource_group[0].name
-  location                  = azurerm_resource_group.darts_migration_resource_group[0].location
-  account_tier              = "Standard"
-  account_kind              = "StorageV2"
-  account_replication_type  = "LRS"
-  tags                      = var.common_tags
+  count                    = local.deploy_logic_app ? 1 : 0
+  name                     = "sadartslogic${var.env}"
+  resource_group_name      = azurerm_resource_group.darts_migration_resource_group[0].name
+  location                 = azurerm_resource_group.darts_migration_resource_group[0].location
+  account_tier             = "Standard"
+  account_kind             = "StorageV2"
+  account_replication_type = "LRS"
+  tags                     = var.common_tags
 }
 
 resource "azurerm_storage_account_network_rules" "logic" {
