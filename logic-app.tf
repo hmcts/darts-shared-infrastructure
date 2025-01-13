@@ -38,7 +38,6 @@ resource "azurerm_storage_account" "logic" {
   account_tier              = "Standard"
   account_kind              = "StorageV2"
   account_replication_type  = "LRS"
-  enable_https_traffic_only = true
   tags                      = var.common_tags
 }
 
