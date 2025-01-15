@@ -6,7 +6,6 @@ resource "azurerm_monitor_metric_alert" "blob-alert" {
   scopes              = ["/subscriptions/5ca62022-6aa2-4cee-aaa7-e7536c8d566c/resourceGroups/darts-migration-prod-rg/providers/Microsoft.Storage/storageAccounts/saproddartsmig02"]
   description         = "Alert triggered when blob ingress drops below a threshold for 30 minutes"
   enabled             = true
-  location            = "uksouth"
 
   criteria {
     metric_namespace = "Microsoft.Storage/storageAccounts"
@@ -28,7 +27,7 @@ resource "azurerm_monitor_action_group" "blob-action-group" {
   name                = "blob-ingress-action-group"
   resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
   short_name          = "alert-group"
-  location            = "uksouth"
+  location            = "global"
   email_receiver {
     name                    = "Sean Bulley"
     email_address           = "sean.bulley@hmcts.net"
