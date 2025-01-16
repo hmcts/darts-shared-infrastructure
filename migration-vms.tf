@@ -560,7 +560,7 @@ resource "azurerm_managed_disk" "shared_disk" {
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS" # Ensure shared disk support
   disk_size_gb         = 30000
-  max_shares           = 3 # Number of VMs sharing this disk
+  max_shares           = 9 # Number of VMs sharing this disk
   create_option        = "Empty"
 }
 
@@ -568,6 +568,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
   for_each = var.migration_linux_vms
   managed_disk_id    = azurerm_managed_disk.shared_disk.id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
-  lun                = 9
+  lun                = 0
   caching            = "None"
 }
