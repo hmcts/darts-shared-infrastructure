@@ -87,12 +87,6 @@ locals {
   private_endpoint_rg_name   = var.businessArea == "sds" ? "ss-${var.env}-network-rg" : "${var.businessArea}-${var.env}-network-rg"
   private_endpoint_vnet_name = var.businessArea == "sds" ? "ss-${var.env}-vnet" : "${var.businessArea}-${var.env}-vnet"
 
-  jenkins_agents = {
-    rg_name     = "ss-ptl-network-rg"
-    vnet_name   = "ss-ptl-vnet"
-    subnet_name = "iaas"
-  }
-
   migration_environments    = ["stg", "prod"]
   is_migration_environment  = contains(local.migration_environments, var.env)
   production_environments   = ["prod"]
