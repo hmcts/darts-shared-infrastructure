@@ -552,3 +552,33 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   lun                = "10"
   caching            = "ReadWrite"
 }
+
+# Shared Managed Disk
+resource "azurerm_managed_disk" "shared_disk" {
+  name                 = "shared-disk"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS"  # Ensure shared disk support
+  disk_size_gb         = 30000
+  max_shares           = 3              # Number of VMs sharing this disk
+  create_option        = "Empty"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows.name[prddartsassess].id
+  lun                = 0
+  caching            = "None"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "vm2_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows.name[prddartsassure].id
+  lun                = 0
+  caching            = "None"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "vm3_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows.name[prddartsmig01].id
+  lun                = 0
+  caching            = "None"
+}
