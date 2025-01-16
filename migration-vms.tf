@@ -565,20 +565,9 @@ resource "azurerm_managed_disk" "shared_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
+  for_each = var.migration_linux_vms
   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows.name[prddartsassess].id
-  lun                = 0
-  caching            = "None"
-}
-resource "azurerm_virtual_machine_data_disk_attachment" "vm2_attachment" {
-  managed_disk_id    = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows.name[prddartsassure].id
-  lun                = 0
-  caching            = "None"
-}
-resource "azurerm_virtual_machine_data_disk_attachment" "vm3_attachment" {
-  managed_disk_id    = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows.name[prddartsmig01].id
-  lun                = 0
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  lun                = 9
   caching            = "None"
 }
