@@ -558,9 +558,9 @@ resource "azurerm_managed_disk" "shared_disk" {
   name                 = "shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  storage_account_type = "Premium_LRS"  # Ensure shared disk support
+  storage_account_type = "Premium_LRS" # Ensure shared disk support
   disk_size_gb         = 30000
-  max_shares           = 3              # Number of VMs sharing this disk
+  max_shares           = 3 # Number of VMs sharing this disk
   create_option        = "Empty"
 }
 
