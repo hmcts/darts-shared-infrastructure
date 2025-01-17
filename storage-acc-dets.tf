@@ -11,6 +11,7 @@
 #   name                 = local.jenkins_agents.subnet_name
 # }
 
+
 # module "sa_dets" {
 #   count                             = local.is_migration_environment ? 1 : 0
 #   source                            = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
@@ -31,7 +32,7 @@
 #   enable_data_protection            = true
 #   enable_versioning                 = false
 #   sa_subnets                        = [data.azurerm_subnet.jenkins_agents.id]
-# }
+
 
 # resource "azurerm_storage_share" "dets-file-share" {
 #   count                = local.is_migration_environment ? 1 : 0
