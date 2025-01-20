@@ -15,7 +15,7 @@ resource "azurerm_log_analytics_workspace" "quarantine-analytics" {
 }
 
 
-data "azurerm_log_analytics_workspace" "hmcts" {
+data "azurerm_log_analytics_workspace" "quarantine" {
   provider            = azurerm.log-analytics-subscription
   name                = var.log_analytics_workspace_name
   resource_group_name = var.log_analytics_workspace_rg
