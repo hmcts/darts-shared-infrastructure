@@ -566,8 +566,8 @@ resource "azurerm_managed_disk" "shared_disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
   for_each           = var.migration_linux_vms
-  managed_disk_id    = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[0].id
+  managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = 0
   caching            = "None"
 }
