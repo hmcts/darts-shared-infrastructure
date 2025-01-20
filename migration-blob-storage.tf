@@ -95,15 +95,12 @@ module "sa-migration-quarantine" {
   common_tags                                = var.common_tags
 }
 
-moved {
-  from = module.sa-migration
-  to   = module.sa-migration[0]
-}
-
 resource "azurerm_storage_blob" "quarantine-st" {
   count                  = local.is_migration_environment ? 1 : 0
   name                   = "${var.product}-quarantine-blob-st-${var.env}"
   storage_account_name   = module.sa-migration-quarantine[0].storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
+
+  depends_on = [module.sa-migration-quarantine]
 }
