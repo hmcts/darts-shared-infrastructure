@@ -103,7 +103,7 @@ moved {
 resource "azurerm_storage_blob" "quarantine-st" {
   count                  = local.is_migration_environment ? 1 : 0
   name                   = "${var.product}-quarantine-blob-st-${var.env}"
-  storage_account_name   = module.sa-migration-duplicate[0].storageaccount_name
+  storage_account_name   = module.sa-migration-quarantine[0].storageaccount_name
   storage_container_name = local.darts_migration_container
   type                   = "Block"
 }
