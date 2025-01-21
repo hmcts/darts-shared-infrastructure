@@ -44,6 +44,10 @@ locals {
       access_type = "container"
     },
     {
+      name        = local.darts_quarantine_container
+      access_type = "container"
+    },
+    {
       name        = local.darts_container_name
       access_type = "container"
   }]
