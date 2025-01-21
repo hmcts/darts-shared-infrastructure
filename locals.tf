@@ -63,15 +63,16 @@ locals {
     name        = "darts-st-migration"
     access_type = "private"
   }]
-  darts_container_name       = "darts-st-container"
-  dets_container_name        = "darts-st-migration"
-  darts_inbound_container    = "darts-inbound-container"
-  darts_migration_container  = "darts-migration"
+  
+  darts_container_name      = "darts-st-container"
+  dets_container_name       = "darts-st-migration"
+  darts_inbound_container   = "darts-inbound-container"
+  darts_migration_container = "darts-migration"
   darts_quarantine_container = "darts-quarantine"
-  db_name                    = "psql-${var.env}-dartsmig-01"
-  db_name_dets               = "psql-${var.env}-detsmig-01"
-  db_name_replica            = "psql-${var.env}-darts-replica"
-  db_port                    = 5432
+  db_name                   = "psql-${var.env}-dartsmig-01"
+  db_name_dets              = "psql-${var.env}-detsmig-01"
+  db_name_replica           = "psql-${var.env}-darts-replica"
+  db_port                   = 5432
 
   palo_address_space = [for network in var.palo_networks : network.address_space]
   flattened_nsg_rules = flatten([
