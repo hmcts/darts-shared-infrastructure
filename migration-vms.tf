@@ -559,7 +559,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 #   location             = azurerm_resource_group.darts_migration_resource_group[0].location
 #   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
 #   storage_account_type = "Premium_LRS" # Ensure shared disk support
-#   disk_size_gb         = 2000
+#   disk_size_gb         = 3000
 #   max_shares           = 9 # Number of VMs sharing this disk
 #   create_option        = "Empty"
 # }
@@ -571,3 +571,4 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 #   lun                = 0
 #   caching            = "None"
 # }
+
