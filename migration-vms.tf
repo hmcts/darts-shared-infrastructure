@@ -559,15 +559,38 @@ resource "azurerm_managed_disk" "shared_disk" {
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS" # Ensure shared disk support
-  disk_size_gb         = 3000
-  max_shares           = 9 # Number of VMs sharing this disk
+  disk_size_gb         = 1999
+  max_shares           = 5 # Number of VMs sharing this disk
   create_option        = "Empty"
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
-  for_each           = var.migration_vms
-  managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[1].id
+  lun                = 0
+  caching            = "None"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "vm2_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[6].id
+  lun                = 0
+  caching            = "None"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "vm3_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[7].id
+  lun                = 0
+  caching            = "None"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "vm4_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[8].id
+  lun                = 0
+  caching            = "None"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "vm5_attachment" {
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[9].id
   lun                = 0
   caching            = "None"
 }
