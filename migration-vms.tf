@@ -557,7 +557,7 @@ locals {
   target_vms_for_shared_disk = {
     for vm_name, vm_config in var.migration_vms :
     vm_name => vm_config
-    if vm_name in ["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"]
+    if vm_name ["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"]
   }
 }
 
@@ -580,31 +580,3 @@ resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment"
   lun               = 0
   caching           = "None"
 }
-# resource "azurerm_virtual_machine_data_disk_attachment" "vm2_attachment" {
-#   for_each           = var.migration_vms
-#   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-#   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[6].id
-#   lun                = 0
-#   caching            = "None"
-# }
-# resource "azurerm_virtual_machine_data_disk_attachment" "vm3_attachment" {
-#   for_each           = var.migration_vms
-#   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-#   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[7].id
-#   lun                = 0
-#   caching            = "None"
-# }
-# resource "azurerm_virtual_machine_data_disk_attachment" "vm4_attachment" {
-#   for_each           = var.migration_vms
-#   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-#   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[8].id
-#   lun                = 0
-#   caching            = "None"
-# }
-# resource "azurerm_virtual_machine_data_disk_attachment" "vm5_attachment" {
-#   for_each           = var.migration_vms
-#   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-#   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[9].id
-#   lun                = 0
-#   caching            = "None"
-# }
