@@ -555,11 +555,11 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 
 locals {
   target_vms_for_shared_disk = {
-    prddartsmig01  = var.migration_vms["prddartsmig01"]
-    prddartsassess = var.migration_vms["prddartsassess"]
-    prddartsassure = var.migration_vms["prddartsassure"]
-    prddartsoracle = var.migration_vms["prddartsoracle"]
-    prddartsunstr  = var.migration_vms["prddartsunstr"]
+    prddartsmig01    = var.migration_vms["prddartsmig01"]
+    prddartsassess   = var.migration_vms["prddartsassess"]
+    prddartsassure   = var.migration_vms["prddartsassure"]
+    prddartsoracle   = var.migration_vms["prddartsoracle"]
+    prddartsunstr    = var.migration_vms["prddartsunstr"]
   }
 }
 
