@@ -557,7 +557,7 @@ locals {
   target_vms_for_shared_disk = {
     for vm_name, vm_config in var.migration_vms :
     vm_name => vm_config
-    if vm_name ["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"]
+    if vm_name == ["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"]
   }
 }
 
