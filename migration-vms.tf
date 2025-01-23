@@ -554,13 +554,13 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 }
 
 locals {
-  target_vms = [for vm_key, vm in azurerm_windows_virtual_machine.migration_vms :
-    vm.id if vm_key in ["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"]]
+  target_vms_for_shared_disk = {
+    for vm_name, vm_config in var.migration_vms :
+    vm_name => vm_config
+    if vm_name in ["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"]
+  }
 }
-# Output the target VM IDs
-output "target_vm_ids" {
-  value = local.target_vms
-}
+
 
 # Shared Managed Disk
 resource "azurerm_managed_disk" "shared_disk" {
@@ -573,10 +573,10 @@ resource "azurerm_managed_disk" "shared_disk" {
   create_option        = "Empty"
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
-  for_each          = toset(local.target_vms)
+resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
+  for_each          = local.target_vms_for_shared_disk
   managed_disk_id   = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = each.value
+  virtual_machine_id = azurerm_virtual_machine.migration_vms[each.key].id
   lun               = 0
   caching           = "None"
 }
@@ -607,4 +607,4 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[9].id
 #   lun                = 0
 #   caching            = "None"
-}
+# }
