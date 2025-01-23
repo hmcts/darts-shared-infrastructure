@@ -555,11 +555,11 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 
 locals {
   target_vms_for_shared_disk = {
-    prddartsmig01    = var.migration_vms["prddartsmig01"]
-    prddartsassess   = var.migration_vms["prddartsassess"]
-    prddartsassure   = var.migration_vms["prddartsassure"]
-    prddartsoracle   = var.migration_vms["prddartsoracle"]
-    prddartsunstr    = var.migration_vms["prddartsunstr"]
+    prddartsmig01  = var.migration_vms["prddartsmig01"]
+    prddartsassess = var.migration_vms["prddartsassess"]
+    prddartsassure = var.migration_vms["prddartsassure"]
+    prddartsoracle = var.migration_vms["prddartsoracle"]
+    prddartsunstr  = var.migration_vms["prddartsunstr"]
   }
 }
 
@@ -584,9 +584,9 @@ resource "azurerm_managed_disk" "shared_disk" {
 # }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
-  for_each          = local.target_vms_for_shared_disk
-  managed_disk_id   = azurerm_managed_disk.shared_disk.id
+  for_each           = local.target_vms_for_shared_disk
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
   virtual_machine_id = azurerm_virtual_machine.migration_vms[each.key].id
-  lun               = 0
-  caching           = "None"
+  lun                = 0
+  caching            = "None"
 }
