@@ -146,7 +146,7 @@ module "vm-bootstrap-migration_vms2" {
   source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
 
   virtual_machine_type        = "vm"
-  virtual_machine_id          = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  virtual_machine_id          = azurerm_windows_virtual_machine.migration_windows2[each.key].id
   install_splunk_uf           = var.install_splunk_uf
   splunk_username             = var.splunk_username
   splunk_password             = var.splunk_password
