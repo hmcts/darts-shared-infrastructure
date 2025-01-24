@@ -24,18 +24,47 @@ resource "azurerm_managed_disk" "migration_vms_data" {
   tags                 = var.common_tags
 }
 
+# resource "azurerm_windows_virtual_machine" "migration_windows" {
+#   for_each              = var.migration_vms
+#   name                  = each.key
+#   location              = azurerm_resource_group.darts_migration_resource_group[0].location
+#   resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
+#   size                  = each.value.sku
+#   tags                  = var.common_tags
+#   admin_username        = var.admin_user
+#   admin_password        = random_password.password.result
+#   provision_vm_agent    = true
+#   computer_name         = each.key
+#   network_interface_ids = [azurerm_network_interface.migration_vms[each.key].id]
+#   os_disk {
+#     caching              = "ReadWrite"
+#     storage_account_type = "Standard_LRS"
+#     name                 = "${each.key}-OsDisk"
+#   }
+
+#   source_image_reference {
+#     publisher = "MicrosoftWindowsServer"
+#     offer     = "WindowsServer"
+#     sku       = "2022-Datacenter"
+#     version   = "latest"
+#   }
+#   identity {
+#     type = "SystemAssigned"
+#   }
+# }
 resource "azurerm_windows_virtual_machine" "migration_windows" {
   for_each              = var.migration_vms
   name                  = each.key
   location              = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
-  size                  = each.value.sku
+  size                  = lookup(each.value, "sku", "Standard_D2s_v3")
   tags                  = var.common_tags
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
   provision_vm_agent    = true
   computer_name         = each.key
   network_interface_ids = [azurerm_network_interface.migration_vms[each.key].id]
+
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -48,11 +77,11 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
     sku       = "2022-Datacenter"
     version   = "latest"
   }
+
   identity {
     type = "SystemAssigned"
   }
 }
-
 module "vm-bootstrap-migration_vms" {
   providers = {
     azurerm.cnp = azurerm.cnp
@@ -553,27 +582,45 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   caching            = "ReadWrite"
 }
 
+# resource "azurerm_managed_disk" "shared_disk" {
+#   name                 = "shared-disk"
+#   location             = azurerm_resource_group.darts_migration_resource_group[0].location
+#   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+#   storage_account_type = "Premium_LRS"
+#   create_option        = "Empty"
+#   disk_size_gb         = 2048 # 2TB size
+#   max_shares           = 5    # Number of VMs to attach the shared disk
+#   tags                 = var.common_tags
+# }
+# resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
+#   for_each = tomap({
+#     prddartsmig01  = azurerm_windows_virtual_machine.migration_windows["prddartsmig01"].id,
+#     prddartsassess = azurerm_windows_virtual_machine.migration_windows["prddartsassess"].id,
+#     prddartsassure = azurerm_windows_virtual_machine.migration_windows["prddartsassure"].id,
+#     prddartsoracle = azurerm_windows_virtual_machine.migration_windows["prddartsoracle"].id,
+#     prddartsunstr  = azurerm_windows_virtual_machine.migration_windows["prddartsunstr"].id
+#   })
+
+#   managed_disk_id    = azurerm_managed_disk.shared_disk.id
+#   virtual_machine_id = each.value
+#   lun                = 0
+#   caching            = "None"
+# }
 resource "azurerm_managed_disk" "shared_disk" {
   name                 = "shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 2048 # 2TB size
-  max_shares           = 5    # Number of VMs to attach the shared disk
+  disk_size_gb         = 2048 # 2TB disk size
+  max_shares           = 5    # Allow up to 5 VMs to share this disk
   tags                 = var.common_tags
 }
-resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
-  for_each = tomap({
-    prddartsmig01  = azurerm_windows_virtual_machine.migration_windows["prddartsmig01"].id,
-    prddartsassess = azurerm_windows_virtual_machine.migration_windows["prddartsassess"].id,
-    prddartsassure = azurerm_windows_virtual_machine.migration_windows["prddartsassure"].id,
-    prddartsoracle = azurerm_windows_virtual_machine.migration_windows["prddartsoracle"].id,
-    prddartsunstr  = azurerm_windows_virtual_machine.migration_windows["prddartsunstr"].id
-  })
 
-  managed_disk_id    = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = each.value
-  lun                = 0
-  caching            = "None"
+resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
+  for_each            = toset(["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"])
+  managed_disk_id     = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id  = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  lun                 = 0 # Logical Unit Number
+  caching             = "None"
 }
