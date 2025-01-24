@@ -53,22 +53,20 @@ resource "azurerm_managed_disk" "migration_vms_data" {
 #   }
 # }
 resource "azurerm_windows_virtual_machine" "migration_windows" {
-  for_each              = var.migration_vms
+  for_each = var.migration_vms
+
   name                  = each.key
   location              = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
   size                  = lookup(each.value, "sku", "Standard_D2s_v3")
-  tags                  = var.common_tags
   admin_username        = var.admin_user
   admin_password        = random_password.password.result
-  provision_vm_agent    = true
-  computer_name         = each.key
   network_interface_ids = [azurerm_network_interface.migration_vms[each.key].id]
 
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "${each.key}-OsDisk"
+    name                 = "${each.key}-osdisk"
   }
 
   source_image_reference {
@@ -82,6 +80,8 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
     type = "SystemAssigned"
   }
 }
+
+
 module "vm-bootstrap-migration_vms" {
   providers = {
     azurerm.cnp = azurerm.cnp
@@ -582,45 +582,30 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   caching            = "ReadWrite"
 }
 
-# resource "azurerm_managed_disk" "shared_disk" {
-#   name                 = "shared-disk"
-#   location             = azurerm_resource_group.darts_migration_resource_group[0].location
-#   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-#   storage_account_type = "Premium_LRS"
-#   create_option        = "Empty"
-#   disk_size_gb         = 2048 # 2TB size
-#   max_shares           = 5    # Number of VMs to attach the shared disk
-#   tags                 = var.common_tags
-# }
-# resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
-#   for_each = tomap({
-#     prddartsmig01  = azurerm_windows_virtual_machine.migration_windows["prddartsmig01"].id,
-#     prddartsassess = azurerm_windows_virtual_machine.migration_windows["prddartsassess"].id,
-#     prddartsassure = azurerm_windows_virtual_machine.migration_windows["prddartsassure"].id,
-#     prddartsoracle = azurerm_windows_virtual_machine.migration_windows["prddartsoracle"].id,
-#     prddartsunstr  = azurerm_windows_virtual_machine.migration_windows["prddartsunstr"].id
-#   })
-
-#   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-#   virtual_machine_id = each.value
-#   lun                = 0
-#   caching            = "None"
-# }
+locals {
+  shared_disk_vms = {
+    prddartsmig01  = var.migration_vms["prddartsmig01"]
+    prddartsassess = var.migration_vms["prddartsassess"]
+    prddartsassure = var.migration_vms["prddartsassure"]
+    prddartsoracle = var.migration_vms["prddartsoracle"]
+    prddartsunstr  = var.migration_vms["prddartsunstr"]
+  }
+}
 resource "azurerm_managed_disk" "shared_disk" {
   name                 = "shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 2048 # 2TB disk size
-  max_shares           = 5    # Allow up to 5 VMs to share this disk
+  disk_size_gb         = 2048 # 2TB
+  max_shares           = 5
   tags                 = var.common_tags
 }
-
 resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
-  for_each            = toset(["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"])
-  managed_disk_id     = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id  = azurerm_windows_virtual_machine.migration_windows[each.key].id
-  lun                 = 0 # Logical Unit Number
-  caching             = "None"
+  for_each = local.shared_disk_vms
+
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  lun                = 0
+  caching            = "None"
 }
