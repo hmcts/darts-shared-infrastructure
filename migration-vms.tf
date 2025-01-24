@@ -105,7 +105,7 @@ resource "azurerm_managed_disk" "migration_vms_data2" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_windows_virtual_machine" "migration_windows" {
+resource "azurerm_windows_virtual_machine" "migration_windows2" {
   for_each              = var.migration_vms2
   name                  = each.key
   location              = azurerm_resource_group.darts_migration_resource_group[0].location
