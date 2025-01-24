@@ -553,32 +553,27 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   caching            = "ReadWrite"
 }
 
-locals {
-  target_vms_for_shared_disk = {
-    prddartsmig01  = var.migration_vms["prddartsmig01"]
-    prddartsassess = var.migration_vms["prddartsassess"]
-    prddartsassure = var.migration_vms["prddartsassure"]
-    prddartsoracle = var.migration_vms["prddartsoracle"]
-    prddartsunstr  = var.migration_vms["prddartsunstr"]
-  }
-}
-
-
-# Shared Managed Disk
 resource "azurerm_managed_disk" "shared_disk" {
   name                 = "shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  storage_account_type = "Premium_LRS" # Ensure shared disk support
-  disk_size_gb         = 1999
-  max_shares           = 5 # Number of VMs sharing this disk
+  storage_account_type = "Premium_LRS"
   create_option        = "Empty"
+  disk_size_gb         = 2048 # 2TB size
+  max_shares           = 5    # Number of VMs to attach the shared disk
+  tags                 = var.common_tags
 }
-
 resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
-  for_each           = local.target_vms_for_shared_disk
+  for_each = tomap({
+    prddartsmig01  = azurerm_windows_virtual_machine.migration_windows["prddartsmig01"].id,
+    prddartsassess = azurerm_windows_virtual_machine.migration_windows["prddartsassess"].id,
+    prddartsassure = azurerm_windows_virtual_machine.migration_windows["prddartsassure"].id,
+    prddartsoracle = azurerm_windows_virtual_machine.migration_windows["prddartsoracle"].id,
+    prddartsunstr  = azurerm_windows_virtual_machine.migration_windows["prddartsunstr"].id
+  })
+
   managed_disk_id    = azurerm_managed_disk.shared_disk.id
-  virtual_machine_id = azurerm_virtual_machine.target_vms_for_shared_disk[each.key].id
+  virtual_machine_id = each.value
   lun                = 0
   caching            = "None"
 }
