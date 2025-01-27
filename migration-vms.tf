@@ -553,21 +553,32 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   caching            = "ReadWrite"
 }
 
+locals {
+  first_5_vms = { for key in slice(keys(var.migration_vms), 0, 5) : key => var.migration_vms[key] }
+}
+
 # Shared Managed Disk
 resource "azurerm_managed_disk" "shared_disk" {
   name                 = "shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS" # Ensure shared disk support
-  disk_size_gb         = 3000
-  max_shares           = 9 # Number of VMs sharing this disk
+  disk_size_gb         = 1999
+  max_shares           = 5 # Number of VMs sharing this disk
   create_option        = "Empty"
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
-  for_each           = var.migration_vms
-  managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
+# resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
+#   for_each           = output.first_5_vm_ips
+#   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
+#   virtual_machine_id = azurerm_windows_virtual_machine.first_5_vm_ips[each.key].id
+#   lun                = 0
+#   caching            = "None"
+# }
+resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
+  for_each = local.first_5_vms
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = 0
-  caching            = "None"
+  caching            = "ReadWrite"
 }
