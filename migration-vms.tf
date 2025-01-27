@@ -574,13 +574,6 @@ resource "azurerm_managed_disk" "shared_disk" {
   create_option        = "Empty"
 }
 
-# resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
-#   for_each           = output.first_5_vm_ips
-#   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
-#   virtual_machine_id = azurerm_windows_virtual_machine.first_5_vm_ips[each.key].id
-#   lun                = 0
-#   caching            = "None"
-# }
 resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
   for_each = local.first_5_vms
   managed_disk_id    = azurerm_managed_disk.shared_disk.id
