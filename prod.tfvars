@@ -36,17 +36,17 @@ migration_vms = {
     subnet     = "migration-subnet-extended"
     sku        = "Standard_D4ds_v5"
   }
-  prddartsmig02 = {
-    ip_address = "10.24.239.7"
-  }
-  prddartsmig03 = {
-    ip_address = "10.24.239.8"
-  }
   prddartsmig04 = {
     ip_address = "10.24.239.9"
   }
   prddartsmig05 = {
     ip_address = "10.24.239.10"
+  }
+  prddartsmig02 = {
+    ip_address = "10.24.239.7"
+  }
+  prddartsmig03 = {
+    ip_address = "10.24.239.8"
   }
 }
 
