@@ -576,6 +576,5 @@ resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment"
   managed_disk_id    = azurerm_managed_disk.shared_disk.id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = 0
-  caching            = "ReadWrite"
+  caching            = "None"
 }
-
