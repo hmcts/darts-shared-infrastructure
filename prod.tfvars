@@ -16,18 +16,6 @@ migration_vms = {
   prddartsmig01 = {
     ip_address = "10.24.239.6"
   }
-  prddartsmig02 = {
-    ip_address = "10.24.239.7"
-  }
-  prddartsmig03 = {
-    ip_address = "10.24.239.8"
-  }
-  prddartsmig04 = {
-    ip_address = "10.24.239.9"
-  }
-  prddartsmig05 = {
-    ip_address = "10.24.239.10"
-  }
   prddartsassess = {
     ip_address     = "10.24.239.5"
     data_disk_size = "2000"
@@ -47,6 +35,18 @@ migration_vms = {
     ip_address = "10.24.239.168"
     subnet     = "migration-subnet-extended"
     sku        = "Standard_D4ds_v5"
+  }
+  prddartsmig04 = {
+    ip_address = "10.24.239.9"
+  }
+  prddartsmig05 = {
+    ip_address = "10.24.239.10"
+  }
+  prddartsmig02 = {
+    ip_address = "10.24.239.7"
+  }
+  prddartsmig03 = {
+    ip_address = "10.24.239.8"
   }
 }
 
