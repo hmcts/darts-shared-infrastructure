@@ -73,7 +73,7 @@ resource "azurerm_storage_blob" "dets-st" {
 }
 
 module "sa-migration-quarantine" {
-  count                                      = local.is_migration_environment ? 1 : 0
+  count                                      = local.is_production_environment ? 1 : 0
   source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                                        = var.env
   storage_account_name                       = "sa${var.env}${var.product}quarantine"
