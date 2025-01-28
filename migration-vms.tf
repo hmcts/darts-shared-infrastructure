@@ -554,12 +554,9 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 }
 
 locals {
-  first_5_vms = {
-    for key in slice(
-      keys(var.migration_vms),
-      0,
-      min(length(keys(var.migration_vms)), 5)
-    ) : key => var.migration_vms[key]
+  selected_vms = {
+    for name, details in var.migration_vms :
+    name => details if contains(["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"], name)
   }
 }
 
@@ -575,7 +572,7 @@ resource "azurerm_managed_disk" "shared_disk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
-  for_each           = local.first_5_vms
+  for_each           = local.selected_vms
   managed_disk_id    = azurerm_managed_disk.shared_disk.id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = 0
