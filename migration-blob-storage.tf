@@ -83,7 +83,7 @@ module "sa-migration-quarantine" {
   account_tier                               = "Standard"
   account_replication_type                   = "ZRS"
   containers                                 = local.containers-quarantine
-  private_endpoint_subnet_id                 = resource.azurerm_subnet.migration[0].id
+  private_endpoint_subnet_id                 = resource.azurerm_subnet.migration-extended[0].id
   enable_nfs                                 = true
   enable_hns                                 = true
   enable_data_protection                     = true
