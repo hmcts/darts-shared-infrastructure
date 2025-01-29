@@ -579,3 +579,19 @@ resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment"
   caching            = "None"
 }
 
+locals {
+  mig-01-disk = {
+    for name, details in var.migration_vms :
+    name => details if contains(["prddartsmig01"], name)
+  }
+}
+resource "azurerm_managed_disk" "mig-01-disk" {
+  for_each             = local.mig-01-disk
+  name                 = "migration-files-datadisk"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = "8000"
+  tags                 = var.common_tags
+}
