@@ -161,3 +161,11 @@ resource "azurerm_role_assignment" "storage_contributors" {
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
 }
+
+resource "azurerm_role_assignment" "storage_contributors_quarantine" {
+  for_each             = toset(var.storage_account_contributor_ids)
+  scope                = module.sa-migration-quarantine.storage_account_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = each.value
+}
+

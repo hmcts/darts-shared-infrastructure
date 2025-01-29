@@ -1,4 +1,4 @@
-storage_account_contributor_ids = ["87c8cf3d-ff9d-4d8f-8430-ccc737764435"]
+storage_account_contributor_ids = ["87c8cf3d-ff9d-4d8f-8430-ccc737764435", "4908856e-c987-4ad8-b519-a5480a1fcc12"]
 hub                             = "nonprod"
 address_space                   = "10.24.239.128/28"
 postgres_subnet_address_space   = "10.24.239.144/28"
