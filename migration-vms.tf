@@ -598,8 +598,8 @@ resource "azurerm_managed_disk" "mig-01-disk" {
 # Attach the Disk to the Linux VM (RHEL)
 resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
   for_each           = var.oracle_linux_vms
-  managed_disk_id    = azurerm_managed_disk.mig-01-disk.id
-  virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
+  managed_disk_id    = azurerm_managed_disk.mig-01-disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.oracle[0].id
   lun                = 0
   caching            = "ReadWrite"
 }
@@ -607,7 +607,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
 # Attach the Disk to the Windows VM (Read-Only)
 resource "azurerm_virtual_machine_data_disk_attachment" "windows_disk_attach" {
   for_each           = local.mig-01-disk
-  managed_disk_id    = azurerm_managed_disk.mig-01-disk.id
+  managed_disk_id    = azurerm_managed_disk.mig-01-disk[each.key].id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = 0
   caching            = "ReadOnly"
