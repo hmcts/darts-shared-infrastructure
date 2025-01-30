@@ -105,10 +105,10 @@ resource "azurerm_storage_blob" "quarantine-st" {
   depends_on = [module.sa-migration-quarantine]
 }
 resource "azurerm_role_assignment" "storage_contributors_quarantine" {
-  count                  = local.is_production_environment ? 1 : 0
+  count                = local.is_production_environment ? 1 : 0
   scope                = module.sa-migration-quarantine[0].storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
-  
+
   depends_on = [module.sa-migration-quarantine]
 }
