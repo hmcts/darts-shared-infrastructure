@@ -598,7 +598,7 @@ resource "azurerm_managed_disk" "mig-01-disk" {
 # Attach the Disk to the Linux VM (RHEL)
 resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
   for_each           = var.oracle_linux_vms
-  managed_disk_id    = azurerm_managed_disk.mig-01-disk[each.key].id
+  managed_disk_id    = azurerm_managed_disk.oracle_linux_vms[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
   lun                = 0
   caching            = "ReadWrite"
