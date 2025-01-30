@@ -106,7 +106,7 @@ resource "azurerm_storage_blob" "quarantine-st" {
 }
 resource "azurerm_role_assignment" "storage_contributors_quarantine" {
   for_each             = toset(var.storage_account_contributor_ids)
-  scope                = module.sa-migration-quarantine.storageaccount_id
+  scope                = module.sa-migration-quarantine[0].storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
   
