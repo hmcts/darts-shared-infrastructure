@@ -586,7 +586,6 @@ locals {
   }
 }
 resource "azurerm_managed_disk" "mig-01-disk" {
-  for_each             = var.oracle_linux_vms
   name                 = "migration-files-datadisk" # Unique name per VM
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
