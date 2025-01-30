@@ -109,6 +109,6 @@ resource "azurerm_role_assignment" "storage_contributors_quarantine" {
   scope                = module.sa-migration-quarantine.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
-  
+
   depends_on = [module.sa-migration-quarantine]
 }
