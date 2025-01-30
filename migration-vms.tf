@@ -586,8 +586,8 @@ locals {
   }
 }
 resource "azurerm_managed_disk" "mig-01-disk" {
-  for_each             = local.mig-01-disk
-  name                 = "migration-files-datadisk"
+  for_each             = var.oracle_linux_vms
+  name                 = "migration-files-datadisk-${each.key}" # Unique name per VM
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "StandardSSD_LRS"
@@ -599,7 +599,7 @@ resource "azurerm_managed_disk" "mig-01-disk" {
 resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
   for_each           = var.oracle_linux_vms
   managed_disk_id    = azurerm_managed_disk.mig-01-disk[each.key].id
-  virtual_machine_id = azurerm_linux_virtual_machine.oracle[0].id
+  virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
   lun                = 0
   caching            = "ReadWrite"
 }
