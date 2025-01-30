@@ -74,7 +74,7 @@ resource "azurerm_storage_blob" "dets-st" {
 
 module "sa-migration-quarantine" {
   count                                      = local.is_production_environment ? 1 : 0
-  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                                        = var.env
   storage_account_name                       = "sa${var.env}${var.product}quarantine"
   resource_group_name                        = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -102,5 +102,13 @@ resource "azurerm_storage_blob" "quarantine-st" {
   storage_container_name = local.darts_quarantine_container
   type                   = "Block"
 
+  depends_on = [module.sa-migration-quarantine]
+}
+resource "azurerm_role_assignment" "storage_contributors_quarantine" {
+  for_each             = toset(var.storage_account_contributor_ids)
+  scope                = module.sa-migration-quarantine.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = each.value
+  
   depends_on = [module.sa-migration-quarantine]
 }
