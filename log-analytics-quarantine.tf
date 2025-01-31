@@ -21,3 +21,17 @@ data "azurerm_log_analytics_workspace" "quarantine" {
   resource_group_name = var.log_analytics_workspace_rg
 }
 
+resource "azurerm_monitor_diagnostic_setting" "quarantine-diagnostic" {
+  count                      = local.is_production_environment ? 1 : 0
+  name                       = "storage-diagnostics"
+  target_resource_id         = module.sa-migration-quarantine[0].storageaccount_id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.quarantine-analytics[0].id
+
+  enabled_log {
+    category = "AuditEvent"
+  }
+
+  metric {
+    category = "AllMetrics"
+  }
+}
