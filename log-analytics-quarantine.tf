@@ -24,42 +24,14 @@ data "azurerm_log_analytics_workspace" "quarantine" {
 resource "azurerm_monitor_diagnostic_setting" "quarantine-diagnostic" {
   count                      = local.is_production_environment ? 1 : 0
   name                       = "storage-diagnostics"
-  target_resource_id         = module.sa-migration-quarantine[0].id
+  target_resource_id         = module.sa-migration-quarantine[0].storageaccount_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.quarantine-analytics[0].id 
 
-  log {
-    category = "StorageRead"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
-  }
-
-  log {
-    category = "StorageWrite"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
-  }
-
-  log {
-    category = "StorageDelete"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
+  enabled_log {
+    category = "AuditEvent"
   }
 
   metric {
-    category = "Transaction"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
+    category = "AllMetrics"
   }
 }
