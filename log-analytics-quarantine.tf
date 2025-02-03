@@ -27,8 +27,8 @@ resource "azurerm_monitor_diagnostic_setting" "quarantine-diagnostic" {
   target_resource_id         = module.sa-migration-quarantine[0].storageaccount_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.quarantine-analytics[0].id
 
-  enabled_log {
-    category_group = "audit"
+enabled_log {
+    category_group = "allLogs"
   }
 
   metric {
