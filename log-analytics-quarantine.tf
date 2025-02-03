@@ -28,11 +28,7 @@ resource "azurerm_monitor_diagnostic_setting" "quarantine-diagnostic" {
   log_analytics_workspace_id = azurerm_log_analytics_workspace.quarantine-analytics[0].id
 
   enabled_log {
-    category = "StorageWrite"
-  }
-
-  enabled_log {
-    category = "StorageDelete"
+    category = "allLogs"
   }
 
   metric {
