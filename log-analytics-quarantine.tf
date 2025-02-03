@@ -28,7 +28,7 @@ resource "azurerm_monitor_diagnostic_setting" "quarantine-diagnostic" {
   log_analytics_workspace_id = azurerm_log_analytics_workspace.quarantine-analytics[0].id
 
   enabled_log {
-    category = "allLogs"
+    category_group = "audit"
   }
 
   metric {
