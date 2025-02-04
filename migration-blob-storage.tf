@@ -20,6 +20,7 @@ module "sa-migration-standard" {
   defender_malware_scanning_enabled          = var.defender_scan
   defender_malware_scanning_cap_gb_per_month = 250000
   common_tags                                = var.common_tags
+  default_action                             = "Allow"
 }
 
 moved {
