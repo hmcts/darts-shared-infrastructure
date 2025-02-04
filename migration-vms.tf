@@ -635,21 +635,61 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
   caching            = "ReadWrite"
 }
 
+locals {
+  selected_vms = {
+    for name, details in var.migration_vms :
+    name => details if contains(["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"], name)
+  }
+}
+
 # Shared Managed Disk
-# resource "azurerm_managed_disk" "shared_disk" {
-#   name                 = "shared-disk"
+resource "azurerm_managed_disk" "shared_disk" {
+  name                 = "shared-disk"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS" # Ensure shared disk support
+  disk_size_gb         = 1999
+  max_shares           = 5 # Number of VMs sharing this disk
+  create_option        = "Empty"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
+  for_each           = local.selected_vms
+  managed_disk_id    = azurerm_managed_disk.shared_disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  lun                = 0
+  caching            = "None"
+}
+
+# locals {
+#   mig-01-vm = {
+#     for name, details in var.migration_vms :
+#     name => details if contains(["prddartsmig01"], name)
+#   }
+# }
+# resource "azurerm_managed_disk" "mig-01-disk" {
+#   name                 = "migration-files-datadisk-"[each.key] # Unique name per VM
 #   location             = azurerm_resource_group.darts_migration_resource_group[0].location
 #   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-#   storage_account_type = "Premium_LRS" # Ensure shared disk support
-#   disk_size_gb         = 3000
-#   max_shares           = 9 # Number of VMs sharing this disk
+#   storage_account_type = "StandardSSD_LRS"
 #   create_option        = "Empty"
+#   disk_size_gb         = "8000"
+#   tags                 = var.common_tags
+# }
+# # Attach the Disk to the Linux VM (RHEL)
+# resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
+#   for_each           = var.oracle_linux_vms
+#   managed_disk_id    = azurerm_managed_disk.mig-01-disk.id
+#   virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
+#   lun                = 1
+#   caching            = "None"
 # }
 
-# resource "azurerm_virtual_machine_data_disk_attachment" "vm1_attachment" {
-#   for_each           = var.migration_vms
-#   managed_disk_id    = azurerm_managed_disk.migration_vms_data[each.key].id
+# # Attach the Disk to the Windows VM (Read-Only)
+# resource "azurerm_virtual_machine_data_disk_attachment" "windows_disk_attach" {
+#   for_each           = local.mig-01-vm
+#   managed_disk_id    = azurerm_managed_disk.mig-01-disk.id
 #   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
-#   lun                = 0
+#   lun                = 2
 #   caching            = "None"
 # }

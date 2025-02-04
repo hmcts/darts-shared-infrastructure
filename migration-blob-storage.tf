@@ -73,8 +73,8 @@ resource "azurerm_storage_blob" "dets-st" {
 }
 
 module "sa-migration-quarantine" {
-  count                                      = local.is_migration_environment ? 1 : 0
-  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  count                                      = local.is_production_environment ? 1 : 0
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                                        = var.env
   storage_account_name                       = "sa${var.env}${var.product}quarantine"
   resource_group_name                        = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -83,7 +83,7 @@ module "sa-migration-quarantine" {
   account_tier                               = "Standard"
   account_replication_type                   = "ZRS"
   containers                                 = local.containers-quarantine
-  private_endpoint_subnet_id                 = resource.azurerm_subnet.migration[0].id
+  private_endpoint_subnet_id                 = resource.azurerm_subnet.migration-extended[0].id
   enable_nfs                                 = true
   enable_hns                                 = true
   enable_data_protection                     = true
@@ -96,11 +96,19 @@ module "sa-migration-quarantine" {
 }
 
 resource "azurerm_storage_blob" "quarantine-st" {
-  count                  = local.is_migration_environment ? 1 : 0
+  count                  = local.is_production_environment ? 1 : 0
   name                   = "${var.product}-quarantine-blob-st-${var.env}"
   storage_account_name   = module.sa-migration-quarantine[0].storageaccount_name
   storage_container_name = local.darts_quarantine_container
   type                   = "Block"
+
+  depends_on = [module.sa-migration-quarantine]
+}
+resource "azurerm_role_assignment" "storage_contributors_quarantine" {
+  count                = local.is_production_environment ? 1 : 0
+  scope                = module.sa-migration-quarantine[0].storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = "4908856e-c987-4ad8-b519-a5480a1fcc12"
 
   depends_on = [module.sa-migration-quarantine]
 }

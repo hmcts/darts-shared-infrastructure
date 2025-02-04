@@ -5,7 +5,7 @@ extended_address_space          = "10.24.239.160/28"
 logic_apps_address_space        = "10.24.239.176/29"
 virtual_machine_admins          = ["675f1c23-3e46-4cf8-867b-747eb60fe89d", "d8b336b1-91fb-4fa6-bbe2-1f197c0d52c8", "14f9cf0e-8327-4f12-9d2c-f7e7eb05629d", "50132661-6997-484e-b0fd-5ec1052afabb", "e7ea2042-4ced-45dd-8ae3-e051c6551789", "1f9e0772-2158-4377-9515-f749044d3178"]
 virtual_machine_users           = []
-storage_account_contributor_ids = []
+storage_account_contributor_ids = ["4908856e-c987-4ad8-b519-a5480a1fcc12"]
 defender_enable                 = true
 defender_scan                   = true
 log_analytics_workspace_name    = "hmcts-prod"
@@ -35,6 +35,18 @@ migration_vms = {
     ip_address = "10.24.239.168"
     subnet     = "migration-subnet-extended"
     sku        = "Standard_D4ds_v5"
+  }
+  prddartsmig04 = {
+    ip_address = "10.24.239.9"
+  }
+  prddartsmig05 = {
+    ip_address = "10.24.239.10"
+  }
+  prddartsmig02 = {
+    ip_address = "10.24.239.7"
+  }
+  prddartsmig03 = {
+    ip_address = "10.24.239.8"
   }
 }
 migration_vms2 = {
