@@ -586,7 +586,7 @@ locals {
   }
 }
 resource "azurerm_managed_disk" "mig-01-disk" {
-  name                 = "migration-files-datadisk" # Unique name per VM
+  name                 = "migration-files-datadisk"# Unique name per VM
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "StandardSSD_LRS"
