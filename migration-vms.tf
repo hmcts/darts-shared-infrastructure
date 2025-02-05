@@ -562,7 +562,7 @@ locals {
 
 # Shared Managed Disk
 resource "azurerm_managed_disk" "shared_disk" {
-  count                  = local.is_production_environment ? 1 : 0
+  count                = local.is_production_environment ? 1 : 0
   name                 = "shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -579,7 +579,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment"
   lun                = 0
   caching            = "None"
 
-  depends_on = [ azurerm_managed_disk.shared_disk ]
+  depends_on = [azurerm_managed_disk.shared_disk]
 }
 
 # locals {
