@@ -593,9 +593,9 @@ resource "azurerm_managed_disk" "mig-01-disk" {
   name                 = "migration-shared-disk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  storage_account_type = "Premium_LRS" 
+  storage_account_type = "Premium_LRS"
   disk_size_gb         = 8000
-  max_shares           = 2 
+  max_shares           = 2
   create_option        = "Empty"
 }
 
