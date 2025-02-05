@@ -612,3 +612,4 @@ resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment"
 #   lun                = 2
 #   caching            = "None"
 # }
+
