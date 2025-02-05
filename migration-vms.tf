@@ -586,12 +586,13 @@ locals {
   }
 }
 resource "azurerm_managed_disk" "mig-01-disk" {
-  name                 = "migration-files-datadisk"# Unique name per VM
+  name                 = "migration-files-datadisk"
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  storage_account_type = "StandardSSD_LRS"
+  storage_account_type = "Premium_LRS" # Required for shared disks
   create_option        = "Empty"
   disk_size_gb         = "8000"
+  max_shares           = 2 # Allows sharing with 2 VMs
   tags                 = var.common_tags
 }
 # Attach the Disk to the Linux VM (RHEL)
