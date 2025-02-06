@@ -44,7 +44,7 @@ variable "storage_container_name" {
 ## SA Defaults
 variable "sa_access_tier" {
   type    = string
-  default = "Hot"
+  default = "Cool"
 }
 variable "sa_account_kind" {
   type    = string
@@ -65,7 +65,7 @@ variable "sa_mig_account_kind" {
 
 variable "sa_account_replication_type" {
   type    = string
-  default = "ZRS"
+  default = "RAGRS"
 }
 variable "sa_mig_account_replication_type" {
   type    = string
