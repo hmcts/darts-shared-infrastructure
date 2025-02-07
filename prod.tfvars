@@ -49,6 +49,20 @@ migration_vms = {
     ip_address = "10.24.239.8"
   }
 }
+migration_vms2 = {
+  prddartsmig02 = {
+    ip_address = "10.24.239.7"
+  }
+  prddartsmig03 = {
+    ip_address = "10.24.239.8"
+  }
+  prddartsmig04 = {
+    ip_address = "10.24.239.9"
+  }
+  prddartsmig05 = {
+    ip_address = "10.24.239.10"
+  }
+}
 
 firewall_route_ranges = [
   "10.23.253.177/32",
