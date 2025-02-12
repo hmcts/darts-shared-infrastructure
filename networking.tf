@@ -45,7 +45,7 @@ resource "azurerm_subnet_network_security_group_association" "migration" {
 resource "azurerm_network_security_rule" "allow_outbound_postgress" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "allow-outbound-assess-postgress"
-  priority                    = 140
+  priority                    = 130
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
