@@ -23,6 +23,14 @@ module "sa-migration-standard" {
   default_action                             = "Allow"
 }
 
+resource "azurerm_role_assignment" "storage_owner_standard" {
+  count                = local.is_production_environment ? 1 : 0
+  scope                = module.sa-migration-standard[0].storageaccount_id
+  role_definition_name = "Owner"
+  principal_id         = "4908856e-c987-4ad8-b519-a5480a1fcc12"
+
+  depends_on = [module.sa-migration-standard]
+}
 moved {
   from = module.sa-migration
   to   = module.sa-migration[0]
