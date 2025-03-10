@@ -44,7 +44,7 @@ variable "storage_container_name" {
 ## SA Defaults
 variable "sa_access_tier" {
   type    = string
-  default = "Cool"
+  default = "Hot"
 }
 variable "sa_account_kind" {
   type    = string
