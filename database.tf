@@ -105,6 +105,7 @@ module "postgresql_flexible" {
   location            = var.location
   pgsql_storage_mb    = 8388608
   pgsql_sku           = "GP_Standard_D16ds_v5"
+  auto_grow_enabled   = true
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId
@@ -168,6 +169,18 @@ module "postgresql_flexible" {
     {
       name  = "maintenance_work_mem"
       value = "1568768"
+    },
+    {
+      name  = "max_parallel_workers_per_gather"
+      value = "8"
+    },
+    {
+      name  = "max_parallel_workers"
+      value = "16"
+    },
+    {
+      name  = "max_parallel_maintenance_workers"
+      value = "16"
     },
     {
       name  = "work_mem"
