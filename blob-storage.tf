@@ -23,8 +23,8 @@ module "sa" {
 
   account_tier                    = var.sa_account_tier
   account_kind                    = var.sa_account_kind
-  account_replication_type        = var.sa_account_replication_type
-  access_tier                     = var.sa_access_tier
+  account_replication_type        = "ZRS"
+  access_tier                     = "Hot"
   allow_nested_items_to_be_public = "true"
   enable_change_feed              = true
   private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints.id
