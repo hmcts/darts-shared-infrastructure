@@ -191,6 +191,14 @@ module "postgresql_flexible" {
       value = "1024"
     },
     {
+      name  = "max_wal_size"
+      value = "8192"
+    },
+    {
+      name  = "checkpoint_timeout"
+      value = "1800"
+    },
+    {
       name  = "max_worker_processes"
       value = "16"
     }
