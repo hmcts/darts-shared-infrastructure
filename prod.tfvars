@@ -14,7 +14,7 @@ log_analytics_subscription_id   = "8999dec3-0104-4a27-94ee-6588559729d1"
 
 migration_vms = {
   prddartsmig01 = {
-    ip_address = "10.24.239.6"
+    ip_address     = "10.24.239.6"
     data_disk_size = "20000"
   }
   prddartsassess = {
