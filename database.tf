@@ -200,7 +200,7 @@ module "postgresql_flexible" {
     },
     {
       name  = "max_worker_processes"
-      value = "16"
+      value = "32"
     }
   ]
 
