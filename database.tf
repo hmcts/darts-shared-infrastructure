@@ -104,7 +104,7 @@ module "postgresql_flexible" {
   business_area       = "sds"
   location            = var.location
   pgsql_storage_mb    = 8388608
-  pgsql_sku           = "GP_Standard_D16ds_v5"
+  pgsql_sku           = "GP_Standard_D32ds_v5"
   auto_grow_enabled   = true
 
   common_tags               = var.common_tags
@@ -168,23 +168,23 @@ module "postgresql_flexible" {
     },
     {
       name  = "maintenance_work_mem"
-      value = "1568768"
+      value = "2097151"
     },
     {
       name  = "max_parallel_workers_per_gather"
-      value = "8"
+      value = "4"
     },
     {
       name  = "max_parallel_workers"
-      value = "16"
+      value = "32"
     },
     {
       name  = "max_parallel_maintenance_workers"
-      value = "16"
+      value = "4"
     },
     {
       name  = "work_mem"
-      value = "8388"
+      value = "83886"
     },
     {
       name  = "min_wal_size"
@@ -192,7 +192,7 @@ module "postgresql_flexible" {
     },
     {
       name  = "max_wal_size"
-      value = "8192"
+      value = "4096"
     },
     {
       name  = "checkpoint_timeout"
