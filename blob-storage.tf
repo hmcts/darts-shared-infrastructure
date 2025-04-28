@@ -155,7 +155,7 @@ resource "azurerm_storage_blob" "b2c_mfa_css" {
   depends_on = [module.sa]
 }
 
-resource "azurerm_role_assignment" "storage_contributors" {
+resource "azurerm_role_assignment" "storage_contributors_owner" {
   for_each             = toset(var.storage_account_contributor_ids)
   scope                = module.sa.storageaccount_id
   role_definition_name = "Storage Account Contributor"
