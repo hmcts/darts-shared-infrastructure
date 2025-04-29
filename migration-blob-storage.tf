@@ -27,7 +27,7 @@ resource "azurerm_role_assignment" "storage_owner_standard" {
   count                = local.is_production_environment ? 1 : 0
   scope                = module.sa-migration-standard[0].storageaccount_id
   role_definition_name = "Owner"
-  principal_id         = "4908856e-c987-4ad8-b519-a5480a1fcc12"
+  principal_id         = "aee94636-8387-4a51-b5a7-a96e580a32d7"
 
   depends_on = [module.sa-migration-standard]
 }
