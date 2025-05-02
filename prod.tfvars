@@ -120,3 +120,5 @@ palo_networks = {
 }
 
 install_azure_monitor = true
+
+pgsql_storage_tier = "P80"

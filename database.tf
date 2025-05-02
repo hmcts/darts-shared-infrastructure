@@ -106,6 +106,7 @@ module "postgresql_flexible" {
   pgsql_storage_mb    = 8388608
   pgsql_sku           = "GP_Standard_D32ds_v5"
   auto_grow_enabled   = true
+  pgsql_storage_tier  = var.pgsql_storage_tier
 
   common_tags               = var.common_tags
   admin_user_object_id      = var.jenkins_AAD_objectId

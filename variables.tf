@@ -364,6 +364,12 @@ variable "enable_sftp" {
   default     = false
 }
 
+variable "pgsql_storage_tier" {
+  description = "The storage tier, this should be left as null but may need to be overriden to allow increased storage."
+  type        = string
+  default     = null
+}
+
 variable "install_endpoint_protection" {
   type        = bool
   description = "Install endpoint protection extension"
