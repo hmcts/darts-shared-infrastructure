@@ -170,6 +170,18 @@ variable "migration_vms" {
   description = "Map of objects describing the migration windows virtual machines to create."
   default     = {}
 }
+variable "migration_vms2" {
+  type = map(object({
+    ip_address     = string
+    subnet         = optional(string, "migration-subnet")
+    data_disk_size = optional(string, "500")
+    sku            = optional(string, "Standard_D16ds_v5")
+    join_ad        = optional(bool, true)
+    scope          = optional(string, "")
+  }))
+  description = "Map of objects describing the migration windows virtual machines to create."
+  default     = {}
+}
 variable "modernisation_vms" {
   type = map(object({
     ip_address     = string
