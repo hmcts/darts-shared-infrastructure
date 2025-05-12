@@ -615,3 +615,23 @@ resource "azurerm_virtual_machine_data_disk_attachment" "windows_disk_attach" {
   caching            = "None"
 }
 
+resource "azurerm_managed_disk" "shared_disk_backup" {
+  count                = local.is_production_environment ? 1 : 0
+  name                 = "shared-disk-backup"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS" # Ensure shared disk support
+  disk_size_gb         = 4000
+  max_shares           = 5 # Number of VMs sharing this disk
+  create_option        = "Empty"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment_backup" {
+  for_each           = local.selected_vms
+  managed_disk_id    = azurerm_managed_disk.shared_disk_backup[0].id
+  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  lun                = 3
+  caching            = "None"
+
+  depends_on = [azurerm_managed_disk.shared_disk_backup]
+}
