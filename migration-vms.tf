@@ -594,15 +594,14 @@ resource "azurerm_managed_disk" "mig-01-disk" {
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
-  disk_size_gb         = 32767
+  disk_size_gb         = 20000
   max_shares           = 2
-  create_option        = "Copy"
-  source_resource_id   = azurerm_managed_disk.shared_disk_backup.id
+  create_option        = "Empty"
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
   for_each           = var.oracle_linux_vms
-  managed_disk_id    = azurerm_managed_disk.mig-01-disk[0].id
+  managed_disk_id    = azurerm_managed_disk.shared_disk_backup[0].id
   virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
   lun                = 1
   caching            = "None"
@@ -610,7 +609,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "windows_disk_attach" {
   for_each           = local.mig-01-vm
-  managed_disk_id    = azurerm_managed_disk.mig-01-disk[0].id
+  managed_disk_id    = azurerm_managed_disk.shared_disk_backup[0].id
   virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
   lun                = 2
   caching            = "None"
@@ -625,14 +624,4 @@ resource "azurerm_managed_disk" "shared_disk_backup" {
   disk_size_gb         = 32767
   max_shares           = 5 # Number of VMs sharing this disk
   create_option        = "Empty"
-}
-
-resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment_backup" {
-  for_each           = local.selected_vms
-  managed_disk_id    = azurerm_managed_disk.shared_disk_backup[0].id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
-  lun                = 3
-  caching            = "None"
-
-  depends_on = [azurerm_managed_disk.shared_disk_backup]
 }
