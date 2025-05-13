@@ -594,9 +594,10 @@ resource "azurerm_managed_disk" "mig-01-disk" {
   location             = azurerm_resource_group.darts_migration_resource_group[0].location
   resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
   storage_account_type = "Premium_LRS"
-  disk_size_gb         = "20000"
+  disk_size_gb         = 32767
   max_shares           = 2
-  create_option        = "Empty"
+  create_option        = "Copy"
+  source_resource_id   = azurerm_managed_disk.shared_disk_backup.id
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
