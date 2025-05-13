@@ -202,6 +202,10 @@ module "postgresql_flexible" {
     {
       name  = "max_worker_processes"
       value = "32"
+    },
+    {
+      name  = "shared_buffers"
+      value = "6835200"
     }
   ]
 
