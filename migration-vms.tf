@@ -53,6 +53,7 @@ resource "azurerm_windows_virtual_machine" "migration_windows" {
   }
 }
 
+
 module "vm-bootstrap-migration_vms" {
   providers = {
     azurerm.cnp = azurerm.cnp
@@ -65,6 +66,87 @@ module "vm-bootstrap-migration_vms" {
 
   virtual_machine_type        = "vm"
   virtual_machine_id          = azurerm_windows_virtual_machine.migration_windows[each.key].id
+  install_splunk_uf           = var.install_splunk_uf
+  splunk_username             = var.splunk_username
+  splunk_password             = var.splunk_password
+  install_nessus_agent        = var.install_nessus_agent
+  os_type                     = "Windows"
+  env                         = var.env
+  install_dynatrace_oneagent  = var.install_dynatrace_oneagent
+  common_tags                 = var.common_tags
+  install_endpoint_protection = var.install_endpoint_protection
+
+  install_azure_monitor = var.install_azure_monitor
+}
+
+resource "azurerm_network_interface" "migration_vms2" {
+  for_each            = var.migration_vms2
+  name                = "${each.key}-nic"
+  location            = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name = azurerm_resource_group.darts_migration_resource_group[0].name
+  tags                = var.common_tags
+
+  ip_configuration {
+    name                          = "migration-ipconfig"
+    subnet_id                     = each.value.subnet == "migration-subnet" ? azurerm_subnet.migration[0].id : azurerm_subnet.migration-extended[0].id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.ip_address
+  }
+}
+
+resource "azurerm_managed_disk" "migration_vms_data2" {
+  for_each             = var.migration_vms2
+  name                 = "${each.key}-datadisk"
+  location             = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
+  storage_account_type = "Premium_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = each.value.data_disk_size
+  tags                 = var.common_tags
+}
+
+resource "azurerm_windows_virtual_machine" "migration_windows2" {
+  for_each              = var.migration_vms2
+  name                  = each.key
+  location              = azurerm_resource_group.darts_migration_resource_group[0].location
+  resource_group_name   = azurerm_resource_group.darts_migration_resource_group[0].name
+  size                  = each.value.sku
+  tags                  = var.common_tags
+  admin_username        = var.admin_user
+  admin_password        = random_password.password.result
+  provision_vm_agent    = true
+  computer_name         = each.key
+  network_interface_ids = [azurerm_network_interface.migration_vms2[each.key].id]
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+    name                 = "${each.key}-OsDisk"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-Datacenter"
+    version   = "latest"
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+
+module "vm-bootstrap-migration_vms2" {
+  providers = {
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+
+  for_each = var.migration_vms2
+  source   = "git@github.com:hmcts/terraform-module-vm-bootstrap?ref=master"
+
+  virtual_machine_type        = "vm"
+  virtual_machine_id          = azurerm_windows_virtual_machine.migration_windows2[each.key].id
   install_splunk_uf           = var.install_splunk_uf
   splunk_username             = var.splunk_username
   splunk_password             = var.splunk_password
