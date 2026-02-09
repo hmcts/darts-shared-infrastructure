@@ -34,7 +34,6 @@ module "darts_migration_key_vault" {
   name                    = "darts-migration-${var.env}"
   product                 = var.product
   env                     = var.env
-  object_id               = var.jenkins_AAD_objectId
   resource_group_name     = azurerm_resource_group.darts_migration_resource_group[0].name
   product_group_name      = "DTS Darts Modernisation"
   developers_group        = local.admin_group_map[var.env]
