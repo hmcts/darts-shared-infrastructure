@@ -79,11 +79,7 @@ module "vm-bootstrap-migration_vms" {
 }
 
 resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
-  for_each = {
-    for key, value in var.migration_vms :
-    key => value
-    if var.env == "prod" && value.join_ad == true
-  }
+  for_each             = { for key, value in var.migration_vms : key => value if value.join_ad == true }
   name                 = "${each.key}-joinad"
   virtual_machine_id   = azurerm_windows_virtual_machine.migration_windows[each.key].id
   publisher            = "Microsoft.Compute"
@@ -93,14 +89,14 @@ resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
     {
         "Name": "HMCTS.NET",
         "OUPath": "OU=DARTS-Migration,DC=hmcts,DC=net",
-        "User": "HMCTS\\${data.azurerm_key_vault_secret.aadds_username[0].value}",
+        "User": "HMCTS\\${data.azurerm_key_vault_secret.aadds_username.value}",
         "Restart": "true",
         "Options": "3"
     }
   SETTINGS
   protected_settings   = <<PROTECTED_SETTINGS
     {
-      "Password": "${data.azurerm_key_vault_secret.aadds_password[0].value}"
+      "Password": "${data.azurerm_key_vault_secret.aadds_password.value}"
     }
   PROTECTED_SETTINGS
 
