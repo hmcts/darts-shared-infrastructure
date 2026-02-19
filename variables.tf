@@ -375,3 +375,8 @@ variable "install_endpoint_protection" {
   description = "Install endpoint protection extension"
   default     = false
 }
+
+variable "sampling_percentage" {
+  default     = 100
+  description = "App insights sampling percentage."
+}

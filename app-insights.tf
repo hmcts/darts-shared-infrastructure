@@ -4,6 +4,7 @@ module "application_insights" {
   env      = var.env
   product  = var.product
 
+  sampling_percentage = var.sampling_percentage
 
   resource_group_name = azurerm_resource_group.darts_resource_group.name
 
