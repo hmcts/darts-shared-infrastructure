@@ -28,6 +28,7 @@ module "sa" {
   allow_nested_items_to_be_public = "true"
   enable_change_feed              = true
   private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints.id
+  public_network_access_enabled   = true
 
   enable_data_protection = true
 
