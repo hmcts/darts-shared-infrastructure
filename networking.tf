@@ -57,21 +57,6 @@ resource "azurerm_network_security_rule" "allow_outbound_postgress" {
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
 }
 
-resource "azurerm_network_security_rule" "allow_outbound_prddartsunstr" {
-  count                       = local.is_migration_environment ? 1 : 0
-  name                        = "allow-outbound-prddartsoracle"
-  priority                    = 140
-  direction                   = "Outbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "10.24.239.168"
-  destination_address_prefix  = "*"
-  network_security_group_name = azurerm_network_security_group.migration[0].name
-  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-}
-
 resource "azurerm_network_security_rule" "dets-to-bias" {
   count                       = local.is_migration_environment ? 1 : 0
   name                        = "DetsToBIAS"
@@ -115,21 +100,6 @@ resource "azurerm_network_security_rule" "allow_azure_monitor" {
   network_security_group_name = azurerm_network_security_group.migration[0].name
   resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
 }
-resource "azurerm_network_security_rule" "deny_outbound_prddartsunstr" {
-  count                       = local.is_migration_environment ? 1 : 0
-  name                        = "deny-outbound-prddartsunstr"
-  priority                    = 170
-  direction                   = "Outbound"
-  access                      = "Deny"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "10.24.239.168"
-  destination_address_prefix  = "*"
-  network_security_group_name = azurerm_network_security_group.migration[0].name
-  resource_group_name         = azurerm_resource_group.darts_migration_resource_group[0].name
-}
-
 resource "azurerm_subnet" "migration-extended" {
   count                = local.is_migration_environment && var.extended_address_space != null ? 1 : 0
   name                 = "migration-subnet-extended"
