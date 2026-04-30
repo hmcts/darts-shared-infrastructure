@@ -133,7 +133,11 @@ module "postgresql_flexible" {
     },
     {
       name  = "azure.extensions"
-      value = "PG_STAT_STATEMENTS,PG_TRGM"
+      value = "PG_STAT_STATEMENTS,PG_TRGM,PGAUDIT"
+    },
+    {
+      name  = "shared_preload_libraries"
+      value = "pg_stat_statements,pgaudit"
     },
     {
       name  = "logfiles.download_enable"
