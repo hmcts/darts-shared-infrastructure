@@ -136,10 +136,6 @@ module "postgresql_flexible" {
       value = "PG_STAT_STATEMENTS,PG_TRGM,PGAUDIT"
     },
     {
-      name  = "shared_preload_libraries"
-      value = "pg_stat_statements,pgaudit"
-    },
-    {
       name  = "logfiles.download_enable"
       value = "ON"
     },
