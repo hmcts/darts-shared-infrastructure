@@ -31,18 +31,14 @@ module "YOUR_managed_redis" {
   ## geo_replication_group_name
 }
 
-
-
-# the name of the terraform resource secret has been kept the same to ease adoption
-# the new instance's secret will be saved to your keyvault secret. The older infra's
-# secrets will be visible as an 'older version' on the key vault
+# This is your existing redis connection string stored in a keyvault secret
 resource "azurerm_key_vault_secret" "redis_connection_string" {
   name         = "redis-connection-string"              
   value        = "rediss://:${urlencode(module.YOUR_managed_redis.access_key)}@${module.YOUR_redis.host_name}:${module.YOUR_redis.redis_port}?tls=true"
   key_vault_id = module.YOUR_key_vault.key_vault_id
 }
 
-# If you'd like to create a new secret rather than overwriting the existing secret use this block instead:
+# Create a new secret for the new managed redis instance, this allows for ease of rollback via Flux
 resource "azurerm_key_vault_secret" "managed_redis_connection_string" {
   name         = "managed-redis-connection-string"              
   value        = "rediss://:${urlencode(module.YOUR_managed_redis.access_key)}@${module.YOUR_redis.host_name}:${module.YOUR_redis.redis_port}?tls=true"
@@ -59,12 +55,12 @@ resource "azurerm_key_vault_secret" "managed_redis_connection_string" {
 # alternatively if you would like to remove the redundant foreach, you will have to utilise a terraform 'moved' 
 # block to tell terraform the resource still exists, it has simply been moved to a new references
 # e.g.
-moved {
-  from = module.darts_redis[0]
-  to   = module.darts_redis
-}
+# moved {
+#   from = module.darts_redis[0]
+#   to   = module.darts_redis
+# }
 
-moved {
-  from = azurerm_key_vault_secret.redis_connection_string[0]
-  to   = azurerm_key_vault_secret.redis_connection_string
-}
+# moved {
+#   from = azurerm_key_vault_secret.redis_connection_string[0]
+#   to   = azurerm_key_vault_secret.redis_connection_string
+# }
