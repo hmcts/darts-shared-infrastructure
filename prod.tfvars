@@ -30,4 +30,5 @@ capacity = "1"
 
 install_azure_monitor = true
 
-pgsql_storage_tier = "P80"
+pgsql_storage_tier   = "P80"
+daily_data_cap_in_gb = 100

@@ -4,6 +4,7 @@ module "application_insights" {
   env      = var.env
   product  = var.product
 
+  daily_data_cap_in_gb = var.daily_data_cap_in_gb
 
   resource_group_name = azurerm_resource_group.darts_resource_group.name
 

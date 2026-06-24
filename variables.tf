@@ -363,3 +363,8 @@ variable "install_endpoint_protection" {
   description = "Install endpoint protection extension"
   default     = false
 }
+
+variable "daily_data_cap_in_gb" {
+  description = "Specifies the Application Insights component daily data volume cap in GB"
+  default     = 50
+}
