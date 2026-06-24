@@ -556,7 +556,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "gitlab_datadisk" {
 locals {
   selected_vms = {
     for name, details in var.migration_vms :
-    name => details if contains(["prddartsmig01", "prddartsassess", "prddartsassure", "prddartsoracle", "prddartsunstr"], name)
+    name => details if contains(["prddartsassess"], name)
   }
 }
 
@@ -580,48 +580,4 @@ resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment"
   caching            = "None"
 
   depends_on = [azurerm_managed_disk.shared_disk]
-}
-
-locals {
-  mig-01-vm = {
-    for name, details in var.migration_vms :
-    name => details if contains(["prddartsmig01"], name)
-  }
-}
-resource "azurerm_managed_disk" "mig-01-disk" {
-  count                = local.is_production_environment ? 1 : 0
-  name                 = "migration-shared-disk"
-  location             = azurerm_resource_group.darts_migration_resource_group[0].location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  storage_account_type = "Premium_LRS"
-  disk_size_gb         = 20000
-  max_shares           = 2
-  create_option        = "Empty"
-}
-
-resource "azurerm_virtual_machine_data_disk_attachment" "linux_disk_attach" {
-  for_each           = var.oracle_linux_vms
-  managed_disk_id    = azurerm_managed_disk.shared_disk_backup[0].id
-  virtual_machine_id = azurerm_linux_virtual_machine.oracle[each.key].id
-  lun                = 1
-  caching            = "None"
-}
-
-resource "azurerm_virtual_machine_data_disk_attachment" "windows_disk_attach" {
-  for_each           = local.mig-01-vm
-  managed_disk_id    = azurerm_managed_disk.shared_disk_backup[0].id
-  virtual_machine_id = azurerm_windows_virtual_machine.migration_windows[each.key].id
-  lun                = 2
-  caching            = "None"
-}
-
-resource "azurerm_managed_disk" "shared_disk_backup" {
-  count                = local.is_production_environment ? 1 : 0
-  name                 = "shared-disk-backup"
-  location             = azurerm_resource_group.darts_migration_resource_group[0].location
-  resource_group_name  = azurerm_resource_group.darts_migration_resource_group[0].name
-  storage_account_type = "Premium_LRS" # Ensure shared disk support
-  disk_size_gb         = 32767
-  max_shares           = 5 # Number of VMs sharing this disk
-  create_option        = "Empty"
 }

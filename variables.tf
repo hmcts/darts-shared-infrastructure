@@ -123,18 +123,6 @@ variable "logic_apps_address_space" {
 
 variable "aks_subscription_id" {}
 
-variable "virtual_machine_admins" {
-  description = "List of pricipal IDs for the virtual machine administrators."
-  type        = list(string)
-  default     = []
-}
-
-variable "virtual_machine_users" {
-  description = "List of pricipal IDs for the virtual machine users."
-  type        = list(string)
-  default     = []
-}
-
 variable "firewall_route_ranges" {
   type        = list(string)
   description = "List of address ranges to route to the DARTS specific migration firewall."
