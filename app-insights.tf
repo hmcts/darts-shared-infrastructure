@@ -8,6 +8,8 @@ module "application_insights" {
   resource_group_name = azurerm_resource_group.darts_resource_group.name
 
   common_tags = var.common_tags
+
+  sampling_percentage = var.sampling_percentage
 }
 
 moved {
