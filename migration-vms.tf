@@ -570,6 +570,7 @@ resource "azurerm_managed_disk" "shared_disk" {
   disk_size_gb         = 1999
   max_shares           = 5 # Number of VMs sharing this disk
   create_option        = "Empty"
+  tags                 = var.common_tags
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "shared_disk_attachment" {
