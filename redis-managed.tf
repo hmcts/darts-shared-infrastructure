@@ -20,7 +20,7 @@ module "managed_redis" {
   source = "git@github.com:hmcts/terraform-module-azure-managed-redis?ref=main"
 
   product     = var.product
-  component   = var.component
+  component   = "portal"
   env         = var.env
   location    = var.location
   common_tags = var.common_tags
