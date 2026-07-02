@@ -19,11 +19,12 @@ module "managed_redis" {
 
   source = "git@github.com:hmcts/terraform-module-azure-managed-redis?ref=main"
 
-  product     = var.product
-  component   = "portal"
-  env         = var.env
-  location    = var.location
-  common_tags = var.common_tags
+  product                      = var.product
+  component                    = "portal"
+  env                          = var.env
+  location                     = var.location
+  common_tags                  = var.common_tags
+  existing_resource_group_name = azurerm_resource_group.darts_resource_group.name
 
   sku_name = "Balanced_B0"
 
