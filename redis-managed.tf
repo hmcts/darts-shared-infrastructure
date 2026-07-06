@@ -26,7 +26,7 @@ module "managed_redis" {
   common_tags                  = var.common_tags
   existing_resource_group_name = azurerm_resource_group.darts_resource_group.name
 
-  sku_name = "Balanced_B0"
+  sku_name = "Balanced_B1"
 
   public_network_access   = "Disabled"
   create_private_endpoint = true
