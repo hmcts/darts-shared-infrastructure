@@ -1,5 +1,5 @@
 #!groovy
-//noinspection GroovyUnusedAssignment
+// @Library("Infrastructure@2.4.2") _
 @Library("Infrastructure") _
 
 def product = "darts"
