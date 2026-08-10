@@ -1,3 +1,8 @@
+data "azurerm_user_assigned_identity" "jenkins" {
+  name                = "jenkins-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
+
 data "azurerm_client_config" "current" {}
 
 module "darts_key_vault" {
@@ -12,6 +17,7 @@ module "darts_key_vault" {
   developers_group         = local.admin_group_map[var.env]
   create_managed_identity  = true
   grant_dev_jenkins_access = var.env == "stg"
+  jenkins_object_id        = data.azurerm_user_assigned_identity.jenkins.principal_id
 
   common_tags = var.common_tags
 }
@@ -41,6 +47,7 @@ module "darts_migration_key_vault" {
   developers_group         = local.admin_group_map[var.env]
   create_managed_identity  = false
   grant_dev_jenkins_access = var.env == "stg"
+  jenkins_object_id        = data.azurerm_user_assigned_identity.jenkins.principal_id
 
   common_tags = var.common_tags
 }
