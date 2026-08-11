@@ -373,3 +373,8 @@ variable "sampling_percentage" {
   description = "The sampling percentage for application insights"
   default     = 100
 }
+
+variable "daily_data_cap_in_gb" {
+  description = "Specifies the Application Insights component daily data volume cap in GB"
+  default     = 50
+}
