@@ -23,3 +23,5 @@ modernisation_linux_vms = {
 
 install_azure_monitor = true
 enable_sftp           = true
+
+retention_period = 30

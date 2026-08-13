@@ -33,6 +33,8 @@ module "sa" {
 
   containers = local.containers
 
+  retention_period = var.retention_period
+
   cors_rules = [{
     allowed_headers    = ["*"]
     allowed_methods    = ["GET", "OPTIONS"]
