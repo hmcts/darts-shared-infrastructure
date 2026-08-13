@@ -21,6 +21,7 @@ module "sa-migration-standard" {
   defender_malware_scanning_cap_gb_per_month = 250000
   common_tags                                = var.common_tags
   default_action                             = "Allow"
+  retention_period                           = var.migration_retention_period
 }
 
 resource "azurerm_role_assignment" "storage_owner_standard" {
@@ -72,6 +73,7 @@ module "sa-dets-standard" {
   defender_malware_scanning_cap_gb_per_month = 250000
   common_tags                                = var.common_tags
   default_action                             = "Allow"
+  retention_period                           = var.migration_retention_period
 }
 
 resource "azurerm_storage_blob" "dets-st" {
@@ -103,6 +105,7 @@ module "sa-migration-quarantine" {
   defender_malware_scanning_enabled          = var.defender_scan
   defender_malware_scanning_cap_gb_per_month = 250000
   common_tags                                = var.common_tags
+  # retention_period                           = var.migration_retention_period
 }
 
 resource "azurerm_storage_blob" "quarantine-st" {

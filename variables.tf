@@ -378,3 +378,8 @@ variable "daily_data_cap_in_gb" {
   description = "Specifies the Application Insights component daily data volume cap in GB"
   default     = 50
 }
+
+variable "migration_retention_period" {
+  description = "The retention period for the migration storage account in days"
+  default     = 14
+}
