@@ -383,3 +383,8 @@ variable "retention_period" {
   description = "The retention period for the storage account in days"
   default     = 365
 }
+
+variable "enable_versioning" {
+  description = "Enable versioning for the storage account"
+  default     = true
+}

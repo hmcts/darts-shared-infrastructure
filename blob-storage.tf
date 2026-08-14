@@ -30,10 +30,10 @@ module "sa" {
   private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints.id
 
   enable_data_protection = true
+  retention_period       = var.retention_period
+  enable_versioning      = var.enable_versioning
 
   containers = local.containers
-
-  retention_period = var.retention_period
 
   cors_rules = [{
     allowed_headers    = ["*"]
