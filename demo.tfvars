@@ -8,6 +8,7 @@ family         = "C"
 capacity       = "3"
 default_action = "Allow"
 
+retention_period = 30
 
 maxmemory_reserved              = "614"
 maxfragmentationmemory_reserved = "300"
