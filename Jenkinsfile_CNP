@@ -1,7 +1,6 @@
 #!groovy
 
-// @Library("Infrastructure@2.5.0") _
-@Library("Infrastructure") _
+@Library("Infrastructure@2.5.0") _
 
 def product = "darts"
 def branchesToSync = ['demo', 'perftest', 'ithc']
