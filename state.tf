@@ -18,9 +18,11 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  alias = "hub"
+  alias                           = "hub"
+  subscription_id                 = local.hub[var.hub].subscription
+  resource_provider_registrations = "none"
+
   features {}
-  subscription_id = local.hub[var.hub].subscription
 }
 provider "azurerm" {
   alias = "dcr"
