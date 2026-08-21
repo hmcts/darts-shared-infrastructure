@@ -45,36 +45,6 @@ module "sa" {
 
 }
 
-resource "azurerm_storage_management_policy" "sa" {
-  count = length(var.policy) > 0 ? 1 : 0
-
-  storage_account_id = module.sa.storageaccount_id
-
-  dynamic "rule" {
-    for_each = var.policy
-
-    content {
-      name    = rule.value.name
-      enabled = true
-
-      filters {
-        prefix_match = rule.value.filters.prefix_match
-        blob_types   = rule.value.filters.blob_types
-      }
-
-      actions {
-        base_blob {
-          delete_after_days_since_modification_greater_than = rule.value.actions.base_blob_delete_after_days_since_modification
-        }
-
-        version {
-          delete_after_days_since_creation = rule.value.actions.version_delete_after_days_since_creation
-        }
-      }
-    }
-  }
-}
-
 resource "azurerm_storage_blob" "outbound" {
   name                   = "${var.product}-outbound-blob-st-${var.env}"
   storage_account_name   = module.sa.storageaccount_name
@@ -193,3 +163,4 @@ resource "azurerm_role_assignment" "storage_contributors" {
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
 }
+
