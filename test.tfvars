@@ -28,28 +28,17 @@ retention_period  = 30
 enable_versioning = false
 policy = [
   {
-    name = "UnstructuredBlobRetentionPolicy"
-    filters = {
-      prefix_match = ["darts-unstructured/"]
-      blob_types   = ["blockBlob"]
-    }
-    actions = {
-      base_blob_delete_after_days_since_modification = 180
-      version_delete_after_days_since_creation       = 30
-    }
-  },
-  {
-    name = "InboundOutboundBlobRetentionPolicy"
+    name = "BlobRetentionPolicy"
     filters = {
       prefix_match = [
         "darts-outbound/",
-        "darts-inbound-container/"
+        "darts-inbound-container/",
+        "darts-unstructured/"
       ]
       blob_types = ["blockBlob"]
     }
     actions = {
-      base_blob_delete_after_days_since_modification = 30
-      version_delete_after_days_since_creation       = 30
+      version_delete_after_days_since_creation = 30
     }
   }
 ]
