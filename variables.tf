@@ -388,3 +388,30 @@ variable "enable_versioning" {
   description = "Enable versioning for the storage account"
   default     = true
 }
+
+variable "policy" {
+  description = "Lifecycle policies to apply to the shared storage account"
+  type = list(object({
+    name = string
+    filters = object({
+      prefix_match = list(string)
+      blob_types   = list(string)
+    })
+    actions = object({
+      base_blob_delete_after_days_since_modification = number
+      version_delete_after_days_since_creation       = number
+    })
+  }))
+  default = []
+
+  validation {
+    condition = alltrue([
+      for policy in var.policy :
+      policy.actions.base_blob_delete_after_days_since_modification >= 0 &&
+      policy.actions.base_blob_delete_after_days_since_modification <= 99999 &&
+      policy.actions.version_delete_after_days_since_creation >= 0 &&
+      policy.actions.version_delete_after_days_since_creation <= 99999
+    ])
+    error_message = "Lifecycle policy retention periods must be between 0 and 99999 days."
+  }
+}
