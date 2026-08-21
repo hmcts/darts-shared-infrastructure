@@ -26,3 +26,20 @@ enable_sftp           = true
 
 retention_period  = 30
 enable_versioning = false
+policy = [
+  {
+    name = "BlobRetentionPolicy"
+    filters = {
+      prefix_match = [
+        "darts-unstructured/",
+        "darts-outbound/",
+        "darts-inbound-container/"
+      ]
+      blob_types = ["blockBlob"]
+    }
+    actions = {
+      base_blob_delete_after_days_since_modification = 30
+      version_delete_after_days_since_creation       = 30
+    }
+  }
+]
