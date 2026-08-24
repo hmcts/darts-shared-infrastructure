@@ -89,14 +89,14 @@ resource "azurerm_virtual_machine_extension" "migration_windows_joinad" {
     {
         "Name": "HMCTS.NET",
         "OUPath": "OU=DARTS-Migration,DC=hmcts,DC=net",
-        "User": "HMCTS\\${data.azurerm_key_vault_secret.aadds_username.value}",
+        "User": "HMCTS\\${data.azurerm_key_vault_secret.aadds_username[0].value}",
         "Restart": "true",
         "Options": "3"
     }
   SETTINGS
   protected_settings   = <<PROTECTED_SETTINGS
     {
-      "Password": "${data.azurerm_key_vault_secret.aadds_password.value}"
+      "Password": "${data.azurerm_key_vault_secret.aadds_password[0].value}"
     }
   PROTECTED_SETTINGS
 

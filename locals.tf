@@ -113,12 +113,15 @@ locals {
 }
 
 data "azurerm_key_vault_secret" "aadds_username" {
+  count = local.is_production_environment ? 1 : 0
+
   name         = "domain-join-username"
   key_vault_id = "/subscriptions/17390ec1-5a5e-4a20-afb3-38d8d726ae45/resourceGroups/PINT-RG/providers/Microsoft.KeyVault/vaults/hmcts-kv-prod-int"
 }
 
 data "azurerm_key_vault_secret" "aadds_password" {
+  count = local.is_production_environment ? 1 : 0
+
   name         = "domain-join-password"
   key_vault_id = "/subscriptions/17390ec1-5a5e-4a20-afb3-38d8d726ae45/resourceGroups/PINT-RG/providers/Microsoft.KeyVault/vaults/hmcts-kv-prod-int"
 }
-

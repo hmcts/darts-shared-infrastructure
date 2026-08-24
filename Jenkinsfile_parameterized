@@ -1,8 +1,7 @@
 #!groovy
 import groovy.json.JsonSlurper
 
-// @Library("Infrastructure@2.5.0") _
-@Library('Infrastructure') _
+@Library("Infrastructure@2.5.2") _
 
 properties([
     parameters([
