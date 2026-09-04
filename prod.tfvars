@@ -33,8 +33,6 @@ install_azure_monitor = true
 pgsql_storage_tier   = "P80"
 daily_data_cap_in_gb = 100
 
-service_criticality = 5
-
 extra_tags = {
   "bcdr-risk-status"    = "v1-unsupported"
   "service_criticality" = "5"

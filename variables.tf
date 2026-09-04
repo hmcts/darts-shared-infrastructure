@@ -8,17 +8,6 @@ variable "extra_tags" {
   default     = {}
 }
 
-variable "service_criticality" {
-  description = "Service criticality rating from 1-5, passed to the postgresql_flexible module. Ratings >= 4 enroll the server in the immutable backup vault."
-  type        = number
-  default     = 1
-
-  validation {
-    condition     = var.service_criticality >= 1 && var.service_criticality <= 5 && floor(var.service_criticality) == var.service_criticality
-    error_message = "service_criticality must be an integer between 1 and 5."
-  }
-}
-
 variable "env" {
   description = "The deployment environment (sandbox, aat, prod etc..)"
 }
