@@ -3,7 +3,7 @@ variable "common_tags" {
 }
 
 variable "extra_tags" {
-  description = "Additional tags applied to PostgreSQL resources (merged on top of common_tags), without replacing tags the pipeline injects."
+  description = "Additional tags applied to PostgreSQL resources, merged with common_tags (common_tags takes precedence for any overlapping keys)."
   type        = map(string)
   default     = {}
 }
