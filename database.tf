@@ -108,7 +108,7 @@ module "postgresql_flexible" {
   auto_grow_enabled   = true
   pgsql_storage_tier  = var.pgsql_storage_tier
 
-  common_tags               = merge(var.common_tags, { for k, v in var.extra_tags : k => v if !contains(keys(var.common_tags), k) })
+  common_tags               = merge(var.extra_tags, var.common_tags)
   admin_user_object_id      = var.jenkins_AAD_objectId
   pgsql_delegated_subnet_id = "/subscriptions/${data.azurerm_subscription.this.subscription_id}/resourceGroups/${azurerm_resource_group.darts_migration_resource_group[0].name}/providers/Microsoft.Network/virtualNetworks/${azurerm_virtual_network.migration[0].name}/subnets/${azurerm_subnet.postgres[0].name}"
   pgsql_databases = [
