@@ -388,3 +388,8 @@ variable "enable_versioning" {
   description = "Enable versioning for the storage account"
   default     = true
 }
+
+variable "policy" {
+  description = "Lifecycle policies to apply to the shared storage account"
+  default     = []
+}

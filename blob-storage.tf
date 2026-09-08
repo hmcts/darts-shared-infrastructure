@@ -32,6 +32,7 @@ module "sa" {
   enable_data_protection = true
   retention_period       = var.retention_period
   enable_versioning      = var.enable_versioning
+  policy                 = var.policy
 
   containers = local.containers
 
@@ -163,3 +164,4 @@ resource "azurerm_role_assignment" "storage_contributors" {
   role_definition_name = "Storage Account Contributor"
   principal_id         = each.value
 }
+
