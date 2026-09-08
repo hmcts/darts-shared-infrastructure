@@ -32,6 +32,7 @@ module "sa" {
   enable_data_protection = true
   retention_period       = var.retention_period
   enable_versioning      = var.enable_versioning
+  policy                 = var.policy
 
   containers = local.containers
 
