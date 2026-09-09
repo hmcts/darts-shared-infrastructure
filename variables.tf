@@ -2,6 +2,12 @@ variable "common_tags" {
   type = map(string)
 }
 
+variable "extra_tags" {
+  description = "Additional tags applied to PostgreSQL resources, merged with common_tags (common_tags takes precedence for any overlapping keys)."
+  type        = map(string)
+  default     = {}
+}
+
 variable "env" {
   description = "The deployment environment (sandbox, aat, prod etc..)"
 }
