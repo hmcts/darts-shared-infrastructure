@@ -6,7 +6,7 @@ data "azurerm_user_assigned_identity" "jenkins" {
 data "azurerm_client_config" "current" {}
 
 module "darts_key_vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=DTSPO-31965/remove-jenkins-ptl-access"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   name                     = "darts-${var.env}"
   product                  = var.product
@@ -36,7 +36,7 @@ resource "azurerm_key_vault_secret" "MaxFileUploadRequestSizeInMegabytes" {
 
 module "darts_migration_key_vault" {
   count  = local.is_migration_environment ? 1 : 0
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=DTSPO-31965/remove-jenkins-ptl-access"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
 
   name                     = "darts-migration-${var.env}"
   product                  = var.product
