@@ -1,4 +1,6 @@
 locals {
+  managed_redis_environments = ["demo", "ithc", "test", "stg", "prod"]
+  managed_redis_enabled_envs = contains(local.managed_redis_environments, var.env) ? toset([var.env]) : toset([])
   managed_redis_vnet_rg_name = "ss-${var.env}-network-rg"
   managed_redis_vnet_name    = "ss-${var.env}-vnet"
   managed_redis_subnet_name  = "iaas"
@@ -12,6 +14,8 @@ data "azurerm_subnet" "redis_private_endpoint" {
 }
 
 module "managed_redis" {
+  for_each = local.managed_redis_enabled_envs
+
   source = "git@github.com:hmcts/terraform-module-azure-managed-redis?ref=main"
 
   product                      = var.product
@@ -37,17 +41,8 @@ module "managed_redis" {
 }
 
 resource "azurerm_key_vault_secret" "managed_redis" {
+  for_each     = module.managed_redis
   name         = "managed-redis-connection-string"
-  value        = "rediss://:${urlencode(module.managed_redis.primary_access_key)}@${module.managed_redis.hostname}:${module.managed_redis.port}?tls=true"
+  value        = "rediss://:${urlencode(each.value.primary_access_key)}@${each.value.hostname}:${each.value.port}?tls=true"
   key_vault_id = module.darts_key_vault.key_vault_id
-}
-
-moved {
-  from = module.managed_redis[0]
-  to   = module.managed_redis
-}
-
-moved {
-  from = azurerm_key_vault_secret.managed_redis[0]
-  to   = azurerm_key_vault_secret.managed_redis
 }
