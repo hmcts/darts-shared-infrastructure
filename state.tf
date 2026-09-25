@@ -31,7 +31,8 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  alias = "soc"
+  alias                           = "soc"
+  resource_provider_registrations = "none"
   features {}
   subscription_id = "8ae5b3b6-0b12-4888-b894-4cec33c92292"
 }
