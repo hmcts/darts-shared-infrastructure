@@ -37,3 +37,5 @@ extra_tags = {
   "bcdr-risk-status"    = "v1-unsupported"
   "service_criticality" = "5"
 }
+
+soft_delete_retention_days = 15 

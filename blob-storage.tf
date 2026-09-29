@@ -38,7 +38,7 @@ module "sa" {
 
   enable_soft_delete = true
 
-  soft_delete_retention_days = 14
+  soft_delete_retention_days = var.soft_delete_retention_days
   cors_rules = [{
     allowed_headers    = ["*"]
     allowed_methods    = ["GET", "OPTIONS"]
