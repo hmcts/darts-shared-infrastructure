@@ -399,7 +399,3 @@ variable "policy" {
   description = "Lifecycle policies to apply to the shared storage account"
   default     = []
 }
-
-variable "soft_delete_retention_days" {
-  description = "The number of days to retain soft deleted blobs"
-}

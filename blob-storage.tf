@@ -35,10 +35,6 @@ module "sa" {
   policy                 = var.policy
 
   containers = local.containers
-
-  enable_soft_delete = true
-
-  soft_delete_retention_days = var.soft_delete_retention_days
   cors_rules = [{
     allowed_headers    = ["*"]
     allowed_methods    = ["GET", "OPTIONS"]

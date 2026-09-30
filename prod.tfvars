@@ -38,4 +38,3 @@ extra_tags = {
   "service_criticality" = "5"
 }
 
-soft_delete_retention_days = 15 
