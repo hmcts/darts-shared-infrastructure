@@ -1,7 +1,7 @@
 
 module "sa-migration-standard" {
   count                                      = local.is_migration_environment ? 1 : 0
-  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=DTSPO-34962_1"
   env                                        = var.env
   storage_account_name                       = "sa${var.env}${var.product}mig02"
   resource_group_name                        = azurerm_resource_group.darts_migration_resource_group[0].name
@@ -84,7 +84,7 @@ resource "azurerm_storage_blob" "dets-st" {
 
 module "sa-migration-quarantine" {
   count                                      = local.is_production_environment ? 1 : 0
-  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
+  source                                     = "git@github.com:hmcts/cnp-module-storage-account?ref=DTSPO-34962_1"
   env                                        = var.env
   storage_account_name                       = "sa${var.env}${var.product}quarantine"
   resource_group_name                        = azurerm_resource_group.darts_migration_resource_group[0].name

@@ -9,8 +9,8 @@ data "azurerm_subnet" "private_endpoints" {
 }
 
 module "sa" {
-  source = "git@github.com:hmcts/cnp-module-storage-account?ref=DTSPO-34962_1"
-
+  source = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
+  
   env = var.env
 
   storage_account_name = local.storage_account_name
