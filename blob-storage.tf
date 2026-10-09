@@ -29,10 +29,11 @@ module "sa" {
   enable_change_feed              = true
   private_endpoint_subnet_id      = data.azurerm_subnet.private_endpoints.id
 
-  enable_data_protection = true
-  retention_period       = var.retention_period
-  enable_versioning      = var.enable_versioning
-  policy                 = var.policy
+  enable_data_protection               = true
+  retention_period                     = var.retention_period
+  container_soft_delete_retention_days = var.retention_period
+  enable_versioning                    = var.enable_versioning
+  policy                               = var.policy
 
   containers = local.containers
 

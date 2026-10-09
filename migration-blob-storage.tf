@@ -10,6 +10,7 @@ module "sa-migration-standard" {
   account_tier                               = "Standard"
   account_replication_type                   = "ZRS"
   containers                                 = local.containers-mig
+  container_soft_delete_retention_days       = var.retention_period
   private_endpoint_subnet_id                 = resource.azurerm_subnet.migration[0].id
   enable_nfs                                 = true
   enable_hns                                 = true
@@ -93,6 +94,7 @@ module "sa-migration-quarantine" {
   account_tier                               = "Standard"
   account_replication_type                   = "ZRS"
   containers                                 = local.containers-quarantine
+  container_soft_delete_retention_days       = var.retention_period
   private_endpoint_subnet_id                 = resource.azurerm_subnet.migration-extended[0].id
   enable_nfs                                 = true
   enable_hns                                 = true
