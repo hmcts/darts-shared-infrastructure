@@ -24,10 +24,6 @@ migration_gitlab_vms = {
   }
 }
 
-sku_name = "Premium"
-family   = "P"
-capacity = "1"
-
 install_azure_monitor = true
 
 pgsql_storage_tier   = "P80"
